@@ -239,7 +239,7 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
  * Handles 'Next Step' button click
  */
 nextStepButton.on('click', function () {
-    if (currentStepNumber >= 0 && currentStepNumber <= 4) {
+    if (currentStepNumber >= 0 && currentStepNumber <= 3) {
         goToNextStep(currentStepNumber);
         currentStepNumber++;
     } else {
@@ -248,12 +248,35 @@ nextStepButton.on('click', function () {
 })
 
 /**
+ * Handles 'Next Step' button click
+ */
+previousStepButton.on('click', function () {
+    if (currentStepNumber >= 1 && currentStepNumber <= 4) {
+        goToNextStep(currentStepNumber);
+        currentStepNumber--;
+    } else {
+        preventDefault();
+    }
+})
+
+
+/**
  * Advances to next step and updates 
  */
 const goToNextStep = (stepNumber) => {
     triggerWebflowSliderNavigationControl(
         getRegistrationFormNavigationControl(
             REQUEST_FORM_STEPS[getStepNameByNumber(REQUEST_FORM_STEPS, stepNumber + 1)]
+        ));
+}
+
+/**
+ * Advances to next step and updates 
+ */
+const goToPreviousStep = (stepNumber) => {
+    triggerWebflowSliderNavigationControl(
+        getRegistrationFormNavigationControl(
+            REQUEST_FORM_STEPS[getStepNameByNumber(REQUEST_FORM_STEPS, stepNumber - 1)]
         ));
 }
 
