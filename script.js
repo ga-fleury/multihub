@@ -5,18 +5,17 @@
 
 // An 'empty step' has been added because Webflow will always skip the first step
 const REQUEST_FORM_STEPS = {
-    EMPTY_STEP: 0,
-    VEHICLE_TYPE_STEP: 1,
-    VEHICLE_NUMBER_STEP: 2,
-    DATE_STEP: 3,
-    LOCATION_STEP: 4,
-    COMMENT_STEP: 5
+    VEHICLE_TYPE_STEP: 0,
+    VEHICLE_NUMBER_STEP: 1,
+    DATE_STEP: 2,
+    LOCATION_STEP: 3,
+    COMMENT_STEP: 4
 }
 
 /**
  * A simple counter to keep track of current step
  */
-let currentStepNumber = 1;
+let currentStepNumber = 0;
 
 // ----------------------- Some shared DOM elements --------------------------------
 
@@ -257,7 +256,7 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
  * 
  */
 const checkCurrentStep = (stepNumber) => {
-    if (stepNumber === 1) {
+    if (stepNumber == 0) {
         makeSlideBigger();
     } else if (stepNumber > 1) {
         makeSlideSmaller();
@@ -341,8 +340,8 @@ const getStepNameByNumber = (obj, value) =>
  * Handles 'Next Step' button click
  */
 nextStepButton.on('click', function () {
-    checkCurrentStep();
-    if (currentStepNumber >= 1 && currentStepNumber <= 4) {
+    checkCurrentStep(currentStepNumber);
+    if (currentStepNumber >= 0 && currentStepNumber <= 3) {
         goToNextStep(currentStepNumber);
         currentStepNumber++;
     }
@@ -352,8 +351,8 @@ nextStepButton.on('click', function () {
  * Handles 'Next Step' button click
  */
 previousStepButton.on('click', function () {
-    checkCurrentStep();
-    if (currentStepNumber >= 2 && currentStepNumber <= 5) {
+    checkCurrentStep(currentStepNumber);
+    if (currentStepNumber >= 1 && currentStepNumber <= 4) {
         goToPreviousStep(currentStepNumber);
         currentStepNumber--;
     }
