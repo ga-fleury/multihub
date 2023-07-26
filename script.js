@@ -265,12 +265,12 @@ const checkCurrentStep = (stepNumber) => {
 
 const makeSlideBigger = () => {
     maskContainer.css('height', '500px');
-    sliderContainer.css('height', '500px');
+    sliderContainer.attr('style', 'height: 500px !important');
 }
 
 const makeSlideSmaller = () => {
     maskContainer.css('height', '290px');
-    sliderContainer.css('height', '290px');
+    sliderContainer.attr('style', 'height: 290px !important');
 }
 
 /**
