@@ -288,3 +288,5 @@ const goToCommentStep = () => {
 const getStepNameByNumber = (obj, value) =>
     Object.keys(obj).find(key => obj[key] === value);
 
+
+console.log("%cMultistep Form Code Loaded","color: blue; font-size: 20px");
