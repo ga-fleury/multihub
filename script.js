@@ -161,6 +161,8 @@ const increaseVehicleNumberButton = $('#btn-v-units-plus', vehicleNumberStep);
  */
 const vehicleNumberField = $('#v-units-field', vehicleNumberStep);
 
+let vehicleNumber = 0;
+
 // ------------------------ STEP 3 FIELDS (Date Step) -----------------------------
 
 /**
@@ -356,6 +358,18 @@ previousStepButton.on('click', function () {
         currentStepNumber--;
     }
     checkCurrentStep(currentStepNumber);
+})
+
+increaseVehicleNumberButton.on('click', function () {
+    vehicleNumber++;
+    vehicleNumberField.val(vehicleNumber);
+})
+
+decreaseVehicleNumberButton.on('click', function () {
+    if (vehicleNumber > 0) {
+        vehicleNumber--;
+        vehicleNumberField.val(vehicleNumber);
+    }
 })
 
 
