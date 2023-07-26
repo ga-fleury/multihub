@@ -67,9 +67,9 @@ const maskContainer = $(maskContainerSelector);
  * Reference to the 'Slider' container in WF
  */
 
-const sliderContainerSelection = '#wf-slider';
+const sliderContainerSelector = '#wf-slider';
 
-const sliderContainer = $(sliderContainerSelection);
+const sliderContainer = $(sliderContainerSelector);
 
 // ----------------------- SUMMARY FIELDS -------------------------
 
@@ -256,9 +256,9 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
  * 
  */
 const checkCurrentStep = (stepNumber) => {
-    if (stepNumber == 0) {
+    if (stepNumber < 1) {
         makeSlideBigger();
-    } else if (stepNumber > 1) {
+    } else if (stepNumber > 0) {
         makeSlideSmaller();
     }
 }
@@ -340,22 +340,22 @@ const getStepNameByNumber = (obj, value) =>
  * Handles 'Next Step' button click
  */
 nextStepButton.on('click', function () {
-    checkCurrentStep(currentStepNumber);
     if (currentStepNumber >= 0 && currentStepNumber <= 3) {
         goToNextStep(currentStepNumber);
         currentStepNumber++;
     }
+    checkCurrentStep(currentStepNumber);
 })
 
 /**
  * Handles 'Next Step' button click
  */
 previousStepButton.on('click', function () {
-    checkCurrentStep(currentStepNumber);
     if (currentStepNumber >= 1 && currentStepNumber <= 4) {
         goToPreviousStep(currentStepNumber);
         currentStepNumber--;
     }
+    checkCurrentStep(currentStepNumber);
 })
 
 
