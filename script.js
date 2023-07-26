@@ -242,8 +242,6 @@ nextStepButton.on('click', function () {
     if (currentStepNumber >= 0 && currentStepNumber <= 3) {
         goToNextStep(currentStepNumber);
         currentStepNumber++;
-    } else {
-        preventDefault();
     }
 })
 
@@ -252,10 +250,8 @@ nextStepButton.on('click', function () {
  */
 previousStepButton.on('click', function () {
     if (currentStepNumber >= 1 && currentStepNumber <= 4) {
-        goToNextStep(currentStepNumber);
+        goToPreviousStep(currentStepNumber);
         currentStepNumber--;
-    } else {
-        preventDefault();
     }
 })
 
