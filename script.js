@@ -206,6 +206,16 @@ const commentField = $('#comment-field', commentStep);
 // ------------------------ MISC FUNCTIONS ----------------------------------
 
 /**
+ * Returns a reference to the Webflow Slider navigation control at the given index
+ * @param {*} index 
+ */
+const getWebflowSliderNavigationControl = (index, sliderContainer) => {
+    const sliderNavContainer = $('.w-slider-nav', sliderContainer); // Webflow slider navigation container
+    const navItems = $('.w-slider-dot', sliderNavContainer); // Webflow sider navigation items
+    return $(navItems.get(index));
+};
+
+/**
  * Gets a reference to the given navigation control within the Request Form
  * @param {*} index 
  */
