@@ -269,8 +269,8 @@ const makeSlideBigger = () => {
 }
 
 const makeSlideSmaller = () => {
-    maskContainer.css('height', 'auto');
-    sliderContainer.css('height', 'auto');
+    maskContainer.css('height', '290px');
+    sliderContainer.css('height', '290px');
 }
 
 /**
