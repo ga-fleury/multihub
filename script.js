@@ -341,6 +341,7 @@ const getStepNameByNumber = (obj, value) =>
  * Handles 'Next Step' button click
  */
 nextStepButton.on('click', function () {
+    checkCurrentStep();
     if (currentStepNumber >= 1 && currentStepNumber <= 4) {
         goToNextStep(currentStepNumber);
         currentStepNumber++;
@@ -351,6 +352,7 @@ nextStepButton.on('click', function () {
  * Handles 'Next Step' button click
  */
 previousStepButton.on('click', function () {
+    checkCurrentStep();
     if (currentStepNumber >= 2 && currentStepNumber <= 5) {
         goToPreviousStep(currentStepNumber);
         currentStepNumber--;
