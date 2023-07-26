@@ -73,6 +73,9 @@ const sliderContainer = $(sliderContainerSelector);
 
 // ----------------------- SUMMARY FIELDS -------------------------
 
+
+const editIconButton = $('#edit-icon', summaryContainer);
+
 /**
  * Reference to the 'Vehicle Type' field in the summary section
  */
@@ -268,11 +271,13 @@ const checkCurrentStep = (stepNumber) => {
 const makeSlideBigger = () => {
     maskContainer.css('height', '500px');
     sliderContainer.attr('style', 'height: 500px !important');
+    previousStepButton.css('display', 'none');
 }
 
 const makeSlideSmaller = () => {
     maskContainer.css('height', '290px');
     sliderContainer.attr('style', 'height: 290px !important');
+    previousStepButton.css('display', 'flex');
 }
 
 /**
@@ -370,6 +375,15 @@ decreaseVehicleNumberButton.on('click', function () {
         vehicleNumber--;
         vehicleNumberField.val(vehicleNumber);
     }
+})
+
+editIconButton.on('click', function () {
+    triggerWebflowSliderNavigationControl(
+        getRegistrationFormNavigationControl(
+            REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP
+        ));
+    
+    currentStepNumber = 0;
 })
 
 
