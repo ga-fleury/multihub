@@ -2,18 +2,21 @@
  * A enum-like structure to make it easier to reference the indexes of the different
  * steps on the Registration Form slider/carousel.
  */
+
+// An 'empty step' has been added because Webflow will always skip the first step
 const REQUEST_FORM_STEPS = {
-    VEHICLE_TYPE_STEP: 0,
-    VEHICLE_NUMBER_STEP: 1,
-    DATE_STEP: 2,
-    LOCATION_STEP: 3,
-    COMMENT_STEP: 4
+    EMPTY_STEP: 0,
+    VEHICLE_TYPE_STEP: 1,
+    VEHICLE_NUMBER_STEP: 2,
+    DATE_STEP: 3,
+    LOCATION_STEP: 4,
+    COMMENT_STEP: 5
 }
 
 /**
  * A simple counter to keep track of current step
  */
-let currentStepNumber = 0;
+let currentStepNumber = 1;
 
 // ----------------------- Some shared DOM elements --------------------------------
 
@@ -52,6 +55,22 @@ const nextStepButton = $(nextStepButtonSelector);
 const previousStepButtonSelector = '#btn-previous-step';
 
 const previousStepButton = $(previousStepButtonSelector);
+
+/**
+ * Reference to the 'Mask' container in WF
+ */
+
+const maskContainerSelector = '#wf-mask';
+
+const maskContainer = $(maskContainerSelector);
+
+/**
+ * Reference to the 'Slider' container in WF
+ */
+
+const sliderContainerSelection = '#wf-slider';
+
+const sliderContainer = $(sliderContainerSelection);
 
 // ----------------------- SUMMARY FIELDS -------------------------
 
@@ -234,27 +253,26 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
     navControl.trigger('click');
 };
 
-
 /**
- * Handles 'Next Step' button click
+ * 
  */
-nextStepButton.on('click', function () {
-    if (currentStepNumber >= 0 && currentStepNumber <= 3) {
-        goToNextStep(currentStepNumber);
-        currentStepNumber++;
+const checkCurrentStep = (stepNumber) => {
+    if (stepNumber === 1) {
+        makeSlideBigger();
+    } else if (stepNumber > 1) {
+        makeSlideSmaller();
     }
-})
+}
 
-/**
- * Handles 'Next Step' button click
- */
-previousStepButton.on('click', function () {
-    if (currentStepNumber >= 1 && currentStepNumber <= 4) {
-        goToPreviousStep(currentStepNumber);
-        currentStepNumber--;
-    }
-})
+const makeSlideBigger = () => {
+    maskContainer.css('height', '500px');
+    sliderContainer.css('height', '500px');
+}
 
+const makeSlideSmaller = () => {
+    maskContainer.css('height', 'auto');
+    sliderContainer.css('height', 'auto');
+}
 
 /**
  * Advances to next step and updates 
@@ -317,5 +335,27 @@ const goToCommentStep = () => {
 const getStepNameByNumber = (obj, value) =>
     Object.keys(obj).find(key => obj[key] === value);
 
+// --------------------------------- HANDLERS ---------------------------------
 
-console.log("%cMultistep Form Code Loaded","color: blue; font-size: 20px");
+/**
+ * Handles 'Next Step' button click
+ */
+nextStepButton.on('click', function () {
+    if (currentStepNumber >= 1 && currentStepNumber <= 4) {
+        goToNextStep(currentStepNumber);
+        currentStepNumber++;
+    }
+})
+
+/**
+ * Handles 'Next Step' button click
+ */
+previousStepButton.on('click', function () {
+    if (currentStepNumber >= 2 && currentStepNumber <= 5) {
+        goToPreviousStep(currentStepNumber);
+        currentStepNumber--;
+    }
+})
+
+
+console.log("%cMultistep Form Code Loaded", "color: blue; font-size: 20px");
