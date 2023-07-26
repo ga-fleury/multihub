@@ -12,6 +12,8 @@ const REQUEST_FORM_STEPS = {
     COMMENT_STEP: 4
 }
 
+
+
 /**
  * A simple counter to keep track of current step
  */
@@ -263,9 +265,24 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
 const checkCurrentStep = (stepNumber) => {
     if (stepNumber < 1) {
         makeSlideBigger();
-    } else if (stepNumber > 0) {
+        transformNextStepButton();
+    } else if (stepNumber > 0 && stepNumber < 4) {
         makeSlideSmaller();
+        transformNextStepButton();
+    } else if (stepNumber === 4) {
+        makeSlideSmaller();
+        transformtSubmitButton();
     }
+}
+
+const transformtSubmitButton = () => {
+    nextStepButton.css('background-color', "#F85731");
+    nextStepButton.innerHTML('Submit Request');
+}
+
+const transformNextStepButton = () => {
+    nextStepButton.css('background-color', "#415077");
+    nextStepButton.innerHTML('Next Step');
 }
 
 const makeSlideBigger = () => {
