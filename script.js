@@ -187,6 +187,9 @@ const vehicleTypeTrailerButton = $('#btn-v-type_trailer', vehicleTypeStep);
 const vehicleTypeVanButton = $('#btn-v-type_van', vehicleTypeStep);
 
 
+const vehicleTypeButtons = $('#btn-v-type_truck, #btn-v-type_tractor, #btn-v-type_trailer, #btn-v-type_van')
+
+
 const vehicleTypeDropdown = $('#vehicle-type-dropdown', vehicleTypeStep);
 
 
