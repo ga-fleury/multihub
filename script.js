@@ -157,6 +157,8 @@ const radiusSummary = $('#radius-summary', summaryContainer);
 const multistepForm = $('#hubspot-multistep-form', requestFormContainer);
 
 
+
+
 // ------------------------ STEP 1 FIELDS (Vehicle Type) -----------------------------
 
 /**
@@ -184,7 +186,9 @@ const vehicleTypeTrailerButton = $('#btn-v-type_trailer', vehicleTypeStep);
  */
 const vehicleTypeVanButton = $('#btn-v-type_van', vehicleTypeStep);
 
-const vehicleTypeButtons = $('#btn-v-type_truck, #btn-v-type_tractor, #btn-v-type_tractor, #btn-v-type_trailer')
+
+const vehicleTypeDropdown = $('#vehicle-type-dropdown', vehicleTypeStep);
+
 
 // ------------------------ STEP 2 FIELDS (Vehicle Number) -----------------------------
 
@@ -462,8 +466,16 @@ editIconButton.on('click', function () {
 })
 
 vehicleTypeButtons.on('click', function () {
-    $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
+    const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
     console.log($(this).attr('id').slice($(this).attr('id').indexOf('_') + 1))
+
+    var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
+    var option = '';
+    for (var i = 0; i < vehicleTypeArray.length; i++) {
+        option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
+    }
+    console.log(option)
+    vehicleTypeDropdown.empty().append(option)
 })
 
 
