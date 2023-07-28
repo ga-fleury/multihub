@@ -462,8 +462,8 @@ editIconButton.on('click', function () {
 })
 
 vehicleTypeButtons.on('click', function () {
-    $(this).attr('id').slice(str.indexOf('_') + 1);
-    console.log($(this).attr('id').slice(str.indexOf('_') + 1))
+    $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
+    console.log($(this).attr('id').slice($(this).attr('id').indexOf('_') + 1))
 })
 
 
