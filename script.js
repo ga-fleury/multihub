@@ -286,7 +286,7 @@ function getHubspotCookie(name) {
     }
 }
 
-getCookieValueByName('hubspotutk');
+getHubspotCookie('hubspotutk');
 
 /**
  * Returns a reference to the Webflow Slider navigation control at the given index
