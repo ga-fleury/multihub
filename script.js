@@ -81,9 +81,9 @@ const summaryContainer = $(summaryContainerSelector);
  * Form Submit Button
  */
 
-const formSubmitButton = $('form-submit-btn');
+const formSubmitButton = $('#form-submit-btn');
 
-const submitRequestButton = $('submit-request-btn');
+const submitRequestButton = $('#submit-request-btn');
 
 /**
  * Reference to the 'Next Step' button
@@ -474,6 +474,10 @@ editIconButton.on('click', function () {
         ));
 
     currentStepNumber = 0;
+})
+
+submitRequestButton.on('click', function () {
+    formSubmitButton.trigger('click');
 })
 
 vehicleTypeButtons.on('click', function () {
