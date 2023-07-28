@@ -162,7 +162,7 @@ const radiusSummary = $('#radius-summary', summaryContainer);
 /**
  * A reference to the DOM container of the elements on the step for vehicle type.
  */
-const multistepForm = $('#hubspot-multistep-form', requestFormContainer);
+const multistepForm = $('#wf-form-Hubpost-Bulk-Rental', requestFormContainer);
 
 
 
@@ -295,6 +295,7 @@ function getHubspotCookie(name) {
     var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     if (match) {
         hubspotCookieField.val(`${match[2]}`);
+
     }
     else {
         console.log('--something went wrong---');
