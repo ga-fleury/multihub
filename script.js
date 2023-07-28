@@ -2,8 +2,6 @@
  * A enum-like structure to make it easier to reference the indexes of the different
  * steps on the Registration Form slider/carousel.
  */
-
-// An 'empty step' has been added because Webflow will always skip the first step
 const REQUEST_FORM_STEPS = {
     VEHICLE_TYPE_STEP: 0,
     VEHICLE_NUMBER_STEP: 1,
@@ -12,12 +10,48 @@ const REQUEST_FORM_STEPS = {
     COMMENT_STEP: 4
 }
 
-
+/**
+ * An object with arrays for the different vehicle types,
+ * used to populate the dropdown once the user selects a Vehicle Type
+ */
+const VEHICLE_CATEGORIES = {
+    'truck': [
+        'CDL Refrigerated Straight Truck',
+        'CDL Straight Truck',
+        'Flatbed Truck',
+        'Non-CDL Refrigerated Straight Truck',
+        'Non-CDL Straight Truck',
+        'Refrigerated Small Box Truck',
+        'Small Box Truck',
+        'Stakebody Truck',
+        'Specialty'
+    ],
+    'tractor': [
+        'Single Axle Daycab',
+        'Tandem Axle Daycab',
+        'Tandem Axle Sleeper',
+        'Specialty'
+    ],
+    'trailer': [
+        'Dry Van',
+        'Flatbed',
+        'Refrigerated Trailer',
+        'Specialty',
+        'Chassis'
+    ],
+    'van': [
+        'Refrigerated Sprinter Van',
+        'Sprinter Van',
+        'Specialty'
+    ]
+}
 
 /**
  * A simple counter to keep track of current step
  */
 let currentStepNumber = 0;
+
+
 
 // ----------------------- Some shared DOM elements --------------------------------
 
@@ -73,6 +107,12 @@ const sliderContainerSelector = '#wf-slider';
 
 const sliderContainer = $(sliderContainerSelector);
 
+/**
+ * Reference to the hidden 'Hubspot UTK' cookie form field
+ */
+
+const hubspotCookieField = $('#hubspot-utk-field');
+
 // ----------------------- SUMMARY FIELDS -------------------------
 
 
@@ -127,22 +167,24 @@ const vehicleTypeStep = $('#vehicle-type-step', requestFormContainer);
 /**
  * A reference to the 'Truck' vehicle type button
  */
-const vehicleTypeTruckButton = $('#btn-v-type-truck', vehicleTypeStep);
+const vehicleTypeTruckButton = $('#btn-v-type_truck', vehicleTypeStep);
 
 /**
  * A reference to the 'Tractor' vehicle type button
  */
-const vehicleTypeTractorButton = $('#btn-v-type-tractor', vehicleTypeStep);
+const vehicleTypeTractorButton = $('#btn-v-type_tractor', vehicleTypeStep);
 
 /**
  * A reference to the 'Tractor' vehicle type button
  */
-const vehicleTypeTrailerButton = $('#btn-v-type-trailer', vehicleTypeStep);
+const vehicleTypeTrailerButton = $('#btn-v-type_trailer', vehicleTypeStep);
 
 /**
  * A reference to the 'Van' vehicle type button
  */
-const vehicleTypeVanButton = $('#btn-v-type-van', vehicleTypeStep);
+const vehicleTypeVanButton = $('#btn-v-type_van', vehicleTypeStep);
+
+const vehicleTypeButtons = $('#btn-v-type_truck, #btn-v-type_tractor, #btn-v-type_tractor, #btn-v-type_trailer')
 
 // ------------------------ STEP 2 FIELDS (Vehicle Number) -----------------------------
 
@@ -231,6 +273,22 @@ const commentField = $('#comment-field', commentStep);
 // ------------------------ MISC FUNCTIONS ----------------------------------
 
 /**
+ * Grabs the value of a cookie based on it's name.
+ * Used to get the value of 'hubspotutk' and pass it to a hidden form field.
+ */
+function getHubspotCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) {
+        hubspotCookieField.val(`${match[2]}`);
+    }
+    else {
+        console.log('--something went wrong---');
+    }
+}
+
+getCookieValueByName('hubspotutk');
+
+/**
  * Returns a reference to the Webflow Slider navigation control at the given index
  * @param {*} index 
  */
@@ -260,7 +318,7 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
 };
 
 /**
- * 
+ * Adjust several features based on what step the user is currently in
  */
 const checkCurrentStep = (stepNumber) => {
     if (stepNumber < 1) {
@@ -268,19 +326,19 @@ const checkCurrentStep = (stepNumber) => {
         transformNextStepButton();
     } else if (stepNumber > 0 && stepNumber < 4) {
         makeSlideSmaller();
-        transformNextStepButton();
+        transformToNextStepButton();
     } else if (stepNumber === 4) {
-        makeSlideSmaller();
-        transformtSubmitButton();
+        console.log('final step reached');
+        transformToSubmitButton();
     }
 }
 
-const transformtSubmitButton = () => {
+const transformToSubmitButton = () => {
     nextStepButton.css('background-color', "#F85731");
     nextStepButton.innerHTML('Submit Request');
 }
 
-const transformNextStepButton = () => {
+const transformToNextStepButton = () => {
     nextStepButton.css('background-color', "#415077");
     nextStepButton.innerHTML('Next Step');
 }
@@ -399,8 +457,13 @@ editIconButton.on('click', function () {
         getRegistrationFormNavigationControl(
             REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP
         ));
-    
+
     currentStepNumber = 0;
+})
+
+vehicleTypeButtons.on('click', function () {
+    $(this).attr('id').slice(str.indexOf('_') + 1);
+    console.log($(this).attr('id').slice(str.indexOf('_') + 1))
 })
 
 
