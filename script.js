@@ -78,6 +78,14 @@ const summaryContainerSelector = '#summary-container';
 const summaryContainer = $(summaryContainerSelector);
 
 /**
+ * Form Submit Button
+ */
+
+const formSubmitButton = $('form-submit-btn');
+
+const submitRequestButton = $('submit-request-btn');
+
+/**
  * Reference to the 'Next Step' button
  */
 const nextStepButtonSelector = '#btn-next-step';
@@ -341,13 +349,13 @@ const checkCurrentStep = (stepNumber) => {
 }
 
 const transformToSubmitButton = () => {
-    nextStepButton.css('background-color', "#F85731");
-    nextStepButton.innerHTML('Submit Request');
+    nextStepButton.css('display', "none");
+    submitRequestButton.css('display', 'block');
 }
 
 const transformToNextStepButton = () => {
-    nextStepButton.css('background-color', "#415077");
-    nextStepButton.innerHTML('Next Step');
+    nextStepButton.css('display', "block");
+    submitRequestButton.css('display', 'none');
 }
 
 const makeSlideBigger = () => {
