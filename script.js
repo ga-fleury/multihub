@@ -506,7 +506,7 @@ submitRequestButton.on('click', function () {
 })
 
 const hideAfterSubmission = () => {
-    $('#btn-wrapper').css('visibility', 'none');
+    $('#btn-wrapper').css('display', 'none');
 }
 
 /**
