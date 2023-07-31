@@ -75,6 +75,7 @@ const initializeForm = () => {
     sliderContainer.attr('style', 'height: 290px !important');
 }
 
+initializeForm();
 
 // ----------------------- Some shared DOM elements --------------------------------
 
