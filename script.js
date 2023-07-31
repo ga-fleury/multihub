@@ -539,8 +539,9 @@ const updateSubmissionData = () => {
 /**
  * Hubspot Form Submission API call
  */
-const formSubmissionCall = () => {
-    fetch("https://api.hsforms.com/submissions/v3/integration/submit/3840745/fa312bc2-e466-4ff5-9225-ebca231883c2", {
+async function formSubmissionCall() {
+    try {
+      const response = await fetch("https://api.hsforms.com/submissions/v3/integration/submit/3840745/fa312bc2-e466-4ff5-9225-ebca231883c2", {
         method: "POST",
         body: {
             "fields": [
@@ -599,14 +600,19 @@ const formSubmissionCall = () => {
                 "hutk": `${FINAL_FORM_DATA.hutk}`, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
                 "pageUri": "www.coop.com/multi-vehicle-request",
                 "pageName": "Bulk Rental Form"
-            },
+            }
         },
         headers: {
             "Authorization": "Bearer pat-na1-d613ec32-87bc-4150-b471-4ee867e69c30",
             "content-type": "application/json"
         }
     })
-}
+      const result = await response.json();
+      console.log("Success:", result);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
 
 
 console.log("%cMultistep Form Code Loaded", "color: blue; font-size: 20px");
