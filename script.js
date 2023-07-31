@@ -554,6 +554,11 @@ async function formSubmissionCall() {
                 },
                 {
                     "objectTypeId": "0-1",
+                    "name": "email",
+                    "value": "testhardcode@email.com"
+                },
+                {
+                    "objectTypeId": "0-1",
                     "name": "multi_rental_date_to",
                     "value": FINAL_FORM_DATA.multi_rental_date_to
                 },
