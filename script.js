@@ -485,6 +485,7 @@ submitRequestButton.on('click', function () {
     formSubmissionCall();
     hideAfterSubmission();
     $('#success-overlay').css('display', 'flex');
+    $('body').attr('style', 'overflow: hidden !important');
 })
 
 const hideAfterSubmission = () => {
