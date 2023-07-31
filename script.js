@@ -478,8 +478,8 @@ submitRequestButton.on('click', function () {
 })
 
 const hideAfterSubmission = () => {
-    if(element)
-    $('#btn-wrapper').css('display', 'none');
+    if (element)
+        $('#btn-wrapper').css('display', 'none');
 }
 
 /**
@@ -487,7 +487,7 @@ const hideAfterSubmission = () => {
  */
 
 vehicleTypeButtons.on('click', function () {
-    if(!FINAL_FORM_DATA.bulk_rental_vehicle_subtype){
+    if (!FINAL_FORM_DATA.bulk_rental_vehicle_subtype) {
         maskContainer.css('height', '390px');
         sliderContainer.attr('style', 'height: 390px !important');
     }
@@ -502,14 +502,11 @@ vehicleTypeButtons.on('click', function () {
     FINAL_FORM_DATA.bulk_rental_vehicle_type = vehicleType
 })
 
-const vehicleTypeOptions = $("#vehicle-type-dropdown > option")
-
-vehicleTypeOptions.each( function () {
-    $(this).on('click', function () {
-        maskContainer.css('height', '500px');
-        sliderContainer.attr('style', 'height: 500px !important');
-    })
+vehicleTypeDropdown.children().on('click', function () {
+    maskContainer.css('height', '500px');
+    sliderContainer.attr('style', 'height: 500px !important');
 })
+
 
 /**
  * Gets data from fields and passes it to Object
@@ -597,14 +594,14 @@ async function formSubmissionCall() {
     }
 
     try {
-      const response = await fetch(requestURL, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: requestHeader
-    })
-      const result = await response.json();
-      console.log("Success:", result);
+        const response = await fetch(requestURL, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: requestHeader
+        })
+        const result = await response.json();
+        console.log("Success:", result);
     } catch (error) {
-      console.error("Error:", error);
+        console.error("Error:", error);
     }
-  }
+}
