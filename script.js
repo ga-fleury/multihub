@@ -11,6 +11,25 @@ const REQUEST_FORM_STEPS = {
 }
 
 /**
+ * Object that will contain the final data to be submitted to Hubspot
+ */
+
+let FINAL_FORM_DATA = {
+    email: '',
+    multi_rental_date_start: '',
+    multi_rental_date_to: '',
+    bulk_rental_vehicle_type: '',
+    bulk_rental_vehicle_subtype: '',
+    bulk_rental_storage: '',
+    daily_rate: '',
+    vehicle_units: '',
+    bulk_rental_location: '',
+    bulk_rental_radius_miles: '',
+    bulk_rental_comment: '',
+    hutk: ''
+}
+
+/**
  * An object with arrays for the different vehicle types,
  * used to populate the dropdown once the user selects a Vehicle Type
  */
@@ -200,6 +219,8 @@ const vehicleTypeButtons = $('#btn-v-type_truck, #btn-v-type_tractor, #btn-v-typ
 
 const vehicleTypeDropdown = $('#vehicle-type-dropdown', vehicleTypeStep);
 
+const vehicleDailyRate = $('#vehicle-rate-field', vehicleTypeStep);
+
 
 // ------------------------ STEP 2 FIELDS (Vehicle Number) -----------------------------
 
@@ -244,7 +265,7 @@ const toDateField = $('#to-date-field', dateStep);
 
 
 $('[data-toggle="datepicker"]').datepicker({
-    format: 'mm-dd-yyyy'
+    format: 'yyyy-mm-dd'
 });
 // Available date placeholders:
 // Year: yyyy
@@ -295,7 +316,7 @@ function getHubspotCookie(name) {
     var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     if (match) {
         hubspotCookieField.val(`${match[2]}`);
-
+        FINAL_FORM_DATA.hutk = match[2];
     }
     else {
         console.log('--something went wrong---');
@@ -339,22 +360,22 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
 const checkCurrentStep = (stepNumber) => {
     if (stepNumber < 1) {
         makeSlideBigger();
-        transformNextStepButton();
+        showNextStepButton();
     } else if (stepNumber > 0 && stepNumber < 4) {
         makeSlideSmaller();
-        transformToNextStepButton();
+        showNextStepButton();
     } else if (stepNumber === 4) {
         console.log('final step reached');
-        transformToSubmitButton();
+        showSubmitButton();
     }
 }
 
-const transformToSubmitButton = () => {
+const showSubmitButton = () => {
     nextStepButton.css('display', "none");
     submitRequestButton.css('display', 'block');
 }
 
-const transformToNextStepButton = () => {
+const showNextStepButton = () => {
     nextStepButton.css('display', "block");
     submitRequestButton.css('display', 'none');
 }
@@ -478,21 +499,114 @@ editIconButton.on('click', function () {
 })
 
 submitRequestButton.on('click', function () {
+    updateSubmissionData();
+    formSubmissionCall();
     formSubmitButton.trigger('click');
 })
 
+/**
+ * Handles clicks on one of the Vehicle Type options
+ */
+
 vehicleTypeButtons.on('click', function () {
     const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
-    console.log($(this).attr('id').slice($(this).attr('id').indexOf('_') + 1))
-
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
     var option = '';
     for (var i = 0; i < vehicleTypeArray.length; i++) {
         option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
     }
-    console.log(option)
     vehicleTypeDropdown.empty().append(option)
+
+    FINAL_FORM_DATA.bulk_rental_vehicle_type = vehicleType
 })
+
+
+/**
+ * Gets data from fields and passes it to Object
+ */
+const updateSubmissionData = () => {
+    FINAL_FORM_DATA.bulk_rental_vehicle_subtype = vehicleTypeDropdown.find(":selected").val()
+    FINAL_FORM_DATA.daily_rate = vehicleDailyRate.val();
+    FINAL_FORM_DATA.vehicle_units = vehicleNumberField.val();
+    FINAL_FORM_DATA.multi_rental_date_start = fromDateField.val();
+    FINAL_FORM_DATA.multi_rental_date_to = toDateField.val();
+    FINAL_FORM_DATA.bulk_rental_location = locationField.val();
+    FINAL_FORM_DATA.bulk_rental_radius_miles = radiusField.val();
+    FINAL_FORM_DATA.bulk_rental_comment = commentField.val();
+}
+
+
+/**
+ * Hubspot Form Submission API call
+ */
+const formSubmissionCall = () => {
+    fetch("https://api.hsforms.com/submissions/v3/integration/submit/3840745/fa312bc2-e466-4ff5-9225-ebca231883c2", {
+        method: "POST",
+        body: JSON.stringify({
+            "fields": [
+                {
+                    "objectTypeId": "0-1",
+                    "name": "multi_rental_date_start",
+                    "value": `${FINAL_FORM_DATA.multi_rental_date_start}`
+                },
+                {
+                    "objectTypeId": "0-1",
+                    "name": "multi_rental_date_to",
+                    "value": `${FINAL_FORM_DATA.multi_rental_date_to}`
+                },
+                {
+                    "objectTypeId": "0-1",
+                    "name": "bulk_rental_vehicle_type",
+                    "value": `${FINAL_FORM_DATA.bulk_rental_vehicle_type}`
+                },
+                {
+                    "objectTypeId": "0-1",
+                    "name": "bulk_rental_vehicle_subtype",
+                    "value": `${FINAL_FORM_DATA.bulk_rental_vehicle_subtype}`
+                },
+                {
+                    "objectTypeId": "0-1",
+                    "name": "bulk_rental_storage",
+                    "value": `${FINAL_FORM_DATA.bulk_rental_storage}`
+                },
+                {
+                    "objectTypeId": "0-1",
+                    "name": "daily_rate",
+                    "value": `${FINAL_FORM_DATA.daily_rate}`
+                },
+                {
+                    "objectTypeId": "0-1",
+                    "name": "vehicle_units",
+                    "value": `${FINAL_FORM_DATA.vehicle_units}`
+                },
+                {
+                    "objectTypeId": "0-1",
+                    "name": "bulk_rental_location",
+                    "value": `${FINAL_FORM_DATA.bulk_rental_location}`
+                },
+                {
+                    "objectTypeId": "0-1",
+                    "name": "bulk_rental_radius_miles",
+                    "value": `${FINAL_FORM_DATA.bulk_rental_radius_miles}`
+                },
+                {
+                    "objectTypeId": "0-1",
+                    "name": "bulk_rental_comment",
+                    "value": `${FINAL_FORM_DATA.bulk_rental_comment}`
+                }
+            ],
+            "context": {
+                "hutk": `${FINAL_FORM_DATA.hutk}`, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
+                "pageUri": "www.coop.com/multi-vehicle-request",
+                "pageName": "Bulk Rental Form"
+            },
+        }),
+        headers: {
+            "Authorization": "Bearer pat-na1-d613ec32-87bc-4150-b471-4ee867e69c30",
+            "content-type": "application/json"
+        }
+    })
+}
 
 
 console.log("%cMultistep Form Code Loaded", "color: blue; font-size: 20px");
