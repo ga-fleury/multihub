@@ -70,6 +70,10 @@ const VEHICLE_CATEGORIES = {
  */
 let currentStepNumber = 0;
 
+const initializeForm = () => {
+    maskContainer.css('height', '290px');
+    sliderContainer.attr('style', 'height: 290px !important');
+}
 
 
 // ----------------------- Some shared DOM elements --------------------------------
@@ -478,7 +482,6 @@ submitRequestButton.on('click', function () {
 })
 
 const hideAfterSubmission = () => {
-    if (element)
         $('#btn-wrapper').css('display', 'none');
 }
 
@@ -502,7 +505,7 @@ vehicleTypeButtons.on('click', function () {
     FINAL_FORM_DATA.bulk_rental_vehicle_type = vehicleType
 })
 
-vehicleTypeDropdown.children().on('click', function () {
+vehicleTypeDropdown.on('change', function () {
     maskContainer.css('height', '500px');
     sliderContainer.attr('style', 'height: 500px !important');
 })
