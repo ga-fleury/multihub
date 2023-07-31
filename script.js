@@ -485,10 +485,10 @@ emailSubmitButton.on('click', function () {
 })
 
 submitRequestButton.on('click', function () {
-    updateSubmissionData();
     var emailCookie = document.cookie.match(new RegExp('(^| )' + 'user-email' + '=([^;]+)'));
     if (emailCookie) {
         FINAL_FORM_DATA.email = decodeURI(emailCookie[2]);
+        updateSubmissionData();
         formSubmissionCall();
         hideAfterSubmission();
         $('#success-overlay').css('display', 'flex');
