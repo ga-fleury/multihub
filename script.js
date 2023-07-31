@@ -479,6 +479,7 @@ emailSubmitButton.on('click', function () {
     updateSubmissionData();
     formSubmissionCall();
     hideAfterSubmission();
+    $('#email-overlay-wrap').css('display', 'none');
     $('#success-overlay').css('display', 'flex');
     $('body').attr('style', 'overflow: hidden !important');
 })
