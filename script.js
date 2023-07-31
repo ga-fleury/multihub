@@ -186,7 +186,9 @@ const radiusSummary = $('#radius-summary', summaryContainer);
  */
 const multistepForm = $('#wf-form-Hubpost-Bulk-Rental', requestFormContainer);
 
+const emailField = $('#email-field');
 
+const emailSubmitButton = $('#email-submit-btn')
 
 
 // ------------------------ STEP 1 FIELDS (Vehicle Type) -----------------------------
@@ -317,19 +319,12 @@ const commentField = $('#comment-field', commentStep);
  */
 function getCookies() {
     var hubspotCookie = document.cookie.match(new RegExp('(^| )' + 'hubspotutk' + '=([^;]+)'));
-    var emailCookie = document.cookie.match(new RegExp('(^| )' + 'user-email' + '=([^;]+)'));
     if (hubspotCookie) {
         hubspotCookieField.val(`${hubspotCookie[2]}`);
         FINAL_FORM_DATA.hutk = hubspotCookie[2];
     }
     else {
         console.log('--something went wrong---');
-    }
-    if (emailCookie) {
-        FINAL_FORM_DATA.email = decodeURI(emailCookie[2]);
-    }
-    else {
-        FINAL_FORM_DATA.email = "fallback@email.com";
     }
 }
 
@@ -480,12 +475,28 @@ editIconButton.on('click', function () {
     currentStepNumber = 0;
 })
 
-submitRequestButton.on('click', function () {
+emailSubmitButton.on('click', function () {
     updateSubmissionData();
     formSubmissionCall();
     hideAfterSubmission();
     $('#success-overlay').css('display', 'flex');
     $('body').attr('style', 'overflow: hidden !important');
+})
+
+submitRequestButton.on('click', function () {
+    updateSubmissionData();
+    var emailCookie = document.cookie.match(new RegExp('(^| )' + 'user-email' + '=([^;]+)'));
+    if (emailCookie) {
+        FINAL_FORM_DATA.email = decodeURI(emailCookie[2]);
+        formSubmissionCall();
+        hideAfterSubmission();
+        $('#success-overlay').css('display', 'flex');
+        $('body').attr('style', 'overflow: hidden !important');
+    }
+    else {
+        $('#email-overlay-wrap').css('display', 'flex');
+        $('body').attr('style', 'overflow: hidden !important');
+    }
 })
 
 const hideAfterSubmission = () => {
@@ -541,6 +552,7 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.bulk_rental_location = locationField.val();
     FINAL_FORM_DATA.bulk_rental_radius_miles = radiusField.val();
     FINAL_FORM_DATA.bulk_rental_comment = commentField.val();
+    FINAL_FORM_DATA.email = emailField.val();
 }
 
 
