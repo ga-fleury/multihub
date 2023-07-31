@@ -35,7 +35,7 @@ let FINAL_FORM_DATA = {
  */
 const VEHICLE_CATEGORIES = {
     'truck': [
-        '',
+        'Select',
         'CDL Refrigerated Straight Truck',
         'CDL Straight Truck',
         'Flatbed Truck',
@@ -47,14 +47,14 @@ const VEHICLE_CATEGORIES = {
         'Specialty'
     ],
     'tractor': [
-        '',
+        'Select',
         'Single Axle Daycab',
         'Tandem Axle Daycab',
         'Tandem Axle Sleeper',
         'Specialty'
     ],
     'trailer': [
-        '',
+        'Select',
         'Dry Van',
         'Flatbed',
         'Refrigerated Trailer',
@@ -62,7 +62,7 @@ const VEHICLE_CATEGORIES = {
         'Chassis'
     ],
     'van': [
-        '',
+        'Select',
         'Refrigerated Sprinter Van',
         'Sprinter Van',
         'Specialty'
@@ -496,7 +496,7 @@ const hideAfterSubmission = () => {
  */
 
 vehicleTypeButtons.on('click', function () {
-    if (!FINAL_FORM_DATA.bulk_rental_vehicle_subtype) {
+    if (FINAL_FORM_DATA.bulk_rental_vehicle_subtype !== '') {
         maskContainer.css('height', '390px');
         sliderContainer.attr('style', 'height: 390px !important');
     }
