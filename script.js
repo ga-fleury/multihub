@@ -496,10 +496,16 @@ const hideAfterSubmission = () => {
  */
 
 vehicleTypeButtons.on('click', function () {
-    if (FINAL_FORM_DATA.bulk_rental_vehicle_type !== '') {
-        maskContainer.css('height', '390px');
-        sliderContainer.attr('style', 'height: 390px !important');
-    }
+    maskContainer.css('height', '390px');
+    sliderContainer.attr('style', 'height: 390px !important');
+
+    vehicleTypeButtons.each(function () {
+       $(this).css('background-color', '#415077');
+       $(this).css('color', '#FFFFFF');
+       $(this).siblings('.v-type-icon').css('display', 'none');
+       $(this).siblings('.white').css('display', 'block');
+    })
+
     const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
     var option = '';
