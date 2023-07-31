@@ -501,8 +501,13 @@ editIconButton.on('click', function () {
 submitRequestButton.on('click', function () {
     updateSubmissionData();
     formSubmissionCall();
+    hideAfterSubmission();
     formSubmitButton.trigger('click');
 })
+
+const hideAfterSubmission = () => {
+    $('#btn-wrapper').css('visibility', 'none');
+}
 
 /**
  * Handles clicks on one of the Vehicle Type options
