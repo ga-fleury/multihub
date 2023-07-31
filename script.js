@@ -496,7 +496,7 @@ const hideAfterSubmission = () => {
  */
 
 vehicleTypeButtons.on('click', function () {
-    if (FINAL_FORM_DATA.bulk_rental_vehicle_subtype !== '') {
+    if (FINAL_FORM_DATA.bulk_rental_vehicle_type !== '') {
         maskContainer.css('height', '390px');
         sliderContainer.attr('style', 'height: 390px !important');
     }
