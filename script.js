@@ -70,12 +70,6 @@ const VEHICLE_CATEGORIES = {
  */
 let currentStepNumber = 0;
 
-const initializeForm = () => {
-    maskContainer.css('height', '290px');
-    sliderContainer.attr('style', 'height: 290px !important');
-}
-
-initializeForm();
 
 // ----------------------- Some shared DOM elements --------------------------------
 
@@ -430,6 +424,13 @@ const goToPreviousStep = (stepNumber) => {
 const getStepNameByNumber = (obj, value) =>
     Object.keys(obj).find(key => obj[key] === value);
 
+const initializeForm = () => {
+    maskContainer.css('height', '290px');
+    sliderContainer.attr('style', 'height: 290px !important');
+}
+
+initializeForm();
+
 // --------------------------------- HANDLERS ---------------------------------
 
 /**
@@ -483,7 +484,7 @@ submitRequestButton.on('click', function () {
 })
 
 const hideAfterSubmission = () => {
-        $('#btn-wrapper').css('display', 'none');
+    $('#btn-wrapper').css('display', 'none');
 }
 
 /**
