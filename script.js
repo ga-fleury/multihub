@@ -484,7 +484,7 @@ submitRequestButton.on('click', function () {
     updateSubmissionData();
     formSubmissionCall();
     hideAfterSubmission();
-    formSubmitButton.trigger('click');
+    $('#success-overlay').css('display', 'flex');
 })
 
 const hideAfterSubmission = () => {
