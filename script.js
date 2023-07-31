@@ -330,7 +330,7 @@ function getHubspotCookie(name) {
 function getEmailCookie(name) {
     var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     if (match) {
-        FINAL_FORM_DATA.email = match[2];
+        FINAL_FORM_DATA.email = decodeURI(match[2]);
     }
     else {
         FINAL_FORM_DATA.email = "fallback@email.com";
