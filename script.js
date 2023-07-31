@@ -312,33 +312,25 @@ const commentField = $('#comment-field', commentStep);
  * Grabs the value of a cookie based on it's name.
  * Used to get the value of 'hubspotutk' and pass it to a hidden form field.
  */
-function getHubspotCookie(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    if (match) {
-        hubspotCookieField.val(`${match[2]}`);
-        FINAL_FORM_DATA.hutk = match[2];
+function getCookies() {
+    var hubspotCookie = document.cookie.match(new RegExp('(^| )' + 'hubspotutk' + '=([^;]+)'));
+    var emailCookie = document.cookie.match(new RegExp('(^| )' + 'user-email' + '=([^;]+)'));
+    if (hubspotCookie) {
+        hubspotCookieField.val(`${hubspotCookie[2]}`);
+        FINAL_FORM_DATA.hutk = hubspotCookie[2];
     }
     else {
         console.log('--something went wrong---');
     }
-}
-
-/**
- * Grabs the value of a cookie based on it's name.
- * Used to get the value of 'hubspotutk' and pass it to a hidden form field.
- */
-function getEmailCookie(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    if (match) {
-        FINAL_FORM_DATA.email = match[2].replace("%40", "@");
+    if (emailCookie) {
+        FINAL_FORM_DATA.email = decodeURI(emailCookie[2]);
     }
     else {
         FINAL_FORM_DATA.email = "fallback@email.com";
     }
 }
 
-getHubspotCookie('hubspotutk');
-getEmailCookie('user-email');
+getCookies();
 
 /**
  * Returns a reference to the Webflow Slider navigation control at the given index
@@ -373,14 +365,13 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
  * Adjust several features based on what step the user is currently in
  */
 const checkCurrentStep = (stepNumber) => {
-    if (stepNumber < 1) {
+    if (stepNumber === REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP) {
         makeSlideBigger();
         showNextStepButton();
-    } else if (stepNumber > 0 && stepNumber < 4) {
+    } else if (stepNumber > REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP && stepNumber < REQUEST_FORM_STEPS.COMMENT_STEP) {
         makeSlideSmaller();
         showNextStepButton();
-    } else if (stepNumber === 4) {
-        console.log('final step reached');
+    } else if (stepNumber === REQUEST_FORM_STEPS.COMMENT_STEP) {
         showSubmitButton();
     }
 }
@@ -427,40 +418,6 @@ const goToPreviousStep = (stepNumber) => {
         ));
 }
 
-/**
- * Goes to the Request Form "Vehicle Type" step.
- */
-const goToVehicleTypeStep = () => {
-    triggerWebflowSliderNavigationControl(getRegistrationFormNavigationControl(REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP));
-};
-
-/**
- * Goes to the Request Form "Vehicle Number" step.
- */
-const goToVehicleNumberStep = () => {
-    triggerWebflowSliderNavigationControl(getRegistrationFormNavigationControl(REQUEST_FORM_STEPS.VEHICLE_NUMBER_STEP));
-};
-
-/**
- * Goes to the Request Form "Date" step.
- */
-const goToDateStep = () => {
-    triggerWebflowSliderNavigationControl(getRegistrationFormNavigationControl(REQUEST_FORM_STEPS.DATE_STEP));
-};
-
-/**
- * Goes to the Request Form "Location" step.
- */
-const goToLocationStep = () => {
-    triggerWebflowSliderNavigationControl(getRegistrationFormNavigationControl(REQUEST_FORM_STEPS.LOCATION_STEP));
-};
-
-/**
- * Goes to the Request Form "Comment" step.
- */
-const goToCommentStep = () => {
-    triggerWebflowSliderNavigationControl(getRegistrationFormNavigationControl(REQUEST_FORM_STEPS.COMMENT_STEP));
-};
 
 /**
  * Gets name of the step from it's number.
@@ -474,7 +431,7 @@ const getStepNameByNumber = (obj, value) =>
  * Handles 'Next Step' button click
  */
 nextStepButton.on('click', function () {
-    if (currentStepNumber >= 0 && currentStepNumber <= 3) {
+    if (currentStepNumber >= REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP && currentStepNumber <= REQUEST_FORM_STEPS.LOCATION_STEP) {
         goToNextStep(currentStepNumber);
         currentStepNumber++;
     }
@@ -485,7 +442,7 @@ nextStepButton.on('click', function () {
  * Handles 'Next Step' button click
  */
 previousStepButton.on('click', function () {
-    if (currentStepNumber >= 1 && currentStepNumber <= 4) {
+    if (currentStepNumber >= REQUEST_FORM_STEPS.VEHICLE_NUMBER_STEP && currentStepNumber <= REQUEST_FORM_STEPS.COMMENT_STEP) {
         goToPreviousStep(currentStepNumber);
         currentStepNumber--;
     }
@@ -530,6 +487,10 @@ const hideAfterSubmission = () => {
  */
 
 vehicleTypeButtons.on('click', function () {
+    if(!FINAL_FORM_DATA.bulk_rental_vehicle_subtype){
+        maskContainer.css('height', '390px');
+        sliderContainer.attr('style', 'height: 390px !important');
+    }
     const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
     var option = '';
@@ -541,6 +502,14 @@ vehicleTypeButtons.on('click', function () {
     FINAL_FORM_DATA.bulk_rental_vehicle_type = vehicleType
 })
 
+const vehicleTypeOptions = $("#vehicle-type-dropdown > option")
+
+vehicleTypeOptions.each( function () {
+    $(this).on('click', function () {
+        maskContainer.css('height', '500px');
+        sliderContainer.attr('style', 'height: 500px !important');
+    })
+})
 
 /**
  * Gets data from fields and passes it to Object
@@ -554,8 +523,6 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.bulk_rental_location = locationField.val();
     FINAL_FORM_DATA.bulk_rental_radius_miles = radiusField.val();
     FINAL_FORM_DATA.bulk_rental_comment = commentField.val();
-
-    console.log(FINAL_FORM_DATA);
 }
 
 
@@ -563,72 +530,77 @@ const updateSubmissionData = () => {
  * Hubspot Form Submission API call
  */
 async function formSubmissionCall() {
-    try {
-      const response = await fetch("https://api.hsforms.com/submissions/v3/integration/submit/3840745/fa312bc2-e466-4ff5-9225-ebca231883c2", {
-        method: "POST",
-        body: JSON.stringify({
-            "fields": [
-                {
-                    "objectTypeId": "0-1",
-                    "name": "multi_rental_date_start",
-                    "value": FINAL_FORM_DATA.multi_rental_date_start
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "email",
-                    "value": FINAL_FORM_DATA.email
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "multi_rental_date_to",
-                    "value": FINAL_FORM_DATA.multi_rental_date_to
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "bulk_rental_vehicle_type",
-                    "value": FINAL_FORM_DATA.bulk_rental_vehicle_type
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "bulk_rental_vehicle_subtype",
-                    "value": FINAL_FORM_DATA.bulk_rental_vehicle_subtype
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "daily_rate",
-                    "value": FINAL_FORM_DATA.daily_rate
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "vehicle_units",
-                    "value": FINAL_FORM_DATA.vehicle_units
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "bulk_rental_location",
-                    "value": FINAL_FORM_DATA.bulk_rental_location
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "bulk_rental_radius_miles",
-                    "value": FINAL_FORM_DATA.bulk_rental_radius_miles
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "bulk_rental_comment",
-                    "value": FINAL_FORM_DATA.bulk_rental_comment
-                }
-            ],
-            "context": {
-                "hutk": FINAL_FORM_DATA.hutk, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
-                "pageUri": "www.coop.com/multi-vehicle-request",
-                "pageName": "Bulk Rental Form"
+    let requestURL = "https://api.hsforms.com/submissions/v3/integration/submit/3840745/fa312bc2-e466-4ff5-9225-ebca231883c2"
+    let authToken = "Bearer pat-na1-d613ec32-87bc-4150-b471-4ee867e69c30"
+    let requestHeader = {
+        "Authorization": authToken,
+        "content-type": "application/json"
+    }
+    let data = {
+        "fields": [
+            {
+                "objectTypeId": "0-1",
+                "name": "multi_rental_date_start",
+                "value": FINAL_FORM_DATA.multi_rental_date_start
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "email",
+                "value": FINAL_FORM_DATA.email
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "multi_rental_date_to",
+                "value": FINAL_FORM_DATA.multi_rental_date_to
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "bulk_rental_vehicle_type",
+                "value": FINAL_FORM_DATA.bulk_rental_vehicle_type
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "bulk_rental_vehicle_subtype",
+                "value": FINAL_FORM_DATA.bulk_rental_vehicle_subtype
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "daily_rate",
+                "value": FINAL_FORM_DATA.daily_rate
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "vehicle_units",
+                "value": FINAL_FORM_DATA.vehicle_units
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "bulk_rental_location",
+                "value": FINAL_FORM_DATA.bulk_rental_location
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "bulk_rental_radius_miles",
+                "value": FINAL_FORM_DATA.bulk_rental_radius_miles
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "bulk_rental_comment",
+                "value": FINAL_FORM_DATA.bulk_rental_comment
             }
-        }),
-        headers: {
-            "Authorization": "Bearer pat-na1-d613ec32-87bc-4150-b471-4ee867e69c30",
-            "content-type": "application/json"
+        ],
+        "context": {
+            "hutk": FINAL_FORM_DATA.hutk, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
+            "pageUri": "www.coop.com/multi-vehicle-request",
+            "pageName": "Bulk Rental Form"
         }
+    }
+
+    try {
+      const response = await fetch(requestURL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: requestHeader
     })
       const result = await response.json();
       console.log("Success:", result);
@@ -636,6 +608,3 @@ async function formSubmissionCall() {
       console.error("Error:", error);
     }
   }
-
-
-console.log("%cMultistep Form Code Loaded", "color: blue; font-size: 20px");
