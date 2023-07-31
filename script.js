@@ -500,11 +500,16 @@ vehicleTypeButtons.on('click', function () {
     sliderContainer.attr('style', 'height: 390px !important');
 
     vehicleTypeButtons.each(function () {
-       $(this).css('background-color', '#415077');
-       $(this).css('color', '#FFFFFF');
-       $(this).siblings('.v-type-icon').css('display', 'none');
-       $(this).siblings('.white').css('display', 'block');
+        $(this).css('background-color', '#FFFFFF');
+        $(this).css('color', '#415077');
+        $(this).siblings('.v-type-icon').css('display', 'block');
+        $(this).siblings('.v-type-icon.white').css('display', 'none');
     })
+
+    $(this).css('background-color', '#415077');
+    $(this).css('color', '#FFFFFF');
+    $(this).siblings('.v-type-icon').css('display', 'none');
+    $(this).siblings('.v-type-icon.white').css('display', 'block');
 
     const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
