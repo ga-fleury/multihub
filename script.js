@@ -323,7 +323,22 @@ function getHubspotCookie(name) {
     }
 }
 
+/**
+ * Grabs the value of a cookie based on it's name.
+ * Used to get the value of 'hubspotutk' and pass it to a hidden form field.
+ */
+function getEmailCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) {
+        FINAL_FORM_DATA.email = match[2];
+    }
+    else {
+        FINAL_FORM_DATA.email = "fallback@email.com";
+    }
+}
+
 getHubspotCookie('hubspotutk');
+getEmailCookie('user-email');
 
 /**
  * Returns a reference to the Webflow Slider navigation control at the given index
@@ -506,6 +521,7 @@ submitRequestButton.on('click', function () {
 })
 
 const hideAfterSubmission = () => {
+    if(element)
     $('#btn-wrapper').css('display', 'none');
 }
 
@@ -560,7 +576,7 @@ async function formSubmissionCall() {
                 {
                     "objectTypeId": "0-1",
                     "name": "email",
-                    "value": "testhardcode@email.com"
+                    "value": FINAL_FORM_DATA.email
                 },
                 {
                     "objectTypeId": "0-1",
