@@ -543,7 +543,7 @@ async function formSubmissionCall() {
     try {
       const response = await fetch("https://api.hsforms.com/submissions/v3/integration/submit/3840745/fa312bc2-e466-4ff5-9225-ebca231883c2", {
         method: "POST",
-        body: {
+        body: JSON.stringify({
             "fields": [
                 {
                     "objectTypeId": "0-1",
@@ -601,7 +601,7 @@ async function formSubmissionCall() {
                 "pageUri": "www.coop.com/multi-vehicle-request",
                 "pageName": "Bulk Rental Form"
             }
-        },
+        }),
         headers: {
             "Authorization": "Bearer pat-na1-d613ec32-87bc-4150-b471-4ee867e69c30",
             "content-type": "application/json"
