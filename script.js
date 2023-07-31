@@ -548,56 +548,56 @@ async function formSubmissionCall() {
                 {
                     "objectTypeId": "0-1",
                     "name": "multi_rental_date_start",
-                    "value": `${FINAL_FORM_DATA.multi_rental_date_start}`
+                    "value": FINAL_FORM_DATA.multi_rental_date_start
                 },
                 {
                     "objectTypeId": "0-1",
                     "name": "multi_rental_date_to",
-                    "value": `${FINAL_FORM_DATA.multi_rental_date_to}`
+                    "value": FINAL_FORM_DATA.multi_rental_date_to
                 },
                 {
                     "objectTypeId": "0-1",
                     "name": "bulk_rental_vehicle_type",
-                    "value": `${FINAL_FORM_DATA.bulk_rental_vehicle_type}`
+                    "value": FINAL_FORM_DATA.bulk_rental_vehicle_type
                 },
                 {
                     "objectTypeId": "0-1",
                     "name": "bulk_rental_vehicle_subtype",
-                    "value": `${FINAL_FORM_DATA.bulk_rental_vehicle_subtype}`
+                    "value": FINAL_FORM_DATA.bulk_rental_vehicle_subtype
                 },
                 {
                     "objectTypeId": "0-1",
                     "name": "bulk_rental_storage",
-                    "value": `${FINAL_FORM_DATA.bulk_rental_storage}`
+                    "value": FINAL_FORM_DATA.bulk_rental_storage
                 },
                 {
                     "objectTypeId": "0-1",
                     "name": "daily_rate",
-                    "value": `${FINAL_FORM_DATA.daily_rate}`
+                    "value": FINAL_FORM_DATA.daily_rate
                 },
                 {
                     "objectTypeId": "0-1",
                     "name": "vehicle_units",
-                    "value": `${FINAL_FORM_DATA.vehicle_units}`
+                    "value": FINAL_FORM_DATA.vehicle_units
                 },
                 {
                     "objectTypeId": "0-1",
                     "name": "bulk_rental_location",
-                    "value": `${FINAL_FORM_DATA.bulk_rental_location}`
+                    "value": FINAL_FORM_DATA.bulk_rental_location
                 },
                 {
                     "objectTypeId": "0-1",
                     "name": "bulk_rental_radius_miles",
-                    "value": `${FINAL_FORM_DATA.bulk_rental_radius_miles}`
+                    "value": FINAL_FORM_DATA.bulk_rental_radius_miles
                 },
                 {
                     "objectTypeId": "0-1",
                     "name": "bulk_rental_comment",
-                    "value": `${FINAL_FORM_DATA.bulk_rental_comment}`
+                    "value": FINAL_FORM_DATA.bulk_rental_comment
                 }
             ],
             "context": {
-                "hutk": `${FINAL_FORM_DATA.hutk}`, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
+                "hutk": FINAL_FORM_DATA.hutk, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
                 "pageUri": "www.coop.com/multi-vehicle-request",
                 "pageName": "Bulk Rental Form"
             }
