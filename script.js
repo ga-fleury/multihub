@@ -533,6 +533,8 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.bulk_rental_location = locationField.val();
     FINAL_FORM_DATA.bulk_rental_radius_miles = radiusField.val();
     FINAL_FORM_DATA.bulk_rental_comment = commentField.val();
+
+    console.log(FINAL_FORM_DATA);
 }
 
 
@@ -564,11 +566,6 @@ async function formSubmissionCall() {
                     "objectTypeId": "0-1",
                     "name": "bulk_rental_vehicle_subtype",
                     "value": FINAL_FORM_DATA.bulk_rental_vehicle_subtype
-                },
-                {
-                    "objectTypeId": "0-1",
-                    "name": "bulk_rental_storage",
-                    "value": FINAL_FORM_DATA.bulk_rental_storage
                 },
                 {
                     "objectTypeId": "0-1",
