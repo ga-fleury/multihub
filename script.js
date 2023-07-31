@@ -501,15 +501,15 @@ vehicleTypeButtons.on('click', function () {
 
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
-        $(this).css('color', '#415077');
-        $(this).siblings('.v-type-icon').css('display', 'block');
-        $(this).siblings('.v-type-icon.white').css('display', 'none');
+        $(this).attr('style', 'color: #415077 !important');
+        $(this).siblings('.v-type-icon').attr('style', 'display: block !important');
+        $(this).siblings('.v-type-icon.white').attr('style', 'display: none !important');
     })
 
     $(this).css('background-color', '#415077');
-    $(this).css('color', '#FFFFFF');
-    $(this).siblings('.v-type-icon').css('display', 'none');
-    $(this).siblings('.v-type-icon.white').css('display', 'block');
+    $(this).attr('style', 'color: #FFFFFF !important');
+    $(this).siblings('.v-type-icon').attr('style', 'display: none !important');
+    $(this).siblings('.v-type-icon.white').attr('style', 'display: block !important');
 
     const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
