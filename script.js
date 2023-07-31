@@ -35,6 +35,7 @@ let FINAL_FORM_DATA = {
  */
 const VEHICLE_CATEGORIES = {
     'truck': [
+        '',
         'CDL Refrigerated Straight Truck',
         'CDL Straight Truck',
         'Flatbed Truck',
@@ -46,12 +47,14 @@ const VEHICLE_CATEGORIES = {
         'Specialty'
     ],
     'tractor': [
+        '',
         'Single Axle Daycab',
         'Tandem Axle Daycab',
         'Tandem Axle Sleeper',
         'Specialty'
     ],
     'trailer': [
+        '',
         'Dry Van',
         'Flatbed',
         'Refrigerated Trailer',
@@ -59,6 +62,7 @@ const VEHICLE_CATEGORIES = {
         'Chassis'
     ],
     'van': [
+        '',
         'Refrigerated Sprinter Van',
         'Sprinter Van',
         'Specialty'
