@@ -459,7 +459,7 @@ increaseVehicleNumberButton.on('click', function () {
 
 decreaseVehicleNumberButton.on('click', function () {
     decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
-    if (vehicleNumber > 2) {
+    if (vehicleNumber >= 3) {
         vehicleNumber--
         vehicleNumberField.val(vehicleNumber);
         updateSummary(vehicleUnitsSummary, vehicleNumber);
