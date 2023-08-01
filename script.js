@@ -286,9 +286,9 @@ const locationStep = $('#location-step', requestFormContainer);
 const locationField = $('#location-field', locationStep);
 
 /**
- * A reference to the 'Radius' field
+ * A reference to the 'Radius' dropdown
  */
-const radiusField = $('#radius-field', locationStep);
+const radiusDropdown = $('#radius-dropdown', locationStep);
 
 
 // ------------------------ STEP 5 FIELDS (Comment Step) -----------------------------
@@ -428,6 +428,7 @@ const updateSummary = (field, value) => {
 
 // --------------------------------- HANDLERS ---------------------------------
 
+
 /**
  * Handles 'Next Step' button click
  */
@@ -458,16 +459,13 @@ increaseVehicleNumberButton.on('click', function () {
 })
 
 decreaseVehicleNumberButton.on('click', function () {
-    if (vehicleNumber == 3) {
-        decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
-    }
-    if (vehicleNumber >= 3) {
+    decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
+    if (vehicleNumber > 2) {
         vehicleNumber--
         vehicleNumberField.val(vehicleNumber);
         updateSummary(vehicleUnitsSummary, vehicleNumber);
         decreaseVehicleNumberButton.attr('style', 'background-color: #415077')
     }
-     
 })
 
 editIconButton.on('click', function () {
@@ -549,6 +547,21 @@ vehicleTypeDropdown.on('change', function () {
     sliderContainer.attr('style', 'height: 500px !important');
 })
 
+fromDateField.on('change', function () {
+    updateSummary(fromDateSummary, fromDateField.val())
+})
+
+toDateField.on('change', function () {
+    updateSummary(toDateSummary, toDateField.val())
+})
+
+radiusDropdown.on('change', function () {
+    updateSummary(radiusSummary, radiusDropdown.find(":selected").val())
+})
+
+locationField.on('change', function () {
+    updateSummary(pickUpSummary, locationField.val())
+})
 
 /**
  * Gets data from fields and passes it to Object
@@ -560,7 +573,7 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.multi_rental_date_start = fromDateField.val();
     FINAL_FORM_DATA.multi_rental_date_to = toDateField.val();
     FINAL_FORM_DATA.bulk_rental_location = locationField.val();
-    FINAL_FORM_DATA.bulk_rental_radius_miles = radiusField.val();
+    FINAL_FORM_DATA.bulk_rental_radius_miles = radiusDropdown.val();
     FINAL_FORM_DATA.bulk_rental_comment = commentField.val();
     FINAL_FORM_DATA.email = emailField.val();
 }
