@@ -530,8 +530,6 @@ vehicleTypeButtons.on('click', function () {
 
     let newLabel = titleCase(`${VEHICLE_CATEGORIES[vehicleType]} Type`)
 
-    $(vehicleSubtypeLabel).empty().text(newLabel)
-
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
         $(this).find('span').css('color', '#415077');
