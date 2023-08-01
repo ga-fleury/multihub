@@ -108,9 +108,8 @@ const nextStepButton = $(nextStepButtonSelector);
 /**
  * Reference to the 'Back' button
  */
-const previousStepButtonSelector = '#btn-previous-step';
 
-const previousStepButton = $(previousStepButtonSelector);
+const previousStepButton = $('#btn-previous-step');
 
 /**
  * Reference to the 'Mask' container in WF
@@ -368,24 +367,24 @@ const checkCurrentStep = (stepNumber) => {
 }
 
 const showSubmitButton = () => {
-    nextStepButton.css('display', "none");
-    submitRequestButton.css('display', 'block');
+    nextStepButton.attr('style', 'display: none !important');
+    submitRequestButton.attr('style', 'display: flex !important');
 }
 
 const showNextStepButton = () => {
-    nextStepButton.css('display', "block");
-    submitRequestButton.css('display', 'none');
+    nextStepButton.attr('style', 'display: flex !important');
+    submitRequestButton.attr('style', 'display: none !important');
 }
 
 const makeSlideBigger = () => {
     previousStepButton.attr('style', 'display: none !important');
-    maskContainer.css('height', '500px');
+    maskContainer.attr('style', 'height: 500px !important');
     sliderContainer.attr('style', 'height: 500px !important');
 }
 
 const makeSlideSmaller = () => {
     previousStepButton.attr('style', 'display: flex !important');
-    maskContainer.css('height', '290px');
+    maskContainer.attr('style', 'height: 290px !important');
     sliderContainer.attr('style', 'height: 290px !important');
 }
 
