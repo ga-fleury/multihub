@@ -485,8 +485,8 @@ editIconButton.on('click', function () {
 
 emailSubmitButton.on('click', function () {
     updateSubmissionData();
+    FINAL_FORM_DATA.email = emailField.val();
     formSubmissionCall();
-    hideAfterSubmission();
     $('#email-overlay-wrap').css('display', 'none');
     $('#success-overlay').css('display', 'flex');
     $('body').attr('style', 'overflow: hidden !important');
@@ -498,7 +498,6 @@ submitRequestButton.on('click', function () {
         FINAL_FORM_DATA.email = decodeURI(emailCookie[2]);
         updateSubmissionData();
         formSubmissionCall();
-        hideAfterSubmission();
         $('#success-overlay').css('display', 'flex');
         $('body').attr('style', 'overflow: hidden !important');
     }
@@ -523,6 +522,8 @@ vehicleTypeButtons.on('click', function () {
     updateSummary(vehicleTypeSummary, 'Pending');
     maskContainer.css('height', '390px');
     sliderContainer.attr('style', 'height: 390px !important');
+    
+    
 
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
