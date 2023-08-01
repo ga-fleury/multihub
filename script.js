@@ -458,7 +458,9 @@ increaseVehicleNumberButton.on('click', function () {
 })
 
 decreaseVehicleNumberButton.on('click', function () {
-    decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
+    if (vehicleNumber == 3) {
+        decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
+    }
     if (vehicleNumber >= 3) {
         vehicleNumber--
         vehicleNumberField.val(vehicleNumber);
