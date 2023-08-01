@@ -458,13 +458,14 @@ increaseVehicleNumberButton.on('click', function () {
 })
 
 decreaseVehicleNumberButton.on('click', function () {
+    decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
     if (vehicleNumber > 2) {
         vehicleNumber--
         vehicleNumberField.val(vehicleNumber);
         updateSummary(vehicleUnitsSummary, vehicleNumber);
-    } else if (vehicleNumber == 3) {
-        decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
+        decreaseVehicleNumberButton.attr('style', 'background-color: #415077')
     }
+     
 })
 
 editIconButton.on('click', function () {
