@@ -36,36 +36,27 @@ let FINAL_FORM_DATA = {
 const VEHICLE_CATEGORIES = {
     'truck': [
         'Select',
-        'CDL Refrigerated Straight Truck',
-        'CDL Straight Truck',
         'Flatbed Truck',
-        'Non-CDL Refrigerated Straight Truck',
-        'Non-CDL Straight Truck',
-        'Refrigerated Small Box Truck',
-        'Small Box Truck',
-        'Stakebody Truck',
-        'Specialty'
+        'Refrigerated Box Truck',
+        'Box Truck',
     ],
     'tractor': [
         'Select',
-        'Single Axle Daycab',
-        'Tandem Axle Daycab',
-        'Tandem Axle Sleeper',
-        'Specialty'
+        'Single Axle Daycab Tractor',
+        'Single Axle Sleeper Tractor',
+        'Tandem Axle Daycab Tractor',
+        'Tandem Axle Sleeper Tractor'
     ],
     'trailer': [
         'Select',
-        'Dry Van',
-        'Flatbed',
-        'Refrigerated Trailer',
-        'Specialty',
-        'Chassis'
+        'Dry Van Trailer',
+        'Flatbed Trailer',
+        'Refrigerated Trailer'
     ],
     'van': [
         'Select',
-        'Refrigerated Sprinter Van',
-        'Sprinter Van',
-        'Specialty'
+        'Refrigerated Cargo Van',
+        'Cargo Van'
     ]
 }
 
@@ -225,6 +216,8 @@ const vehicleTypeButtons = $('#btn-v-type_truck, #btn-v-type_tractor, #btn-v-typ
 const vehicleTypeDropdown = $('#vehicle-type-dropdown', vehicleTypeStep);
 
 const vehicleDailyRate = $('#vehicle-rate-field', vehicleTypeStep);
+
+const vehicleSubtypeLabel = $('#subtype-label', vehicleTypeStep);
 
 
 // ------------------------ STEP 2 FIELDS (Vehicle Number) -----------------------------
@@ -423,6 +416,9 @@ const goToPreviousStep = (stepNumber) => {
 const getStepNameByNumber = (obj, value) =>
     Object.keys(obj).find(key => obj[key] === value);
 
+/**
+ * Initializes Form
+ */
 const initializeForm = () => {
     maskContainer.css('height', '290px');
     sliderContainer.attr('style', 'height: 290px !important');
@@ -430,7 +426,19 @@ const initializeForm = () => {
 
 initializeForm();
 
-// --------------------------------- HANDLERS ---------------------------------
+/**
+ * Returns string in Title Case
+ */
+function titleCase(string) {
+    var sentence = string.toLowerCase().split(" ");
+    for (var i = 0; i < sentence.length; i++) {
+        sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+    }
+    document.write(sentence.join(" "));
+    return sentence;
+}
+
+// -------------------------- CLICK HANDLERS ---------------------------------
 
 /**
  * Handles 'Next Step' button click
@@ -466,6 +474,7 @@ decreaseVehicleNumberButton.on('click', function () {
     }
 })
 
+// TODO: We no longer have an Icon Button
 editIconButton.on('click', function () {
     triggerWebflowSliderNavigationControl(
         getRegistrationFormNavigationControl(
@@ -500,6 +509,9 @@ submitRequestButton.on('click', function () {
     }
 })
 
+
+// TODO: remove this, no longer needed since we are using popup after submission
+
 const hideAfterSubmission = () => {
     $('#btn-wrapper').css('display', 'none');
 }
@@ -512,6 +524,14 @@ vehicleTypeButtons.on('click', function () {
     maskContainer.css('height', '390px');
     sliderContainer.attr('style', 'height: 390px !important');
 
+    const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
+    let vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
+    let option = '';
+
+    let newLabel = titleCase(`${VEHICLE_CATEGORIES[vehicleType]} Type`)
+
+    $(vehicleSubtypeLabel).empty().text(newLabel)
+
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
         $(this).find('span').css('color', '#415077');
@@ -523,11 +543,7 @@ vehicleTypeButtons.on('click', function () {
     $(this).find('span').css('color', '#FFFFFF');
     $(this).find('.v-type-icon').css('display', 'none');
     $(this).find('.v-type-icon.white').css('display', 'block');
-
-    const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
-    var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
-    var option = '';
-    for (var i = 0; i < vehicleTypeArray.length; i++) {
+    for (let i = 0; i < vehicleTypeArray.length; i++) {
         option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
     }
     vehicleTypeDropdown.empty().append(option)
