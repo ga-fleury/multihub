@@ -416,9 +416,6 @@ const goToPreviousStep = (stepNumber) => {
 const getStepNameByNumber = (obj, value) =>
     Object.keys(obj).find(key => obj[key] === value);
 
-/**
- * Initializes Form
- */
 const initializeForm = () => {
     maskContainer.css('height', '290px');
     sliderContainer.attr('style', 'height: 290px !important');
@@ -426,19 +423,8 @@ const initializeForm = () => {
 
 initializeForm();
 
-/**
- * Returns string in Title Case
- */
-function titleCase(string) {
-    var sentence = string.toLowerCase().split(" ");
-    for (var i = 0; i < sentence.length; i++) {
-        sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
-    }
-    document.write(sentence.join(" "));
-    return sentence;
-}
 
-// -------------------------- CLICK HANDLERS ---------------------------------
+// --------------------------------- HANDLERS ---------------------------------
 
 /**
  * Handles 'Next Step' button click
@@ -474,7 +460,6 @@ decreaseVehicleNumberButton.on('click', function () {
     }
 })
 
-// TODO: We no longer have an Icon Button
 editIconButton.on('click', function () {
     triggerWebflowSliderNavigationControl(
         getRegistrationFormNavigationControl(
@@ -524,12 +509,6 @@ vehicleTypeButtons.on('click', function () {
     maskContainer.css('height', '390px');
     sliderContainer.attr('style', 'height: 390px !important');
 
-    const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
-    let vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
-    let option = '';
-
-    let newLabel = titleCase(`${VEHICLE_CATEGORIES[vehicleType]} Type`)
-
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
         $(this).find('span').css('color', '#415077');
@@ -541,7 +520,11 @@ vehicleTypeButtons.on('click', function () {
     $(this).find('span').css('color', '#FFFFFF');
     $(this).find('.v-type-icon').css('display', 'none');
     $(this).find('.v-type-icon.white').css('display', 'block');
-    for (let i = 0; i < vehicleTypeArray.length; i++) {
+
+    const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
+    var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
+    var option = '';
+    for (var i = 0; i < vehicleTypeArray.length; i++) {
         option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
     }
     vehicleTypeDropdown.empty().append(option)
