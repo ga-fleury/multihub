@@ -459,12 +459,13 @@ increaseVehicleNumberButton.on('click', function () {
 })
 
 decreaseVehicleNumberButton.on('click', function () {
-    decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
     if (vehicleNumber > 2) {
         vehicleNumber--
+        if (vehicleNumber == 2) {
+            decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
+        }
         vehicleNumberField.val(vehicleNumber);
         updateSummary(vehicleUnitsSummary, vehicleNumber);
-        decreaseVehicleNumberButton.attr('style', 'background-color: #415077')
     }
 })
 
@@ -517,6 +518,8 @@ vehicleTypeButtons.on('click', function () {
     updateSummary(vehicleTypeSummary, 'Pending');
     maskContainer.css('height', '390px');
     sliderContainer.attr('style', 'height: 390px !important');
+    
+    
 
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
@@ -537,6 +540,8 @@ vehicleTypeButtons.on('click', function () {
         option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
     }
     vehicleTypeDropdown.empty().append(option)
+
+    vehicleSubtypeLabel.text(`${VEHICLE_CATEGORIES[vehicleType].charAt(0).toUpperCase() + VEHICLE_CATEGORIES[vehicleType].slice(1)} Type`)
 
     FINAL_FORM_DATA.bulk_rental_vehicle_type = vehicleType
 })
