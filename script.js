@@ -378,15 +378,15 @@ const showNextStepButton = () => {
 }
 
 const makeSlideBigger = () => {
+    previousStepButton.attr('style', 'display: none !important');
     maskContainer.css('height', '500px');
     sliderContainer.attr('style', 'height: 500px !important');
-    previousStepButton.css('display', 'none');
 }
 
 const makeSlideSmaller = () => {
+    previousStepButton.attr('style', 'display: flex !important');
     maskContainer.css('height', '290px');
     sliderContainer.attr('style', 'height: 290px !important');
-    previousStepButton.css('display', 'flex');
 }
 
 /**
