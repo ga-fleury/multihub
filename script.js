@@ -435,7 +435,6 @@ nextStepButton.on('click', function () {
     if (currentStepNumber >= 0 && currentStepNumber <= 3) {
         goToNextStep(currentStepNumber);
         currentStepNumber++;
-        updateSummary();
     }
     checkCurrentStep(currentStepNumber);
 })
