@@ -423,6 +423,9 @@ const initializeForm = () => {
 
 initializeForm();
 
+const updateSummary = (field, value) => {
+    field.text(value);
+}
 
 // --------------------------------- HANDLERS ---------------------------------
 
@@ -433,6 +436,7 @@ nextStepButton.on('click', function () {
     if (currentStepNumber >= REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP && currentStepNumber <= REQUEST_FORM_STEPS.LOCATION_STEP) {
         goToNextStep(currentStepNumber);
         currentStepNumber++;
+        updateSummary();
     }
     checkCurrentStep(currentStepNumber);
 })
@@ -533,6 +537,7 @@ vehicleTypeButtons.on('click', function () {
 })
 
 vehicleTypeDropdown.on('change', function () {
+    updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").val());
     maskContainer.css('height', '500px');
     sliderContainer.attr('style', 'height: 500px !important');
 })
