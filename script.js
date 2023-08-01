@@ -181,7 +181,7 @@ const radiusSummary = $('#radius-summary', summaryContainer);
  */
 const multistepForm = $('#wf-form-Hubpost-Bulk-Rental', requestFormContainer);
 
-const emailField = $('#email-field');
+const emailField = $('#email-field-modal');
 
 const emailSubmitButton = $('#email-submit-btn')
 
