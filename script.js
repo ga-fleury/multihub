@@ -356,13 +356,13 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
  * Adjust several features based on what step the user is currently in
  */
 const checkCurrentStep = (stepNumber) => {
-    if (stepNumber === REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP) {
+    if (stepNumber === 0) {
         makeSlideBigger();
         showNextStepButton();
-    } else if (stepNumber > REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP && stepNumber < REQUEST_FORM_STEPS.COMMENT_STEP) {
+    } else if (stepNumber > 0 && stepNumber < 4) {
         makeSlideSmaller();
         showNextStepButton();
-    } else if (stepNumber === REQUEST_FORM_STEPS.COMMENT_STEP) {
+    } else if (stepNumber === 4) {
         showSubmitButton();
     }
 }
@@ -433,7 +433,7 @@ const updateSummary = (field, value) => {
  * Handles 'Next Step' button click
  */
 nextStepButton.on('click', function () {
-    if (currentStepNumber >= REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP && currentStepNumber <= REQUEST_FORM_STEPS.LOCATION_STEP) {
+    if (currentStepNumber >= 0 && currentStepNumber <= 3) {
         goToNextStep(currentStepNumber);
         currentStepNumber++;
         updateSummary();
@@ -445,7 +445,7 @@ nextStepButton.on('click', function () {
  * Handles 'Next Step' button click
  */
 previousStepButton.on('click', function () {
-    if (currentStepNumber >= REQUEST_FORM_STEPS.VEHICLE_NUMBER_STEP && currentStepNumber <= REQUEST_FORM_STEPS.COMMENT_STEP) {
+    if (currentStepNumber >= 1 && currentStepNumber <= 4) {
         goToPreviousStep(currentStepNumber);
         currentStepNumber--;
     }
@@ -510,6 +510,7 @@ const hideAfterSubmission = () => {
  */
 
 vehicleTypeButtons.on('click', function () {
+    updateSummary(vehicleTypeSummary, 'Pending');
     maskContainer.css('height', '390px');
     sliderContainer.attr('style', 'height: 390px !important');
 
