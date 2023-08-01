@@ -26,7 +26,12 @@ let FINAL_FORM_DATA = {
     bulk_rental_location: '',
     bulk_rental_radius_miles: '',
     bulk_rental_comment: '',
-    hutk: ''
+    hutk: '',
+    full_name: '',
+    company: '',
+    phone: '',
+    dot_number: '',
+    city: ''
 }
 
 /**
@@ -518,8 +523,6 @@ vehicleTypeButtons.on('click', function () {
     updateSummary(vehicleTypeSummary, 'Pending');
     maskContainer.css('height', '390px');
     sliderContainer.attr('style', 'height: 390px !important');
-    
-    
 
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
@@ -541,8 +544,6 @@ vehicleTypeButtons.on('click', function () {
     }
     vehicleTypeDropdown.empty().append(option)
 
-    vehicleSubtypeLabel.text(`${VEHICLE_CATEGORIES[vehicleType].charAt(0).toUpperCase() + VEHICLE_CATEGORIES[vehicleType].slice(1)} Type`)
-
     FINAL_FORM_DATA.bulk_rental_vehicle_type = vehicleType
 })
 
@@ -553,7 +554,7 @@ vehicleTypeDropdown.on('change', function () {
 })
 
 fromDateField.on('change', function () {
-    updateSummary(fromDateSummary, fromDateField.val())
+    updateSummary(fromDateSummary, fromDateField.val().replace())
 })
 
 toDateField.on('change', function () {
