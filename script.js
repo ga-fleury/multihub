@@ -495,7 +495,7 @@ emailSubmitButton.on('click', function () {
 submitRequestButton.on('click', function () {
     var emailCookie = document.cookie.match(new RegExp('(^| )' + 'user-email' + '=([^;]+)'));
     if (emailCookie) {
-        FINAL_FORM_DATA.email = decodeURI(emailCookie[2]);
+        emailField.val(decodeURI(emailCookie[2]))
         updateSubmissionData();
         formSubmissionCall();
         $('#success-overlay').css('display', 'flex');
