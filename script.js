@@ -241,7 +241,7 @@ const increaseVehicleNumberButton = $('#btn-v-units-plus', vehicleNumberStep);
  */
 const vehicleNumberField = $('#v-units-field', vehicleNumberStep);
 
-let vehicleNumber = vehicleNumberField.val();
+let vehicleNumber = 2;
 
 // ------------------------ STEP 3 FIELDS (Date Step) -----------------------------
 
@@ -451,14 +451,16 @@ previousStepButton.on('click', function () {
 })
 
 increaseVehicleNumberButton.on('click', function () {
-    vehicleNumberField.val(vehicleNumber + 1);
-    increaseVehicleNumberButton.attr('style', 'background-color: #415077')
+    vehicleNumber++
+    vehicleNumberField.val(vehicleNumber);
+    decreaseVehicleNumberButton.attr('style', 'background-color: #415077')
     updateSummary(vehicleUnitsSummary, vehicleNumber);
 })
 
 decreaseVehicleNumberButton.on('click', function () {
     if (vehicleNumber > 2) {
-        vehicleNumberField.val(vehicleNumber - 1);
+        vehicleNumber--
+        vehicleNumberField.val(vehicleNumber);
         updateSummary(vehicleUnitsSummary, vehicleNumber);
     } else if (vehicleNumber == 3) {
         decreaseVehicleNumberButton.attr('style', 'background-color: #8d969a')
