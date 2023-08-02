@@ -381,18 +381,6 @@ const showNextStepButton = () => {
     submitRequestButton.attr('style', 'display: none !important');
 }
 
-const makeSlideBigger = () => {
-    previousStepButton.attr('style', 'display: none !important');
-    maskContainer.attr('style', 'height: 500px !important');
-    sliderContainer.attr('style', 'height: 500px !important');
-}
-
-const makeSlideSmaller = () => {
-    previousStepButton.attr('style', 'display: flex !important');
-    maskContainer.attr('style', 'height: 290px !important');
-    sliderContainer.attr('style', 'height: 290px !important');
-}
-
 /**
  * Advances to next step and updates 
  */
@@ -433,6 +421,14 @@ const updateSummary = (field, value) => {
 
 // --------------------------------- HANDLERS ---------------------------------
 
+// prevents typing on date fields
+fromDateField.keypress(function(e) {
+    return false
+});
+
+toDateField.keypress(function(e) {
+    return false
+});
 
 /**
  * Handles 'Next Step' button click
@@ -520,10 +516,20 @@ const hideAfterSubmission = () => {
 
 vehicleTypeButtons.on('click', function () {
     updateSummary(vehicleTypeSummary, 'Pending');
-    maskContainer.css('height', '390px');
+
+    // #region ------------- responsive changes start ---------
+    maskContainer.attr('style', 'height: 390px !important')
     sliderContainer.attr('style', 'height: 390px !important');
-    
-    
+
+    if (windowWidth <= 992 && windowWidth >= 768) {
+        maskContainer.attr('style', 'height: 290px !important');
+        sliderContainer.attr('style', 'height: 290px !important');
+    }
+
+    if (windowWidth <= 767) {
+        maskContainer.attr('style', 'height: 350px !important');
+        sliderContainer.attr('style', 'height: 350px !important');
+    }
 
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
@@ -531,6 +537,8 @@ vehicleTypeButtons.on('click', function () {
         $(this).find('.v-type-icon').css('display', 'block');
         $(this).find('.v-type-icon.white').css('display', 'none');
     })
+
+    // #endregion responsive changes 
 
     $(this).css('background-color', '#415077');
     $(this).find('span').css('color', '#FFFFFF');
@@ -550,8 +558,22 @@ vehicleTypeButtons.on('click', function () {
 
 vehicleTypeDropdown.on('change', function () {
     updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").val());
-    maskContainer.css('height', '500px');
+    // #region ------------- responsive changes start ---------
+
+    maskContainer.attr('style', 'height: 500px !important');
     sliderContainer.attr('style', 'height: 500px !important');
+
+    if (windowWidth <= 992 && windowWidth >= 768) {
+        maskContainer.attr('style', 'height: 400px !important');
+        sliderContainer.attr('style', 'height: 400px !important');
+    }
+
+    if (windowWidth <= 767) {
+        maskContainer.attr('style', 'height: 460px !important');
+        sliderContainer.attr('style', 'height: 460px !important');
+    }
+
+    // #endregion responsive changes 
 })
 
 fromDateField.on('change', function () {
@@ -672,12 +694,42 @@ async function formSubmissionCall() {
 
 // --------------------------------- RESPONSIVENESS -----------------------------
 
-$(window).resize(function() {
-    var width = $(window).width();
-    if (width <= 1400 && width > 1200){
+/**
+ * Global variable for window width, adjusted on resize
+ */
+var windowWidth = $(window).width();
+
+$(window).resize(function () {
+    windowWidth = $(window).width();
+    // desktop medium breakpoint
+    if (windowWidth <= 1400 && windowWidth > 1200) {
         requestFormContainer.attr('style', 'width: 800px')
     }
-    if (width <= 1200 && width >= 992){
+    // desktop small breakpoint
+    if (windowWidth <= 1200 && windowWidth >= 992) {
         requestFormContainer.attr('style', 'width: 600px')
     }
-  });
+});
+
+
+const makeSlideBigger = () => {
+    previousStepButton.attr('style', 'display: none !important');
+    maskContainer.attr('style', 'height: 500px !important');
+    sliderContainer.attr('style', 'height: 500px !important');
+
+    if (windowWidth <= 992 && windowWidth >= 768) {
+        maskContainer.attr('style', 'height: 400px !important');
+        sliderContainer.attr('style', 'height: 400px !important');
+    }
+}
+
+const makeSlideSmaller = () => {
+    previousStepButton.attr('style', 'display: flex !important');
+    maskContainer.attr('style', 'height: 290px !important');
+    sliderContainer.attr('style', 'height: 290px !important');
+
+    if (windowWidth <= 992 && windowWidth >= 768) {
+        maskContainer.attr('style', 'height: 190px !important');
+        sliderContainer.attr('style', 'height: 190px !important');
+    }
+}
