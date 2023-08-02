@@ -424,11 +424,9 @@ const checkCurrentStep = (stepNumber) => {
     if (stepNumber === 0) {
         makeSlideBigger();
     } else if (stepNumber === 1) {
+        nextStepButtonEnabled = true;
+        nextStepButton.attr('style', 'background-color: #415077')
         makeSlideSmaller();
-        if (vehicleNumberField.val()) {
-            nextStepButtonEnabled = true;
-            nextStepButton.attr('style', 'background-color: #415077')
-        };
     } else if (stepNumber === 2) {
         if (fromDateField.val() && toDateField.val()) {
             nextStepButtonEnabled = true;
@@ -526,6 +524,7 @@ nextStepButton.on('click', function () {
         }
         checkCurrentStep(currentStepNumber);
         nextStepButtonEnabled = false;
+        nextStepButton.attr('style', 'background-color: #8d969a')
     } else {
         return false;
     }
