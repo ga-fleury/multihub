@@ -297,7 +297,7 @@ const toDateField = $('#to-date-field', dateStep);
 
 
 $('[data-toggle="datepicker"]').datepicker({
-    format: 'mm-dd-yyyy'
+    format: 'yyyy-mm-dd'
 });
 // Available date placeholders:
 // Year: yyyy
@@ -639,14 +639,20 @@ vehicleTypeDropdown.on('change', function () {
 })
 
 fromDateField.on('change', function () {
-    updateSummary(fromDateSummary, fromDateField.val().replace())
+    let year = toDateField.slice(0,4)
+    let month = toDateField.slice(5,7)
+    let day = toDateField.slice(8,10)
+    updateSummary(fromDateSummary, `${month}/${day}/${year}`)
     if (toDateField.val()) {
         enableNextStepButton();
     }
 })
 
 toDateField.on('change', function () {
-    updateSummary(toDateSummary, toDateField.val())
+    let year = toDateField.slice(0,4)
+    let month = toDateField.slice(5,7)
+    let day = toDateField.slice(8,10)
+    updateSummary(toDateSummary, `${month}/${day}/${year}`)
     if (fromDateField.val()) {
         enableNextStepButton();
     }
