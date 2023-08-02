@@ -426,19 +426,19 @@ const checkCurrentStep = (stepNumber) => {
         console.log('step 0 reached')
     } else if (stepNumber == 1) {
         nextStepButtonEnabled = true;
-        nextStepButton.attr('style', 'background-color: #415077')
+        nextStepButton.attr('style', 'background-color: #415077 !important')
         makeSlideSmaller();
         console.log('step 1 reached')
     } else if (stepNumber == 2) {
         if (fromDateField.val() && toDateField.val()) {
             nextStepButtonEnabled = true;
-            nextStepButton.attr('style', 'background-color: #415077')
+            nextStepButton.attr('style', 'background-color: #415077 !important')
         }
         console.log('step 2 reached')
     } else if (stepNumber == 3) {
         if (locationField.val() && radiusDropdownField.val()) {
             nextStepButtonEnabled = true;
-            nextStepButton.attr('style', 'background-color: #415077')
+            nextStepButton.attr('style', 'background-color: #415077 !important')
         }
         showNextStepButton();
         console.log('step 3 reached')
@@ -514,7 +514,7 @@ vehicleNumberField.keypress(function (e) {
 vehicleDailyRate.on('change', function () {
     if (vehicleDailyRate.val()) {
         nextStepButtonEnabled = true;
-        nextStepButton.attr('style', 'background-color: #415077')
+        nextStepButton.attr('style', 'background-color: #415077 !important')
     }
 })
 
@@ -522,7 +522,7 @@ vehicleDailyRate.on('change', function () {
  * Handles 'Next Step' button click
  */
 nextStepButton.on('click', function () {
-    if (nextStepButtonEnabled) {
+    if (nextStepButtonEnabled === true) {
         if (currentStepNumber >= 0 && currentStepNumber <= 3) {
             goToNextStep(currentStepNumber);
             currentStepNumber++;
@@ -549,7 +549,7 @@ previousStepButton.on('click', function () {
 increaseVehicleNumberButton.on('click', function () {
     vehicleNumber++
     vehicleNumberField.val(vehicleNumber);
-    decreaseVehicleNumberButton.attr('style', 'background-color: #415077')
+    decreaseVehicleNumberButton.attr('style', 'background-color: #415077 !important')
     updateSummary(vehicleUnitsSummary, vehicleNumber);
 })
 
@@ -627,14 +627,14 @@ vehicleTypeButtons.on('click', function () {
 
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
-        $(this).find('span').css('color', '#415077');
+        $(this).find('span').css('color', '#415077 !important');
         $(this).find('.v-type-icon').css('display', 'block');
         $(this).find('.v-type-icon.white').css('display', 'none');
     })
 
     // #endregion responsive changes 
 
-    $(this).css('background-color', '#415077');
+    $(this).css('background-color', '#415077 !important');
     $(this).find('span').css('color', '#FFFFFF');
     $(this).find('.v-type-icon').css('display', 'none');
     $(this).find('.v-type-icon.white').css('display', 'block');
