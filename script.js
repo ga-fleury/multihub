@@ -423,11 +423,20 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
 const checkCurrentStep = (stepNumber) => {
     if (stepNumber === 0) {
         makeSlideBigger();
-        showNextStepButton();
-    } else if (stepNumber > 0 && stepNumber < 4) {
+    } else if (stepNumber === 1) {
         makeSlideSmaller();
+    } else if (stepNumber === 2) {
+        if (vehicleNumberField.val()) {
+            nextStepButtonEnabled = true;
+            nextStepButton.attr('style', 'background-color: #415077')
+        };
+    } else if (stepNumber === 3) {
+        if (fromDateField.val() && toDateField.val()) {
+            nextStepButtonEnabled = true;
+            nextStepButton.attr('style', 'background-color: #415077')
+        }
         showNextStepButton();
-    } else if (stepNumber === 4) {
+    }else if (stepNumber === 4) {
         showSubmitButton();
     }
 }
@@ -483,15 +492,19 @@ const updateSummary = (field, value) => {
 // --------------------------------- HANDLERS ---------------------------------
 
 // prevents typing on date fields
-fromDateField.keypress(function(e) {
+fromDateField.keypress(function (e) {
     return false
 });
 
-toDateField.keypress(function(e) {
+toDateField.keypress(function (e) {
     return false
 });
 
-vehicleDailyRate.on('change', function() {
+vehicleNumberField.keypress(function (e) {
+    return false
+})
+
+vehicleDailyRate.on('change', function () {
     if (vehicleDailyRate.val()) {
         nextStepButtonEnabled = true;
         nextStepButton.attr('style', 'background-color: #415077')
@@ -508,6 +521,7 @@ nextStepButton.on('click', function () {
             currentStepNumber++;
         }
         checkCurrentStep(currentStepNumber);
+        nextStepButtonEnabled = false;
     } else {
         return false;
     }
