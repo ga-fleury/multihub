@@ -354,7 +354,7 @@ const locationField = $('#location-field', locationStep);
 /**
  * A reference to the 'Radius' dropdown
  */
-const radiusDropdown = $('#radius-dropdown', locationStep);
+const radiusDropdownField = $('#radius-dropdown', locationStep);
 
 
 // ------------------------ STEP 5 FIELDS (Comment Step) -----------------------------
@@ -425,16 +425,22 @@ const checkCurrentStep = (stepNumber) => {
         makeSlideBigger();
     } else if (stepNumber === 1) {
         makeSlideSmaller();
-    } else if (stepNumber === 2) {
+        if (vehicleNumberField.val()) {
             nextStepButtonEnabled = true;
             nextStepButton.attr('style', 'background-color: #415077')
-    } else if (stepNumber === 3) {
+        };
+    } else if (stepNumber === 2) {
         if (fromDateField.val() && toDateField.val()) {
             nextStepButtonEnabled = true;
             nextStepButton.attr('style', 'background-color: #415077')
         }
+    } else if (stepNumber === 3) {
+        if (locationField.val() && radiusDropdownField.val()) {
+            nextStepButtonEnabled = true;
+            nextStepButton.attr('style', 'background-color: #415077')
+        }
         showNextStepButton();
-    }else if (stepNumber === 4) {
+    } else if (stepNumber === 4) {
         showSubmitButton();
     }
 }
@@ -668,8 +674,8 @@ toDateField.on('change', function () {
     updateSummary(toDateSummary, toDateField.val())
 })
 
-radiusDropdown.on('change', function () {
-    updateSummary(radiusSummary, radiusDropdown.find(":selected").val())
+radiusDropdownField.on('change', function () {
+    updateSummary(radiusSummary, radiusDropdownField.find(":selected").val())
 })
 
 locationField.on('change', function () {
@@ -686,7 +692,7 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.multi_rental_date_start = fromDateField.val();
     FINAL_FORM_DATA.multi_rental_date_to = toDateField.val();
     FINAL_FORM_DATA.bulk_rental_location = locationField.val();
-    FINAL_FORM_DATA.bulk_rental_radius_miles = radiusDropdown.val();
+    FINAL_FORM_DATA.bulk_rental_radius_miles = radiusDropdownField.val();
     FINAL_FORM_DATA.bulk_rental_comment = commentField.val();
     FINAL_FORM_DATA.email = emailField.val();
 }
