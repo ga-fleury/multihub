@@ -421,25 +421,30 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
  * Adjust several features based on what step the user is currently in
  */
 const checkCurrentStep = (stepNumber) => {
-    if (stepNumber === 0) {
+    if (stepNumber == 0) {
         makeSlideBigger();
-    } else if (stepNumber === 1) {
+        console.log('step 0 reached')
+    } else if (stepNumber == 1) {
         nextStepButtonEnabled = true;
         nextStepButton.attr('style', 'background-color: #415077')
         makeSlideSmaller();
-    } else if (stepNumber === 2) {
+        console.log('step 1 reached')
+    } else if (stepNumber == 2) {
         if (fromDateField.val() && toDateField.val()) {
             nextStepButtonEnabled = true;
             nextStepButton.attr('style', 'background-color: #415077')
         }
-    } else if (stepNumber === 3) {
+        console.log('step 2 reached')
+    } else if (stepNumber == 3) {
         if (locationField.val() && radiusDropdownField.val()) {
             nextStepButtonEnabled = true;
             nextStepButton.attr('style', 'background-color: #415077')
         }
         showNextStepButton();
-    } else if (stepNumber === 4) {
+        console.log('step 3 reached')
+    } else if (stepNumber == 4) {
         showSubmitButton();
+        console.log('step 4 reached')
     }
 }
 
@@ -521,10 +526,10 @@ nextStepButton.on('click', function () {
         if (currentStepNumber >= 0 && currentStepNumber <= 3) {
             goToNextStep(currentStepNumber);
             currentStepNumber++;
+            checkCurrentStep(currentStepNumber);
+            nextStepButtonEnabled = false;
+            nextStepButton.attr('style', 'background-color: #8d969a')
         }
-        checkCurrentStep(currentStepNumber);
-        nextStepButtonEnabled = false;
-        nextStepButton.attr('style', 'background-color: #8d969a')
     } else {
         return false;
     }
