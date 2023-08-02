@@ -785,7 +785,7 @@ async function formSubmissionCall() {
     try {
         const response = await fetch(requestURL, {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify(API_POST_REQUEST_BODY),
             headers: requestHeader
         })
         const result = await response.json();
