@@ -425,8 +425,7 @@ const checkCurrentStep = (stepNumber) => {
         makeSlideBigger();
         console.log('step 0 reached')
     } else if (stepNumber == 1) {
-        nextStepButtonEnabled = true;
-        nextStepButton.attr('style', 'background-color: #415077 !important')
+        enableNextStepButton();
         makeSlideSmaller();
         console.log('step 1 reached')
     } else if (stepNumber == 2) {
@@ -513,8 +512,7 @@ vehicleNumberField.keypress(function (e) {
 
 vehicleDailyRate.on('change', function () {
     if (vehicleDailyRate.val()) {
-        nextStepButtonEnabled = true;
-        nextStepButton.attr('style', 'background-color: #415077 !important')
+        enableNextStepButton();
     }
 })
 
@@ -611,19 +609,8 @@ const hideAfterSubmission = () => {
 vehicleTypeButtons.on('click', function () {
     updateSummary(vehicleTypeSummary, 'Pending');
 
-    // #region ------------- responsive changes start ---------
     maskContainer.attr('style', 'height: 390px !important')
     sliderContainer.attr('style', 'height: 390px !important');
-
-    if (windowWidth <= 992 && windowWidth >= 768) {
-        maskContainer.attr('style', 'height: 290px !important');
-        sliderContainer.attr('style', 'height: 290px !important');
-    }
-
-    if (windowWidth <= 767) {
-        maskContainer.attr('style', 'height: 350px !important');
-        sliderContainer.attr('style', 'height: 350px !important');
-    }
 
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
@@ -632,7 +619,6 @@ vehicleTypeButtons.on('click', function () {
         $(this).find('.v-type-icon.white').css('display', 'none');
     })
 
-    // #endregion responsive changes 
 
     $(this).css('background-color', '#415077 !important');
     $(this).find('span').css('color', '#FFFFFF');
@@ -648,6 +634,18 @@ vehicleTypeButtons.on('click', function () {
     vehicleTypeDropdown.empty().append(option)
 
     FINAL_FORM_DATA.bulk_rental_vehicle_type = vehicleType
+
+    // #region ------------- responsive changes start ---------
+    if (windowWidth <= 992 && windowWidth >= 768) {
+        maskContainer.attr('style', 'height: 290px !important');
+        sliderContainer.attr('style', 'height: 290px !important');
+    }
+
+    if (windowWidth <= 767) {
+        maskContainer.attr('style', 'height: 350px !important');
+        sliderContainer.attr('style', 'height: 350px !important');
+    }
+    // #endregion responsive changes 
 })
 
 vehicleTypeDropdown.on('change', function () {
@@ -672,10 +670,16 @@ vehicleTypeDropdown.on('change', function () {
 
 fromDateField.on('change', function () {
     updateSummary(fromDateSummary, fromDateField.val().replace())
+    if (toDateField.val()) {
+        enableNextStepButton();
+    }
 })
 
 toDateField.on('change', function () {
     updateSummary(toDateSummary, toDateField.val())
+    if (fromDateField.val()) {
+        enableNextStepButton();
+    }
 })
 
 radiusDropdownField.on('change', function () {
@@ -766,4 +770,12 @@ const makeSlideSmaller = () => {
         maskContainer.attr('style', 'height: 190px !important');
         sliderContainer.attr('style', 'height: 190px !important');
     }
+}
+
+/**
+ * Enables Next Step Button
+ */
+const enableNextStepButton = () => {
+    nextStepButtonEnabled = true;
+    nextStepButton.attr('style', 'background-color: #415077 !important')
 }
