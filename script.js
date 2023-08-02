@@ -34,7 +34,6 @@ let FINAL_FORM_DATA = {
     city: ''
 }
 
-
 /**
  * An object with arrays for the different vehicle types,
  * used to populate the dropdown once the user selects a Vehicle Type
@@ -349,7 +348,7 @@ function getCookies() {
     var hubspotCookie = document.cookie.match(new RegExp('(^| )' + 'hubspotutk' + '=([^;]+)'));
     if (hubspotCookie) {
         hubspotCookieField.val(`${hubspotCookie[2]}`);
-        FINAL_FORM_DATA.context.hutk = hubspotCookie[2];
+        API_POST_REQUEST_BODY.context.hutk = hubspotCookie[2];
     }
     else {
         console.log('--something went wrong---');
@@ -699,7 +698,7 @@ async function formSubmissionCall() {
         "Authorization": authToken,
         "content-type": "application/json"
     }
-    let data = {
+    let API_POST_REQUEST_BODY = {
         "fields": [
             {
                 "objectTypeId": "0-1",
@@ -782,13 +781,10 @@ async function formSubmissionCall() {
             "pageName": "Bulk Rental Form"
         }
     }
-
-
-
     try {
         const response = await fetch(requestURL, {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify(API_POST_REQUEST_BODY),
             headers: requestHeader
         })
         const result = await response.json();
@@ -853,5 +849,3 @@ const enableModalSubmitButton = () => {
     modalSubmitButtonEnabled = true;
     modalSubmitButton.attr('style', 'background-color: #f85731 !important')
 }
-
-console.log('script loaded successfully')
