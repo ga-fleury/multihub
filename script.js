@@ -620,7 +620,7 @@ vehicleTypeButtons.on('click', function () {
     })
 
 
-    $(this).css('background-color', '#415077 !important');
+    $(this).attr('style', 'background-color: #415077 !important');
     $(this).find('span').css('color', '#FFFFFF');
     $(this).find('.v-type-icon').css('display', 'none');
     $(this).find('.v-type-icon.white').css('display', 'block');
