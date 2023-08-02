@@ -234,6 +234,37 @@ const pickUpSummary = $('#pick-up-summary', summaryContainer);
  */
 const radiusSummary = $('#radius-summary', summaryContainer);
 
+// ------------------------------------ MODAL FIELDS ----------------------------
+
+const yourNameField = $('#your-name-field');
+
+const yourCompanyField = $('#your-company-field');
+
+const phoneNumberField = $('#phone-number-field');
+
+const dotField = $('#dot-field');
+
+const cityField = $('#city-field');
+
+const emailField = $('#email-field-modal');
+
+const modalSubmitButton = $('#modal-submit-btn');
+
+const allModalFields = $('#your-name-field, #your-company-field, #phone-number-field, #dot-field, #city-field, #email-field-modal')
+
+allModalFields.on('change', function () {
+    let modalFieldsFilledOut = 0;
+    allModalFields.each(function () {
+        if ($(this).val()) {
+            modalFieldsFilledOut++
+        }
+    })
+    if (modalFieldsFilledOut === 6) {
+        enableModalSubmitButton();
+    } else {
+        modalFieldsFilledOut = 0;
+    }
+})
 
 // ------------------------------------ FORM -------------------------------------
 
@@ -242,9 +273,6 @@ const radiusSummary = $('#radius-summary', summaryContainer);
  */
 const multistepForm = $('#wf-form-Hubpost-Bulk-Rental', requestFormContainer);
 
-const emailField = $('#email-field-modal');
-
-const emailSubmitButton = $('#email-submit-btn')
 
 
 // ------------------------ STEP 1 FIELDS (Vehicle Type) -----------------------------
@@ -328,7 +356,7 @@ const toDateField = $('#to-date-field', dateStep);
 
 
 $('[data-toggle="datepicker"]').datepicker({
-    format: 'yyyy-mm-dd'
+    format: 'dd/mm/yyyy'
 });
 // Available date placeholders:
 // Year: yyyy
@@ -430,14 +458,12 @@ const checkCurrentStep = (stepNumber) => {
         console.log('step 1 reached')
     } else if (stepNumber == 2) {
         if (fromDateField.val() && toDateField.val()) {
-            nextStepButtonEnabled = true;
-            nextStepButton.attr('style', 'background-color: #415077 !important')
+            enableNextStepButton();
         }
         console.log('step 2 reached')
     } else if (stepNumber == 3) {
         if (locationField.val() && radiusDropdownField.val()) {
-            nextStepButtonEnabled = true;
-            nextStepButton.attr('style', 'background-color: #415077 !important')
+            enableNextStepButton();
         }
         showNextStepButton();
         console.log('step 3 reached')
@@ -571,13 +597,17 @@ editIconButton.on('click', function () {
     currentStepNumber = 0;
 })
 
-emailSubmitButton.on('click', function () {
-    updateSubmissionData();
-    FINAL_FORM_DATA.email = emailField.val();
-    formSubmissionCall();
-    $('#email-overlay-wrap').css('display', 'none');
-    $('#success-overlay').css('display', 'flex');
-    $('body').attr('style', 'overflow: hidden !important');
+modalSubmitButton.on('click', function () {
+    if (modalSubmitButtonEnabled === true) {
+        updateSubmissionData();
+        FINAL_FORM_DATA.email = emailField.val();
+        formSubmissionCall();
+        $('#email-overlay-wrap').css('display', 'none');
+        $('#success-overlay').css('display', 'flex');
+        $('body').attr('style', 'overflow: hidden !important');
+    } else if (modalSubmitButton === false) {
+        return false
+    }
 })
 
 submitRequestButton.on('click', function () {
@@ -684,10 +714,16 @@ toDateField.on('change', function () {
 
 radiusDropdownField.on('change', function () {
     updateSummary(radiusSummary, radiusDropdownField.find(":selected").val())
+    if (locationField.val()) {
+        enableNextStepButton();
+    }
 })
 
 locationField.on('change', function () {
     updateSummary(pickUpSummary, locationField.val())
+    if (radiusDropdownField.val()) {
+        enableNextStepButto();
+    }
 })
 
 /**
@@ -778,4 +814,9 @@ const makeSlideSmaller = () => {
 const enableNextStepButton = () => {
     nextStepButtonEnabled = true;
     nextStepButton.attr('style', 'background-color: #415077 !important')
+}
+
+const enableModalSubmitButton = () => {
+    modalSubmitButtonEnabled = true;
+    modalSubmitButton.attr('style', 'background-color: #f85731 !important')
 }
