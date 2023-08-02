@@ -426,10 +426,8 @@ const checkCurrentStep = (stepNumber) => {
     } else if (stepNumber === 1) {
         makeSlideSmaller();
     } else if (stepNumber === 2) {
-        if (vehicleNumberField.val()) {
             nextStepButtonEnabled = true;
             nextStepButton.attr('style', 'background-color: #415077')
-        };
     } else if (stepNumber === 3) {
         if (fromDateField.val() && toDateField.val()) {
             nextStepButtonEnabled = true;
