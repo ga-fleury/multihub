@@ -297,7 +297,7 @@ const toDateField = $('#to-date-field', dateStep);
 
 
 $('[data-toggle="datepicker"]').datepicker({
-    format: 'mm/dd/yyyy'
+    format: 'mm-dd-yyyy'
 });
 // Available date placeholders:
 // Year: yyyy
