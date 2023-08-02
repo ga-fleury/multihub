@@ -526,11 +526,11 @@ nextStepButton.on('click', function () {
         if (currentStepNumber >= 0 && currentStepNumber <= 3) {
             goToNextStep(currentStepNumber);
             currentStepNumber++;
-            checkCurrentStep(currentStepNumber);
             nextStepButtonEnabled = false;
             nextStepButton.attr('style', 'background-color: #8d969a')
         }
-    } else {
+        checkCurrentStep(currentStepNumber);
+    } else if (nextStepButtonEnabled === false) {
         return false;
     }
 })
