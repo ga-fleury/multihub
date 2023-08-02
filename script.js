@@ -853,3 +853,5 @@ const enableModalSubmitButton = () => {
     modalSubmitButtonEnabled = true;
     modalSubmitButton.attr('style', 'background-color: #f85731 !important')
 }
+
+console.log('script loaded successfully')
