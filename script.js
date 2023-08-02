@@ -553,7 +553,7 @@ modalSubmitButton.on('click', function () {
 submitRequestButton.on('click', function () {
     var emailCookie = document.cookie.match(new RegExp('(^| )' + 'user-email' + '=([^;]+)'));
     if (emailCookie) {
-        emailField.val(decodeURI(emailCookie[2]))
+        emailField.val(decodeURIComponent(emailCookie[2]))
         updateSubmissionData();
         formSubmissionCall();
         $('#success-overlay').css('display', 'flex');
@@ -563,8 +563,8 @@ submitRequestButton.on('click', function () {
         $('#email-overlay-wrap').css('display', 'flex');
         $('body').attr('style', 'overflow: hidden !important');
     }
-    console.log(decodeURI(emailCookie[2]))
     console.log(emailCookie[2])
+    console.log(decodeURIComponent(emailCookie[2]))
 })
 
 
