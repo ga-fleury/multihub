@@ -668,3 +668,16 @@ async function formSubmissionCall() {
         console.error("Error:", error);
     }
 }
+
+
+// --------------------------------- RESPONSIVENESS -----------------------------
+
+$(window).resize(function() {
+    var width = $(window).width();
+    if (width <= 1400 && width > 1200){
+        requestFormContainer.attr('style', 'width: 800px')
+    }
+    if (width <= 1200 && width >= 992){
+        requestFormContainer.attr('style', 'width: 600px')
+    }
+  });
