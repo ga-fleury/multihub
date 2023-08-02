@@ -85,6 +85,31 @@ let API_POST_REQUEST_BODY = {
             "objectTypeId": "0-1",
             "name": "bulk_rental_comment",
             "value": FINAL_FORM_DATA.bulk_rental_comment
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "full_name",
+            "value": FINAL_FORM_DATA.full_name
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "company",
+            "value": FINAL_FORM_DATA.company
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "phone",
+            "value": FINAL_FORM_DATA.phone
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "dot_number",
+            "value": FINAL_FORM_DATA.dot_number
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "city",
+            "value": FINAL_FORM_DATA.city
         }
     ],
     "context": {
@@ -722,7 +747,7 @@ radiusDropdownField.on('change', function () {
 locationField.on('change', function () {
     updateSummary(pickUpSummary, locationField.val())
     if (radiusDropdownField.val()) {
-        enableNextStepButto();
+        enableNextStepButton();
     }
 })
 
@@ -739,6 +764,11 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.bulk_rental_radius_miles = radiusDropdownField.val();
     FINAL_FORM_DATA.bulk_rental_comment = commentField.val();
     FINAL_FORM_DATA.email = emailField.val();
+    FINAL_FORM_DATA.full_name = yourNameField.val();
+    FINAL_FORM_DATA.company = yourCompanyField.val();
+    FINAL_FORM_DATA.phone = phoneNumberField.val();
+    FINAL_FORM_DATA.dot_number = dotField.val();
+    FINAL_FORM_DATA.city = cityField.val();
 }
 
 
