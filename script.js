@@ -641,9 +641,9 @@ vehicleTypeDropdown.on('change', function () {
 })
 
 fromDateField.on('change', function () {
-    let year = toDateField.val().slice(0,4)
-    let month = toDateField.val().slice(5,7)
-    let day = toDateField.val().slice(8,10)
+    let year = fromDateField.val().slice(0,4)
+    let month = fromDateField.val().slice(5,7)
+    let day = fromDateField.val().slice(8,10)
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
     if (toDateField.val()) {
         enableNextStepButton();
