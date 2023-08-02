@@ -563,6 +563,8 @@ submitRequestButton.on('click', function () {
         $('#email-overlay-wrap').css('display', 'flex');
         $('body').attr('style', 'overflow: hidden !important');
     }
+    console.log(decodeURI(emailCookie[2]))
+    console.log(emailCookie[2])
 })
 
 
@@ -639,9 +641,9 @@ vehicleTypeDropdown.on('change', function () {
 })
 
 fromDateField.on('change', function () {
-    let year = toDateField.slice(0,4)
-    let month = toDateField.slice(5,7)
-    let day = toDateField.slice(8,10)
+    let year = toDateField.val().slice(0,4)
+    let month = toDateField.val().slice(5,7)
+    let day = toDateField.val().slice(8,10)
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
     if (toDateField.val()) {
         enableNextStepButton();
@@ -649,9 +651,9 @@ fromDateField.on('change', function () {
 })
 
 toDateField.on('change', function () {
-    let year = toDateField.slice(0,4)
-    let month = toDateField.slice(5,7)
-    let day = toDateField.slice(8,10)
+    let year = toDateField.val().slice(0,4)
+    let month = toDateField.val().slice(5,7)
+    let day = toDateField.val().slice(8,10)
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
     if (fromDateField.val()) {
         enableNextStepButton();
