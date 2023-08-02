@@ -34,6 +34,65 @@ let FINAL_FORM_DATA = {
     city: ''
 }
 
+let API_POST_REQUEST_BODY = {
+    "fields": [
+        {
+            "objectTypeId": "0-1",
+            "name": "multi_rental_date_start",
+            "value": FINAL_FORM_DATA.multi_rental_date_start
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "email",
+            "value": FINAL_FORM_DATA.email
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "multi_rental_date_to",
+            "value": FINAL_FORM_DATA.multi_rental_date_to
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "bulk_rental_vehicle_type",
+            "value": FINAL_FORM_DATA.bulk_rental_vehicle_type
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "bulk_rental_vehicle_subtype",
+            "value": FINAL_FORM_DATA.bulk_rental_vehicle_subtype
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "daily_rate",
+            "value": FINAL_FORM_DATA.daily_rate
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "vehicle_units",
+            "value": FINAL_FORM_DATA.vehicle_units
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "bulk_rental_location",
+            "value": FINAL_FORM_DATA.bulk_rental_location
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "bulk_rental_radius_miles",
+            "value": FINAL_FORM_DATA.bulk_rental_radius_miles
+        },
+        {
+            "objectTypeId": "0-1",
+            "name": "bulk_rental_comment",
+            "value": FINAL_FORM_DATA.bulk_rental_comment
+        }
+    ],
+    "context": {
+        "pageUri": "www.coop.com/multi-vehicle-request",
+        "pageName": "Bulk Rental Form"
+    }
+}
+
 /**
  * An object with arrays for the different vehicle types,
  * used to populate the dropdown once the user selects a Vehicle Type
@@ -109,6 +168,8 @@ const submitRequestButton = $('#submit-request-btn');
 const nextStepButtonSelector = '#btn-next-step';
 
 const nextStepButton = $(nextStepButtonSelector);
+
+let nextStepButtonEnabled = false;
 
 /**
  * Reference to the 'Back' button
@@ -318,7 +379,7 @@ function getCookies() {
     var hubspotCookie = document.cookie.match(new RegExp('(^| )' + 'hubspotutk' + '=([^;]+)'));
     if (hubspotCookie) {
         hubspotCookieField.val(`${hubspotCookie[2]}`);
-        FINAL_FORM_DATA.hutk = hubspotCookie[2];
+        API_POST_REQUEST_BODY.context.hutk = hubspotCookie[2];
     }
     else {
         console.log('--something went wrong---');
@@ -430,15 +491,26 @@ toDateField.keypress(function(e) {
     return false
 });
 
+vehicleDailyRate.on('change', function() {
+    if (vehicleDailyRate.val()) {
+        nextStepButtonEnabled = true;
+        nextStepButton.attr('style', 'background-color: #415077')
+    }
+})
+
 /**
  * Handles 'Next Step' button click
  */
 nextStepButton.on('click', function () {
-    if (currentStepNumber >= 0 && currentStepNumber <= 3) {
-        goToNextStep(currentStepNumber);
-        currentStepNumber++;
+    if (nextStepButtonEnabled) {
+        if (currentStepNumber >= 0 && currentStepNumber <= 3) {
+            goToNextStep(currentStepNumber);
+            currentStepNumber++;
+        }
+        checkCurrentStep(currentStepNumber);
+    } else {
+        return false;
     }
-    checkCurrentStep(currentStepNumber);
 })
 
 /**
@@ -618,66 +690,6 @@ async function formSubmissionCall() {
         "Authorization": authToken,
         "content-type": "application/json"
     }
-    let data = {
-        "fields": [
-            {
-                "objectTypeId": "0-1",
-                "name": "multi_rental_date_start",
-                "value": FINAL_FORM_DATA.multi_rental_date_start
-            },
-            {
-                "objectTypeId": "0-1",
-                "name": "email",
-                "value": FINAL_FORM_DATA.email
-            },
-            {
-                "objectTypeId": "0-1",
-                "name": "multi_rental_date_to",
-                "value": FINAL_FORM_DATA.multi_rental_date_to
-            },
-            {
-                "objectTypeId": "0-1",
-                "name": "bulk_rental_vehicle_type",
-                "value": FINAL_FORM_DATA.bulk_rental_vehicle_type
-            },
-            {
-                "objectTypeId": "0-1",
-                "name": "bulk_rental_vehicle_subtype",
-                "value": FINAL_FORM_DATA.bulk_rental_vehicle_subtype
-            },
-            {
-                "objectTypeId": "0-1",
-                "name": "daily_rate",
-                "value": FINAL_FORM_DATA.daily_rate
-            },
-            {
-                "objectTypeId": "0-1",
-                "name": "vehicle_units",
-                "value": FINAL_FORM_DATA.vehicle_units
-            },
-            {
-                "objectTypeId": "0-1",
-                "name": "bulk_rental_location",
-                "value": FINAL_FORM_DATA.bulk_rental_location
-            },
-            {
-                "objectTypeId": "0-1",
-                "name": "bulk_rental_radius_miles",
-                "value": FINAL_FORM_DATA.bulk_rental_radius_miles
-            },
-            {
-                "objectTypeId": "0-1",
-                "name": "bulk_rental_comment",
-                "value": FINAL_FORM_DATA.bulk_rental_comment
-            }
-        ],
-        "context": {
-            "hutk": FINAL_FORM_DATA.hutk, // include this parameter and set it to the hubspotutk cookie value to enable cookie tracking on your submission
-            "pageUri": "www.coop.com/multi-vehicle-request",
-            "pageName": "Bulk Rental Form"
-        }
-    }
-
     try {
         const response = await fetch(requestURL, {
             method: "POST",
