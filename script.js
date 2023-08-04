@@ -472,9 +472,6 @@ toDateField.keypress(function (e) {
     return false
 });
 
-vehicleNumberField.keypress(function (e) {
-    return false
-})
 
 vehicleDailyRate.on('change', function () {
     if (vehicleDailyRate.val()) {
