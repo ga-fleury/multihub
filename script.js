@@ -642,7 +642,7 @@ fromDateField.on('change', function () {
     let month = fromDateField.val().slice(5,7)
     let day = fromDateField.val().slice(8,10)
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
-    if (toDateField.val()) {
+    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val())) {
         enableNextStepButton();
     }
 })
@@ -652,7 +652,7 @@ toDateField.on('change', function () {
     let month = toDateField.val().slice(5,7)
     let day = toDateField.val().slice(8,10)
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
-    if (fromDateField.val()) {
+    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val())) {
         enableNextStepButton();
     }
 })
