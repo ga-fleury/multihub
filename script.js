@@ -205,7 +205,7 @@ allModalFields.on('change', function () {
             modalFieldsFilledOut++
         }
     })
-    if (modalFieldsFilledOut === 4) {
+    if (modalFieldsFilledOut === allModalFields.length) {
         enableModalSubmitButton();
     } else {
         modalFieldsFilledOut = 0;
@@ -589,14 +589,14 @@ vehicleTypeButtons.on('click', function () {
 
     vehicleTypeButtons.each(function () {
         $(this).css('background-color', '#FFFFFF');
-        $(this).find('span').css('color', '#415077 !important');
+        $(this).find('span').attr('style', 'color: #415077 !important');
         $(this).find('.v-type-icon').css('display', 'block');
         $(this).find('.v-type-icon.white').css('display', 'none');
     })
 
 
     $(this).attr('style', 'background-color: #415077 !important');
-    $(this).find('span').css('color', '#FFFFFF');
+    $(this).find('span').attr('style', 'color: #FFFFFF !important');
     $(this).find('.v-type-icon').css('display', 'none');
     $(this).find('.v-type-icon.white').css('display', 'block');
 
