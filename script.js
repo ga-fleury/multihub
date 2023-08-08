@@ -205,7 +205,7 @@ allModalFields.on('change', function () {
             modalFieldsFilledOut++
         }
     })
-    if (modalFieldsFilledOut === 6) {
+    if (modalFieldsFilledOut === 4) {
         enableModalSubmitButton();
     } else {
         modalFieldsFilledOut = 0;
