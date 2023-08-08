@@ -196,21 +196,28 @@ const emailField = $('#email-field-modal');
 
 const modalSubmitButton = $('#modal-submit-btn');
 
-const allModalFields = $('#your-name-field, #your-company-field, #phone-number-field, #email-field-modal')
+const requiredModalFields = $('#your-name-field, #your-company-field, #phone-number-field, #email-field-modal')
 
-allModalFields.on('change', function () {
+requiredModalFields.on('change', function () {
     let modalFieldsFilledOut = 0;
-    allModalFields.each(function () {
+    requiredModalFields.each(function () {
         if ($(this).val()) {
             modalFieldsFilledOut++
         }
     })
-    if (modalFieldsFilledOut === allModalFields.length) {
+    if (modalFieldsFilledOut === requiredModalFields.length 
+        && validateEmail(emailField)
+        && validateDOT(dotField)
+        && validatePhone(phoneNumberField)
+        ) {
+
         enableModalSubmitButton();
     } else {
         modalFieldsFilledOut = 0;
+        disableModalSubmitButton();
     }
 })
+
 
 // ------------------------------------ FORM -------------------------------------
 
@@ -490,13 +497,21 @@ vehicleDailyRate.keypress(function (evt) {
     return true;
 })
 
+phoneNumberField.keypress(function (evt) {
+    allowOnlyNumbersToBeTyped(evt);
+
+})
+
+dotField.keypress(function (evt) {
+    allowOnlyNumbersToBeTyped(evt);
+})
+
+/**
+ * limits field to only numerical characters
+ */
+
 vehicleNumberField.keypress(function (evt) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
-    }
-    return true;
+    allowOnlyNumbersToBeTyped(evt);
 })
 
 vehicleNumberField.on('change', function () {
@@ -894,6 +909,11 @@ const enableModalSubmitButton = () => {
     modalSubmitButton.attr('style', 'background-color: #f85731 !important')
 }
 
+const disableModalSubmitButton = () => {
+    modalSubmitButtonEnabled = false;
+    modalSubmitButton.attr('style', 'background-color: #8d969a !important')
+}
+
 $(multistepForm).on('keyup keypress', function (e) {
     var keyCode = e.keyCode || e.which;
     if (keyCode === 13) {
@@ -909,3 +929,37 @@ $(multistepForm).on('keyup keypress', function (e) {
   let age = parseInt(params.get("age")); // is the number 18
 }
  */
+
+const validateEmail = (field) => {
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (field.match(emailRegex)) {
+        return true
+    } else {
+        return false
+    }
+}
+
+const validateDOT = (field) => {
+    if (field.val().length >=3 && field.val().length <=7) {
+        return true
+    } else {
+        return false
+    }
+}
+
+const validatePhone = (field) => {
+    if (field.val().length === 10) {
+        return true
+    } else {
+        return false
+    }
+}
+
+const allowOnlyNumbersToBeTyped = (evt) => {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
