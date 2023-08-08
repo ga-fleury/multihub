@@ -31,7 +31,12 @@ let FINAL_FORM_DATA = {
     company: '',
     phone: '',
     dot_number: '',
-    city: ''
+    city: '',
+    utm_campaign: '',
+    utm_source: '',
+    utm_medium: '',
+    utm_content: '',
+    utm_term: ''
 }
 
 /**
@@ -191,7 +196,7 @@ const emailField = $('#email-field-modal');
 
 const modalSubmitButton = $('#modal-submit-btn');
 
-const allModalFields = $('#your-name-field, #your-company-field, #phone-number-field, #dot-field, #city-field, #email-field-modal')
+const allModalFields = $('#your-name-field, #your-company-field, #phone-number-field, #email-field-modal')
 
 allModalFields.on('change', function () {
     let modalFieldsFilledOut = 0;
@@ -400,6 +405,7 @@ const checkCurrentStep = (stepNumber) => {
         if (fromDateField.val() && toDateField.val()) {
             enableNextStepButton();
         }
+        updateSummary(vehicleUnitsSummary, vehicleNumberField.val())
         console.log('step 2 reached')
     } else if (stepNumber == 3) {
         if (locationField.val() && radiusDropdownField.val()) {
@@ -641,9 +647,12 @@ fromDateField.on('change', function () {
     let year = fromDateField.val().slice(0,4)
     let month = fromDateField.val().slice(5,7)
     let day = fromDateField.val().slice(8,10)
+    let todayDate = new Date().toISOString().split('T')[0]
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
-    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val())) {
+    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
         enableNextStepButton();
+    } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val())) {
+        disableNextStepButton();
     }
 })
 
@@ -654,6 +663,8 @@ toDateField.on('change', function () {
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val())) {
         enableNextStepButton();
+    } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val())) {
+        disableNextStepButton();
     }
 })
 
@@ -661,7 +672,7 @@ radiusDropdownField.on('change', function () {
     updateSummary(radiusSummary, radiusDropdownField.find(":selected").val())
     if (locationField.val()) {
         enableNextStepButton();
-    }
+    } 
 })
 
 locationField.on('change', function () {
@@ -852,7 +863,28 @@ const enableNextStepButton = () => {
     nextStepButton.attr('style', 'background-color: #415077 !important')
 }
 
+const disableNextStepButton = () => {
+    nextStepButtonEnabled = false;
+    nextStepButton.attr('style', 'background-color: #8d969a !important')
+}
+
 const enableModalSubmitButton = () => {
     modalSubmitButtonEnabled = true;
     modalSubmitButton.attr('style', 'background-color: #f85731 !important')
 }
+
+$(multistepForm).on('keyup keypress', function(e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) { 
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  /**
+   *   const getUTMsFromURL = () => {
+    let params = new URL(document.location).searchParams;
+    let name = params.get("name"); // is the string "Jonathan Smith".
+    let age = parseInt(params.get("age")); // is the number 18
+  }
+   */
