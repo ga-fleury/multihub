@@ -478,12 +478,18 @@ toDateField.keypress(function (e) {
     return false
 });
 
-
-vehicleDailyRate.on('change', function () {
+vehicleDailyRate.keypress(function (evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
     if (vehicleDailyRate.val()) {
         enableNextStepButton();
     }
+    return true;
 })
+
 
 /**
  * Handles 'Next Step' button click
@@ -644,9 +650,9 @@ vehicleTypeDropdown.on('change', function () {
 })
 
 fromDateField.on('change', function () {
-    let year = fromDateField.val().slice(0,4)
-    let month = fromDateField.val().slice(5,7)
-    let day = fromDateField.val().slice(8,10)
+    let year = fromDateField.val().slice(0, 4)
+    let month = fromDateField.val().slice(5, 7)
+    let day = fromDateField.val().slice(8, 10)
     let todayDate = new Date().toISOString().split('T')[0]
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
@@ -657,9 +663,9 @@ fromDateField.on('change', function () {
 })
 
 toDateField.on('change', function () {
-    let year = toDateField.val().slice(0,4)
-    let month = toDateField.val().slice(5,7)
-    let day = toDateField.val().slice(8,10)
+    let year = toDateField.val().slice(0, 4)
+    let month = toDateField.val().slice(5, 7)
+    let day = toDateField.val().slice(8, 10)
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val())) {
         enableNextStepButton();
@@ -672,7 +678,7 @@ radiusDropdownField.on('change', function () {
     updateSummary(radiusSummary, radiusDropdownField.find(":selected").val())
     if (locationField.val()) {
         enableNextStepButton();
-    } 
+    }
 })
 
 locationField.on('change', function () {
@@ -873,18 +879,18 @@ const enableModalSubmitButton = () => {
     modalSubmitButton.attr('style', 'background-color: #f85731 !important')
 }
 
-$(multistepForm).on('keyup keypress', function(e) {
+$(multistepForm).on('keyup keypress', function (e) {
     var keyCode = e.keyCode || e.which;
-    if (keyCode === 13) { 
-      e.preventDefault();
-      return false;
+    if (keyCode === 13) {
+        e.preventDefault();
+        return false;
     }
-  });
+});
 
-  /**
-   *   const getUTMsFromURL = () => {
-    let params = new URL(document.location).searchParams;
-    let name = params.get("name"); // is the string "Jonathan Smith".
-    let age = parseInt(params.get("age")); // is the number 18
-  }
-   */
+/**
+ *   const getUTMsFromURL = () => {
+  let params = new URL(document.location).searchParams;
+  let name = params.get("name"); // is the string "Jonathan Smith".
+  let age = parseInt(params.get("age")); // is the number 18
+}
+ */
