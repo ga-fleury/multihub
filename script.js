@@ -490,6 +490,19 @@ vehicleDailyRate.keypress(function (evt) {
     return true;
 })
 
+vehicleNumberField.keypress(function (evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+})
+
+vehicleNumberField.on('change', function () {
+    vehicleNumber = vehicleNumberField.val();
+})
+
 
 /**
  * Handles 'Next Step' button click
@@ -520,10 +533,12 @@ previousStepButton.on('click', function () {
 })
 
 increaseVehicleNumberButton.on('click', function () {
-    vehicleNumber++
-    vehicleNumberField.val(vehicleNumber);
-    decreaseVehicleNumberButton.attr('style', 'background-color: #415077 !important')
-    updateSummary(vehicleUnitsSummary, vehicleNumber);
+    if (vehicleNumber < 50) {
+        vehicleNumber++
+        vehicleNumberField.val(vehicleNumber);
+        decreaseVehicleNumberButton.attr('style', 'background-color: #415077 !important')
+        updateSummary(vehicleUnitsSummary, vehicleNumber);
+    }
 })
 
 decreaseVehicleNumberButton.on('click', function () {
