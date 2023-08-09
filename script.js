@@ -264,7 +264,7 @@ const vehicleDailyRate = $('#vehicle-rate-field', vehicleTypeStep);
 
 const vehicleSubtypeLabel = $('#subtype-label', vehicleTypeStep);
 
-const storageCheckbox = $('storage-checkbox')
+const storageCheckbox = $('#storage-checkbox')
 
 
 // ------------------------ STEP 2 FIELDS (Vehicle Number) -----------------------------
@@ -662,7 +662,6 @@ vehicleTypeButtons.on('click', function () {
 
 vehicleTypeDropdown.on('change', function () {
     storageCheckbox.attr('style', 'display: none')
-    console.log('dont need storage')
     console.log(vehicleTypeDropdown.val())
     updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").val());
     // #region ------------- responsive changes start ---------
