@@ -165,6 +165,8 @@ const vehicleUnitsSummary = $('#vehicle-units-summary', summaryContainer);
  */
 const fromDateSummary = $('#from-date-summary', summaryContainer);
 
+const dateWarning = $('#date-warning')
+
 /**
  * Reference to the 'To' field in the summary section
  */
@@ -696,8 +698,10 @@ fromDateField.on('change', function () {
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
         enableNextStepButton();
-    } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val())) {
+        dateWarning.attr('style', 'visibility: none')
+    } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val()) || Date.parse(fromDateField.val()) < todayDate) {
         disableNextStepButton();
+        dateWarning.attr('style', 'visibility: block')
     }
 })
 
