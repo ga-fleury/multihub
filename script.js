@@ -208,9 +208,9 @@ requiredModalFields.on('change', function () {
         }
     })
     if (modalFieldsFilledOut === 4
-        && validateEmail(emailField.val())
-        && validateDOT(dotField.val())
-        && validatePhone(phoneNumberField.val())
+        && validateEmail(emailField)
+        && validateDOT(dotField)
+        && validatePhone(phoneNumberField)
     ) {
         enableModalSubmitButton();
     } else {
@@ -948,7 +948,7 @@ $(multistepForm).on('keyup keypress', function (e) {
 
 const validateEmail = (field) => {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (field.match(emailRegex)) {
+    if (field.val().match(emailRegex)) {
         console.log('valid email')
         return true
     } else {
@@ -987,13 +987,13 @@ const allowOnlyNumbersToBeTyped = (evt) => {
 }
 
 emailField.on('change', function () {
-    validateEmail(emailField.val());
+    validateEmail(emailField);
 })
 
 dotField.on('change', function () {
-    validateDOT(dotField.val());
+    validateDOT(dotField);
 })
 
 phoneNumberField.on('change', function () {
-    validatePhone(phoneNumberField.val());
+    validatePhone(phoneNumberField);
 })
