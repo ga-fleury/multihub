@@ -661,6 +661,8 @@ vehicleTypeButtons.on('click', function () {
 })
 
 vehicleTypeDropdown.on('change', function () {
+    storageCheckbox.attr('style', 'display: none')
+    console.log('dont need storage')
     console.log(vehicleTypeDropdown.val())
     updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").val());
     // #region ------------- responsive changes start ---------
@@ -682,9 +684,7 @@ vehicleTypeDropdown.on('change', function () {
         storageCheckbox.attr('style', 'display: block')
         console.log('need storage')
     }
-    
-    storageCheckbox.attr('style', 'display: none')
-    console.log('dont need storage')
+
 
     // #endregion responsive changes 
 })
