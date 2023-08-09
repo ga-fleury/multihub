@@ -952,6 +952,7 @@ const validateEmail = (field) => {
         console.log('valid email')
         return true
     } else {
+        console.log('invalid email')
         return false
     }
 }
@@ -961,6 +962,7 @@ const validateDOT = (field) => {
         console.log('valid DOT')
         return true
     } else {
+        console.log('invalid DOT')
         return false
     }
 }
@@ -970,6 +972,7 @@ const validatePhone = (field) => {
         console.log('valid Phone')
         return true
     } else {
+        console.log('invalid Phone')
         return false
     }
 }
@@ -982,3 +985,15 @@ const allowOnlyNumbersToBeTyped = (evt) => {
     }
     return true;
 }
+
+emailField.on('change', function () {
+    validateEmail(emailField);
+})
+
+dotField.on('change', function () {
+    validateDOT(dotField);
+})
+
+phoneNumberField.on('change', function () {
+    validatePhone(phoneNumberField);
+})
