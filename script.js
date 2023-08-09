@@ -694,7 +694,7 @@ fromDateField.on('change', function () {
     let day = fromDateField.val().slice(8, 10)
     let todayDate = new Date().toISOString().split('T')[0]
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
-    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
+    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
         enableNextStepButton();
     } else {
         disableNextStepButton();
@@ -706,7 +706,7 @@ toDateField.on('change', function () {
     let month = toDateField.val().slice(5, 7)
     let day = toDateField.val().slice(8, 10)
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
-    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val())) {
+    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
         enableNextStepButton();
     } else {
         disableNextStepButton();
