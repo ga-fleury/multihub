@@ -500,6 +500,18 @@ vehicleDailyRate.keypress(function (evt) {
     return true;
 })
 
+vehicleDailyRate.on('change', function (evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    if (vehicleDailyRate.val()) {
+        enableNextStepButton();
+    }
+    return true;
+})
+
 phoneNumberField.keypress(function (evt) {
     allowOnlyNumbersToBeTyped(evt);
 
@@ -698,10 +710,10 @@ fromDateField.on('change', function () {
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
         enableNextStepButton();
-        dateWarning.attr('style', 'visibility: none')
+        dateWarning.attr('style', 'display: none')
     } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val()) || Date.parse(fromDateField.val()) < todayDate) {
         disableNextStepButton();
-        dateWarning.attr('style', 'visibility: block')
+        dateWarning.attr('style', 'display: block')
     }
 })
 
