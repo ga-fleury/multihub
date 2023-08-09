@@ -205,12 +205,11 @@ requiredModalFields.on('change', function () {
             modalFieldsFilledOut++
         }
     })
-    if (modalFieldsFilledOut === requiredModalFields.length 
+    if (modalFieldsFilledOut === 4 
         && validateEmail(emailField)
         && validateDOT(dotField)
         && validatePhone(phoneNumberField)
         ) {
-
         enableModalSubmitButton();
     } else {
         modalFieldsFilledOut = 0;
@@ -264,6 +263,8 @@ const vehicleTypeDropdown = $('#vehicle-type-dropdown', vehicleTypeStep);
 const vehicleDailyRate = $('#vehicle-rate-field', vehicleTypeStep);
 
 const vehicleSubtypeLabel = $('#subtype-label', vehicleTypeStep);
+
+const storageCheckbox = $('storage-checkbox')
 
 
 // ------------------------ STEP 2 FIELDS (Vehicle Number) -----------------------------
@@ -676,6 +677,11 @@ vehicleTypeDropdown.on('change', function () {
         sliderContainer.attr('style', 'height: 460px !important');
     }
 
+    if (vehicleTypeDropdown.val() == 'Dry Van Trailer' || vehicleTypeDropdown.val() == 'Refrigerated Trailer') {
+        storageCheckbox.addClass('visible');
+    } else {
+        storageCheckbox.removeClasse('visible')
+    }
     // #endregion responsive changes 
 })
 
@@ -933,6 +939,7 @@ $(multistepForm).on('keyup keypress', function (e) {
 const validateEmail = (field) => {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (field.match(emailRegex)) {
+        console.log('valid email')
         return true
     } else {
         return false
@@ -941,6 +948,7 @@ const validateEmail = (field) => {
 
 const validateDOT = (field) => {
     if (field.val().length >=3 && field.val().length <=7) {
+        console.log('valid DOT')
         return true
     } else {
         return false
@@ -949,6 +957,7 @@ const validateDOT = (field) => {
 
 const validatePhone = (field) => {
     if (field.val().length === 10) {
+        console.log('valid Phone')
         return true
     } else {
         return false
