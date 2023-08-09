@@ -208,9 +208,9 @@ requiredModalFields.on('change', function () {
         }
     })
     if (modalFieldsFilledOut === 4
-        && validateEmail(emailField)
-        && validateDOT(dotField)
-        && validatePhone(phoneNumberField)
+        && validateEmail(emailField.val())
+        && validateDOT(dotField.val())
+        && validatePhone(phoneNumberField.val())
     ) {
         enableModalSubmitButton();
     } else {
@@ -987,13 +987,13 @@ const allowOnlyNumbersToBeTyped = (evt) => {
 }
 
 emailField.on('change', function () {
-    validateEmail(emailField);
+    validateEmail(emailField.val());
 })
 
 dotField.on('change', function () {
-    validateDOT(dotField);
+    validateDOT(dotField.val());
 })
 
 phoneNumberField.on('change', function () {
-    validatePhone(phoneNumberField);
+    validatePhone(phoneNumberField.val());
 })
