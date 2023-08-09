@@ -711,7 +711,7 @@ fromDateField.on('change', function () {
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
         enableNextStepButton();
         dateWarning.attr('style', 'display: none')
-    } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val()) || Date.parse(fromDateField.val()) < todayDate) {
+    } else {
         disableNextStepButton();
         dateWarning.attr('style', 'display: block')
     }
@@ -721,11 +721,14 @@ toDateField.on('change', function () {
     let year = toDateField.val().slice(0, 4)
     let month = toDateField.val().slice(5, 7)
     let day = toDateField.val().slice(8, 10)
+    let todayDate = new Date().toISOString().split('T')[0]
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
-    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val())) {
+    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
         enableNextStepButton();
-    } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val())) {
+        dateWarning.attr('style', 'display: none')
+    } else {
         disableNextStepButton();
+        dateWarning.attr('style', 'display: block')
     }
 })
 
