@@ -726,9 +726,11 @@ toDateField.on('change', function () {
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
         enableNextStepButton();
         dateWarning.attr('style', 'display: none')
+        console.log('enable date button')
     } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val()) || Date.parse(fromDateField.val()) < todayDate) {
         disableNextStepButton();
         dateWarning.attr('style', 'display: block')
+        console.log('disable date button')
     }
 })
 
