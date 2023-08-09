@@ -713,8 +713,10 @@ toDateField.on('change', function () {
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
         enableNextStepButton();
+        dateWarning.attr('style', "display: none");
     } else {
         disableNextStepButton();
+        dateWarning.attr('style', "display: block");
     }
 })
 
