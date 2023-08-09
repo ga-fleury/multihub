@@ -205,11 +205,11 @@ requiredModalFields.on('change', function () {
             modalFieldsFilledOut++
         }
     })
-    if (modalFieldsFilledOut === 4 
+    if (modalFieldsFilledOut === 4
         && validateEmail(emailField)
         && validateDOT(dotField)
         && validatePhone(phoneNumberField)
-        ) {
+    ) {
         enableModalSubmitButton();
     } else {
         modalFieldsFilledOut = 0;
@@ -679,12 +679,13 @@ vehicleTypeDropdown.on('change', function () {
     }
 
     if (vehicleTypeDropdown.val() == 'Dry Van Trailer' || vehicleTypeDropdown.val() == 'Refrigerated Trailer') {
-        storageCheckbox.addClass('visible');
+        storageCheckbox.attr('style', 'display: block')
         console.log('need storage')
-    } else {
-        storageCheckbox.removeClasse('visible')
-        console.log('dont need storage')
     }
+    
+    storageCheckbox.attr('style', 'display: none')
+    console.log('dont need storage')
+
     // #endregion responsive changes 
 })
 
@@ -950,7 +951,7 @@ const validateEmail = (field) => {
 }
 
 const validateDOT = (field) => {
-    if (field.val().length >=3 && field.val().length <=7) {
+    if (field.val().length >= 3 && field.val().length <= 7) {
         console.log('valid DOT')
         return true
     } else {
