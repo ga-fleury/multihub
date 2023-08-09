@@ -165,8 +165,6 @@ const vehicleUnitsSummary = $('#vehicle-units-summary', summaryContainer);
  */
 const fromDateSummary = $('#from-date-summary', summaryContainer);
 
-const dateWarning = $('#date-warning')
-
 /**
  * Reference to the 'To' field in the summary section
  */
@@ -500,18 +498,6 @@ vehicleDailyRate.keypress(function (evt) {
     return true;
 })
 
-vehicleDailyRate.on('change', function (evt) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
-    }
-    if (vehicleDailyRate.val()) {
-        enableNextStepButton();
-    }
-    return true;
-})
-
 phoneNumberField.keypress(function (evt) {
     allowOnlyNumbersToBeTyped(evt);
 
@@ -710,10 +696,8 @@ fromDateField.on('change', function () {
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
         enableNextStepButton();
-        dateWarning.attr('style', 'display: none')
-    } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val()) || Date.parse(fromDateField.val()) < todayDate) {
+    } else {
         disableNextStepButton();
-        dateWarning.attr('style', 'display: block')
     }
 })
 
@@ -721,16 +705,11 @@ toDateField.on('change', function () {
     let year = toDateField.val().slice(0, 4)
     let month = toDateField.val().slice(5, 7)
     let day = toDateField.val().slice(8, 10)
-    let todayDate = new Date().toISOString().split('T')[0]
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
-    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= todayDate) {
+    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val())) {
         enableNextStepButton();
-        dateWarning.attr('style', 'display: none')
-        console.log('enable date button')
-    } else if (Date.parse(fromDateField.val()) > Date.parse(toDateField.val()) || Date.parse(fromDateField.val()) < todayDate) {
+    } else {
         disableNextStepButton();
-        dateWarning.attr('style', 'display: block')
-        console.log('disable date button')
     }
 })
 
