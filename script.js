@@ -661,6 +661,7 @@ vehicleTypeButtons.on('click', function () {
 })
 
 vehicleTypeDropdown.on('change', function () {
+    console.log(vehicleTypeDropdown.val())
     updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").val());
     // #region ------------- responsive changes start ---------
 
@@ -679,8 +680,10 @@ vehicleTypeDropdown.on('change', function () {
 
     if (vehicleTypeDropdown.val() == 'Dry Van Trailer' || vehicleTypeDropdown.val() == 'Refrigerated Trailer') {
         storageCheckbox.addClass('visible');
+        console.log('need storage')
     } else {
         storageCheckbox.removeClasse('visible')
+        console.log('dont need storage')
     }
     // #endregion responsive changes 
 })
