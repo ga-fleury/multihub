@@ -201,22 +201,7 @@ const modalSubmitButton = $('#modal-submit-btn');
 const requiredModalFields = $('#your-name-field, #your-company-field, #phone-number-field, #email-field-modal')
 
 requiredModalFields.on('change', function () {
-    let modalFieldsFilledOut = 0;
-    requiredModalFields.each(function () {
-        if ($(this).val()) {
-            modalFieldsFilledOut++
-        }
-    })
-    if (modalFieldsFilledOut === 4
-        && validateEmail(emailField)
-        && validateDOT(dotField)
-        && validatePhone(phoneNumberField)
-    ) {
-        enableModalSubmitButton();
-    } else {
-        modalFieldsFilledOut = 0;
-        disableModalSubmitButton();
-    }
+    checkModalFields();
 })
 
 
@@ -960,9 +945,15 @@ const validateEmail = (field) => {
 const validateDOT = (field) => {
     if (field.val().length >= 3 && field.val().length <= 7) {
         console.log('valid DOT')
+        enableModalSubmitButton();
+        return true
+    } else if (field.val().length == 0) {
+        console.log('valid DOT')
+        enableModalSubmitButton();
         return true
     } else {
         console.log('invalid DOT')
+        disableModalSubmitButton();
         return false
     }
 }
@@ -991,9 +982,33 @@ emailField.on('change', function () {
 })
 
 dotField.on('change', function () {
-    validateDOT(dotField);
+    if (validateDOT(dotField) && checkModalFields()) {
+        enableModalSubmitButton();
+    } else {
+        disableModalSubmitButton();
+    }
 })
 
 phoneNumberField.on('change', function () {
     validatePhone(phoneNumberField);
 })
+
+const checkModalFields = () => {
+    let modalFieldsFilledOut = 0;
+    requiredModalFields.each(function () {
+        if ($(this).val()) {
+            modalFieldsFilledOut++
+        }
+    })
+    if (modalFieldsFilledOut === 4
+        && validateEmail(emailField)
+        && validatePhone(phoneNumberField)
+    ) {
+        enableModalSubmitButton();
+        return true
+    } else {
+        modalFieldsFilledOut = 0;
+        disableModalSubmitButton();
+        return false
+    }
+}
