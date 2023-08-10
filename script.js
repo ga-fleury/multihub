@@ -457,6 +457,11 @@ const getStepNameByNumber = (obj, value) =>
 const initializeForm = () => {
     maskContainer.css('height', '290px');
     sliderContainer.attr('style', 'height: 290px !important');
+
+    if (windowWidth <= 767) {
+        maskContainer.attr('style', 'height: 250px !important');
+        sliderContainer.attr('style', 'height: 250px !important');
+    }
 }
 
 initializeForm();
