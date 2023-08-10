@@ -20,7 +20,7 @@ let FINAL_FORM_DATA = {
     multi_rental_date_to: '',
     bulk_rental_vehicle_type: '',
     bulk_rental_vehicle_subtype: '',
-    bulk_rental_storage: 'No',
+    bulk_rental_storage: 'no',
     daily_rate: '',
     vehicle_units: '',
     bulk_rental_location: '',
@@ -756,7 +756,7 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.dot_number = dotField.val();
     FINAL_FORM_DATA.city = cityField.val();
     if (storageCheckbox.is(":checked")) {
-        FINAL_FORM_DATA.bulk_rental_storage = 'Yes'
+        FINAL_FORM_DATA.bulk_rental_storage = 'yes'
     }
 }
 
