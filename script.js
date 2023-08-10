@@ -20,7 +20,7 @@ let FINAL_FORM_DATA = {
     multi_rental_date_to: '',
     bulk_rental_vehicle_type: '',
     bulk_rental_vehicle_subtype: '',
-    bulk_rental_storage: 'no',
+    bulk_rental_storage: 'No',
     daily_rate: '',
     vehicle_units: '',
     bulk_rental_location: '',
@@ -250,6 +250,8 @@ const vehicleTypeDropdown = $('#vehicle-type-dropdown', vehicleTypeStep);
 const vehicleDailyRate = $('#vehicle-rate-field', vehicleTypeStep);
 
 const vehicleSubtypeLabel = $('#subtype-label', vehicleTypeStep);
+
+const storageCheckboxWrap = $('#storage-checkbox-wrap')
 
 const storageCheckbox = $('#storage-checkbox')
 
@@ -664,7 +666,7 @@ vehicleTypeButtons.on('click', function () {
 })
 
 vehicleTypeDropdown.on('change', function () {
-    storageCheckbox.attr('style', 'display: none')
+    storageCheckboxWrap.attr('style', 'display: none')
     console.log(vehicleTypeDropdown.val())
     updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").val());
     // #region ------------- responsive changes start ---------
@@ -683,7 +685,7 @@ vehicleTypeDropdown.on('change', function () {
     }
 
     if (vehicleTypeDropdown.val() == 'Dry Van Trailer' || vehicleTypeDropdown.val() == 'Refrigerated Trailer') {
-        storageCheckbox.attr('style', 'display: block')
+        storageCheckboxWrap.attr('style', 'display: block')
         console.log('need storage')
     }
 
@@ -754,7 +756,7 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.dot_number = dotField.val();
     FINAL_FORM_DATA.city = cityField.val();
     if (storageCheckbox.is(":checked")) {
-        FINAL_FORM_DATA.bulk_rental_storage = 'yes'
+        FINAL_FORM_DATA.bulk_rental_storage = 'Yes'
     }
 }
 
@@ -917,6 +919,12 @@ const makeSlideSmaller = () => {
 }
 
 storageCheckbox.on('click', function () {
+    if (storageCheckbox.is(":checked")) {
+        console.log('checked')
+    }
+})
+
+storageCheckboxWrap.on('click', function () {
     if (storageCheckbox.is(":checked")) {
         console.log('checked')
     }
