@@ -76,6 +76,12 @@ const VEHICLE_CATEGORIES = {
 let currentStepNumber = 0;
 
 
+/**
+ * Global variable for window width, adjusted on resize
+ */
+var windowWidth = $(window).width();
+
+
 // ----------------------- Some shared DOM elements --------------------------------
 
 /**
@@ -896,11 +902,6 @@ async function formSubmissionCall() {
 
 
 // --------------------------------- RESPONSIVENESS -----------------------------
-
-/**
- * Global variable for window width, adjusted on resize
- */
-var windowWidth = $(window).width();
 
 $(window).resize(function () {
     windowWidth = $(window).width();
