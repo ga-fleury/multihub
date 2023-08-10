@@ -20,7 +20,7 @@ let FINAL_FORM_DATA = {
     multi_rental_date_to: '',
     bulk_rental_vehicle_type: '',
     bulk_rental_vehicle_subtype: '',
-    bulk_rental_storage: '',
+    bulk_rental_storage: 'no',
     daily_rate: '',
     vehicle_units: '',
     bulk_rental_location: '',
@@ -473,7 +473,7 @@ toDateField.keypress(function (e) {
     return false
 });
 
-vehicleDailyRate.keypress(function (evt) {
+vehicleDailyRate.on('keypress', function (evt) {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -483,6 +483,22 @@ vehicleDailyRate.keypress(function (evt) {
         enableNextStepButton();
     }
     return true;
+})
+
+/**
+ * 
+ */
+vehicleDailyRate.on('keyup', function (e) {
+    e.target.value = e.target.value.replace(/[^\d]/g,'');
+    return false;
+})
+
+vehicleDailyRate.change(function (evt) {
+    if (validateVehicleRate(vehicleDailyRate)) {
+        enableModalSubmitButton();
+    } else {
+        disableModalSubmitButton();
+    }
 })
 
 phoneNumberField.keypress(function (evt) {
@@ -737,6 +753,9 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.phone = phoneNumberField.val();
     FINAL_FORM_DATA.dot_number = dotField.val();
     FINAL_FORM_DATA.city = cityField.val();
+    if (storageCheckbox.is(":checked")) {
+        FINAL_FORM_DATA.bulk_rental_storage = 'yes'
+    }
 }
 
 
@@ -776,6 +795,11 @@ async function formSubmissionCall() {
                 "objectTypeId": "0-1",
                 "name": "bulk_rental_vehicle_subtype",
                 "value": FINAL_FORM_DATA.bulk_rental_vehicle_subtype
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "bulk_rental_storage",
+                "value": FINAL_FORM_DATA.bulk_rental_storage
             },
             {
                 "objectTypeId": "0-1",
@@ -892,6 +916,12 @@ const makeSlideSmaller = () => {
     }
 }
 
+storageCheckbox.on('click', function () {
+    if (storageCheckbox.is(":checked")) {
+        console.log('checked')
+    }
+})
+
 /**
  * Enables Next Step Button
  */
@@ -965,6 +995,12 @@ const validatePhone = (field) => {
     } else {
         console.log('invalid Phone')
         return false
+    }
+}
+
+const validateVehicleRate = (field) => {
+    if (field.val().length > 0) {
+        return true
     }
 }
 
