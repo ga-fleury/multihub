@@ -523,13 +523,7 @@ vehicleNumberField.keypress(function (evt) {
 
 vehicleNumberField.on('change', function () {
     vehicleNumber = vehicleNumberField.val();
-    if (vehicleNumber >= 2 && vehicleNumber <= 50) {
-        unitsWarning.attr('style', 'display: none')
-        enableNextStepButton();
-    } else { 
-        disableNextStepButton();
-        unitsWarning.attr('style', 'display: block')
-    }
+    vehicleUnitsCheck();
 })
 
 
@@ -568,7 +562,18 @@ increaseVehicleNumberButton.on('click', function () {
         decreaseVehicleNumberButton.attr('style', 'background-color: #415077 !important')
         updateSummary(vehicleUnitsSummary, vehicleNumber);
     }
+    vehicleUnitsCheck();
 })
+
+const vehicleUnitsCheck = () => {
+    if (vehicleNumber >= 2 && vehicleNumber <= 50) {
+        unitsWarning.attr('style', 'display: none')
+        enableNextStepButton();
+    } else { 
+        disableNextStepButton();
+        unitsWarning.attr('style', 'display: block')
+    }
+}
 
 decreaseVehicleNumberButton.on('click', function () {
     if (vehicleNumber > 2) {
@@ -579,6 +584,7 @@ decreaseVehicleNumberButton.on('click', function () {
         vehicleNumberField.val(vehicleNumber);
         updateSummary(vehicleUnitsSummary, vehicleNumber);
     }
+    vehicleUnitsCheck();
 })
 
 editIconButton.on('click', function () {
