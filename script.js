@@ -468,9 +468,8 @@ const initializeForm = () => {
         maskContainer.attr('style', 'height: 250px !important');
         sliderContainer.attr('style', 'height: 250px !important');
     }
+    disableModalSubmitButton();
 }
-
-initializeForm();
 
 const updateSummary = (field, value) => {
     field.text(value);
@@ -1075,4 +1074,6 @@ const checkModalFields = () => {
         disableModalSubmitButton();
         return false
     }
-}
+}   
+
+initializeForm();
