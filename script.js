@@ -167,6 +167,8 @@ const fromDateSummary = $('#from-date-summary', summaryContainer);
 
 const dateWarning = $('#date-warning');
 
+const unitsWarning = $('#units-warning');
+
 /**
  * Reference to the 'To' field in the summary section
  */
@@ -395,7 +397,6 @@ const checkCurrentStep = (stepNumber) => {
         makeSlideBigger();
         console.log('step 0 reached')
     } else if (stepNumber == 1) {
-        enableNextStepButton();
         makeSlideSmaller();
         console.log('step 1 reached')
     } else if (stepNumber == 2) {
@@ -522,6 +523,13 @@ vehicleNumberField.keypress(function (evt) {
 
 vehicleNumberField.on('change', function () {
     vehicleNumber = vehicleNumberField.val();
+    if (vehicleNumber >= 2 && vehicleNumber <= 50) {
+        unitsWarning.attr('style', 'display: none')
+        enableNextStepButton();
+    } else { 
+        disableNextStepButton();
+        unitsWarning.attr('style', 'display: block')
+    }
 })
 
 
