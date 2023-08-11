@@ -632,6 +632,7 @@ submitRequestButton.on('click', function () {
     else {
         $('#email-overlay-wrap').css('display', 'flex');
         $('body').attr('style', 'overflow: hidden !important');
+        disableModalSubmitButton();
     }
     console.log(emailCookie[2])
     console.log(decodeURIComponent(emailCookie[2]))
