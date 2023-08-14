@@ -507,7 +507,7 @@ vehicleDailyRate.on('keyup', function (e) {
     return false;
 })
 
-vehicleDailyRate.change(function (evt) {
+vehicleDailyRate.on('change', function () {
     if (validateVehicleRate(vehicleDailyRate)) {
         enableModalSubmitButton();
     } else {
