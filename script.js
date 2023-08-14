@@ -504,14 +504,17 @@ vehicleDailyRate.on('keypress', function (evt) {
  */
 vehicleDailyRate.on('keyup', function (e) {
     e.target.value = e.target.value.replace(/[^\d]/g,'');
+    if (vehicleDailyRate.val()) {
+        enableNextStepButton();
+    }
     return false;
 })
 
 vehicleDailyRate.on('change', function () {
     if (validateVehicleRate(vehicleDailyRate)) {
-        enableModalSubmitButton();
+        enableNextStepButton();
     } else {
-        disableModalSubmitButton();
+        disableNextStepButton();
     }
 })
 
