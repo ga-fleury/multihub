@@ -81,6 +81,38 @@ let currentStepNumber = 0;
  */
 var windowWidth = $(window).width();
 
+// -------------------------------- UTMS ----------------------------------------
+
+/**
+ * Grabs all of the query parameters 
+ */
+const urlParams = new URLSearchParams(window.location.search);
+
+/**
+ * Gets the UTM Campaign value
+ */
+const utmCampaign = urlParams.get('utm_campaign')
+
+/**
+ * Gets the UTM Source value
+ */
+const utmSource = urlParams.get('utm_source')
+
+/**
+ * Gets the UTM Medium value
+ */
+const utmMedium = urlParams.get('utm_medium')
+
+/**
+ * Gets the UTM Content value
+ */
+const utmContent = urlParams.get('utm_content')
+
+/**
+ * Gets the UTM Term value
+ */
+const utmTerm = urlParams.get('utm_term')
+
 
 // ----------------------- Some shared DOM elements --------------------------------
 
@@ -107,11 +139,13 @@ const summaryContainerSelector = '#summary-container';
 const summaryContainer = $(summaryContainerSelector);
 
 /**
- * Form Submit Button
+ * Form Submit Button 1st part (when email is received from cookie)
  */
-
 const formSubmitButton = $('#form-submit-btn');
 
+/**
+ * Form Submit Button 2nd part (when email and information modal appears)
+ */
 const submitRequestButton = $('#submit-request-btn');
 
 /**
@@ -121,6 +155,11 @@ const nextStepButtonSelector = '#btn-next-step';
 
 const nextStepButton = $(nextStepButtonSelector);
 
+
+/**
+ * Boolean that controls Next Step Button status
+ * @param nextStepButton
+ */
 let nextStepButtonEnabled = false;
 
 /**
@@ -167,13 +206,19 @@ const vehicleTypeSummary = $('#vehicle-type-summary', summaryContainer);
 const vehicleUnitsSummary = $('#vehicle-units-summary', summaryContainer);
 
 /**
+ * Vehicle Units validation warning reference
+ */
+const unitsWarning = $('#units-warning');
+
+/**
  * Reference to the 'From' field in the summary section
  */
 const fromDateSummary = $('#from-date-summary', summaryContainer);
 
+/**
+ * Vehicle Date validation warning reference
+ */
 const dateWarning = $('#date-warning');
-
-const unitsWarning = $('#units-warning');
 
 /**
  * Reference to the 'To' field in the summary section
@@ -192,16 +237,34 @@ const radiusSummary = $('#radius-summary', summaryContainer);
 
 // ------------------------------------ MODAL FIELDS ----------------------------
 
+/**
+ * Reference to the Name modal field
+ */
 const yourNameField = $('#your-name-field');
 
+/**
+ * Reference to the Company modal field
+ */
 const yourCompanyField = $('#your-company-field');
 
+/**
+ * Reference to the Phone Number modal field
+ */
 const phoneNumberField = $('#phone-number-field');
 
+/**
+ * Reference to the DOT Number modal field
+ */
 const dotField = $('#dot-field');
 
+/**
+ * Reference to the City modal field
+ */
 const cityField = $('#city-field');
 
+/**
+ * Reference to the Email modal field
+ */
 const emailField = $('#email-field-modal');
 
 const modalSubmitButton = $('#modal-submit-btn');
@@ -305,7 +368,9 @@ const fromDateField = $('#from-date-field', dateStep);
  */
 const toDateField = $('#to-date-field', dateStep);
 
-
+/**
+ * Date Picker
+ */
 $('[data-toggle="datepicker"]').datepicker({
     format: 'yyyy-mm-dd'
 });
@@ -881,6 +946,31 @@ async function formSubmissionCall() {
                 "objectTypeId": "0-1",
                 "name": "city",
                 "value": FINAL_FORM_DATA.city
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "utm_campaign",
+                "value": utmCampaign
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "utm_source",
+                "value": utmSource
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "utm_medium",
+                "value": utmMedium
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "utm_content",
+                "value": utmContent
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "utm_term",
+                "value": utmTerm
             }
         ],
         "context": {
