@@ -61,7 +61,8 @@ const VEHICLE_CATEGORIES = {
         'Select',
         'Dry Van Trailer',
         'Flatbed Trailer',
-        'Refrigerated Trailer'
+        'Refrigerated Trailer',
+        'Chassis'
     ],
     'van': [
         'Select',
@@ -859,7 +860,7 @@ const updateSubmissionData = () => {
  * Hubspot Form Submission API call
  */
 async function formSubmissionCall() {
-    let requestURL = "https://api.hsforms.com/submissions/v3/integration/submit/3840745/fa312bc2-e466-4ff5-9225-ebca231883c2"
+    let requestURL = "https://api.hsforms.com/submissions/v3/integration/submit/3840745/8f60d2a1-bc0c-4ac6-a7cf-4bffeb9b3554"
     let authToken = "Bearer pat-na1-d613ec32-87bc-4150-b471-4ee867e69c30"
     let requestHeader = {
         "Authorization": authToken,
