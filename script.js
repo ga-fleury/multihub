@@ -14,6 +14,8 @@ const REQUEST_FORM_STEPS = {
  * Object that will contain the final data to be submitted to Hubspot
  */
 
+//TODO: remove daily_rate and full_name
+
 let FINAL_FORM_DATA = {
     email: '',
     multi_rental_date_start: '',
@@ -21,6 +23,8 @@ let FINAL_FORM_DATA = {
     bulk_rental_vehicle_type: '',
     bulk_rental_vehicle_subtype: '',
     bulk_rental_storage: 'no',
+    daily_or_monthly_rate: '',
+    vehicle_rate: '',
     daily_rate: '',
     vehicle_units: '',
     bulk_rental_location: '',
@@ -28,6 +32,8 @@ let FINAL_FORM_DATA = {
     bulk_rental_comment: '',
     hutk: '',
     full_name: '',
+    firstname: '',
+    lastname: '',
     company: '',
     phone: '',
     dot_number: '',
@@ -241,7 +247,9 @@ const radiusSummary = $('#radius-summary', summaryContainer);
 /**
  * Reference to the Name modal field
  */
-const yourNameField = $('#your-name-field');
+const firstNameField = $('#first-name-field');
+
+const lastNameField = $('#last-name-field');
 
 /**
  * Reference to the Company modal field
@@ -270,7 +278,7 @@ const emailField = $('#email-field-modal');
 
 const modalSubmitButton = $('#modal-submit-btn');
 
-const requiredModalFields = $('#your-name-field, #your-company-field, #phone-number-field, #email-field-modal')
+const requiredModalFields = $('#first-name-field, #last-name-field, #your-company-field, #phone-number-field, #email-field-modal')
 
 requiredModalFields.on('change', function () {
     checkModalFields();
@@ -319,7 +327,7 @@ const vehicleTypeButtons = $('#btn-v-type_truck, #btn-v-type_tractor, #btn-v-typ
 
 const vehicleTypeDropdown = $('#vehicle-type-dropdown', vehicleTypeStep);
 
-const vehicleDailyRate = $('#vehicle-rate-field', vehicleTypeStep);
+const vehicleRate = $('#vehicle-rate-field', vehicleTypeStep);
 
 const vehicleSubtypeLabel = $('#subtype-label', vehicleTypeStep);
 
@@ -327,6 +335,7 @@ const storageCheckboxWrap = $('#storage-checkbox-wrap')
 
 const storageCheckbox = $('#storage-checkbox')
 
+const dailyOrMonthlyRate = $("#daily-monthly-dropdown")
 
 // ------------------------ STEP 2 FIELDS (Vehicle Number) -----------------------------
 
@@ -553,13 +562,13 @@ toDateField.keypress(function (e) {
     return false
 });
 
-vehicleDailyRate.on('keypress', function (evt) {
+vehicleRate.on('keypress', function (evt) {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
         return false;
     }
-    if (vehicleDailyRate.val()) {
+    if (vehicleRate.val()) {
         enableNextStepButton();
     }
     return true;
@@ -568,16 +577,16 @@ vehicleDailyRate.on('keypress', function (evt) {
 /**
  * 
  */
-vehicleDailyRate.on('keyup', function (e) {
+vehicleRate.on('keyup', function (e) {
     e.target.value = e.target.value.replace(/[^\d]/g,'');
-    if (vehicleDailyRate.val()) {
+    if (vehicleRate.val()) {
         enableNextStepButton();
     }
     return false;
 })
 
-vehicleDailyRate.on('change', function () {
-    if (validateVehicleRate(vehicleDailyRate)) {
+vehicleRate.on('change', function () {
+    if (validateVehicleRate(vehicleRate)) {
         enableNextStepButton();
     } else {
         disableNextStepButton();
@@ -837,7 +846,8 @@ locationField.on('change', function () {
  */
 const updateSubmissionData = () => {
     FINAL_FORM_DATA.bulk_rental_vehicle_subtype = vehicleTypeDropdown.find(":selected").val()
-    FINAL_FORM_DATA.daily_rate = vehicleDailyRate.val();
+    FINAL_FORM_DATA.daily_or_monthly_rate = dailyOrMonthlyRate.val();
+    FINAL_FORM_DATA.vehicle_rate = vehicleRate.val();
     FINAL_FORM_DATA.vehicle_units = vehicleNumberField.val();
     FINAL_FORM_DATA.multi_rental_date_start = fromDateField.val();
     FINAL_FORM_DATA.multi_rental_date_to = toDateField.val();
@@ -845,7 +855,8 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.bulk_rental_radius_miles = radiusDropdownField.val();
     FINAL_FORM_DATA.bulk_rental_comment = commentField.val();
     FINAL_FORM_DATA.email = emailField.val();
-    FINAL_FORM_DATA.full_name = yourNameField.val();
+    FINAL_FORM_DATA.firstname = firstNameField.val();
+    FINAL_FORM_DATA.lastname = lastNameField.val();
     FINAL_FORM_DATA.company = yourCompanyField.val();
     FINAL_FORM_DATA.phone = phoneNumberField.val();
     FINAL_FORM_DATA.dot_number = dotField.val();
@@ -905,6 +916,16 @@ async function formSubmissionCall() {
             },
             {
                 "objectTypeId": "0-1",
+                "name": "daily_or_monthly_rate",
+                "value": FINAL_FORM_DATA.daily_or_monthly_rate
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "vehicle_rate",
+                "value": FINAL_FORM_DATA.vehicle_rate
+            },
+            {
+                "objectTypeId": "0-1",
                 "name": "vehicle_units",
                 "value": FINAL_FORM_DATA.vehicle_units
             },
@@ -927,6 +948,16 @@ async function formSubmissionCall() {
                 "objectTypeId": "0-1",
                 "name": "full_name",
                 "value": FINAL_FORM_DATA.full_name
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "firstname",
+                "value": FINAL_FORM_DATA.firstname
+            },
+            {
+                "objectTypeId": "0-1",
+                "name": "lastname",
+                "value": FINAL_FORM_DATA.lastname
             },
             {
                 "objectTypeId": "0-1",
@@ -1159,7 +1190,7 @@ const checkModalFields = () => {
             modalFieldsFilledOut++
         }
     })
-    if (modalFieldsFilledOut === 4
+    if (modalFieldsFilledOut === 5
         && validateEmail(emailField)
         && validatePhone(phoneNumberField)
     ) {
