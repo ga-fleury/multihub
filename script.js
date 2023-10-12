@@ -498,6 +498,8 @@ const checkCurrentStep = (stepNumber) => {
     }
 }
 
+
+
 const showSubmitButton = () => {
     nextStepButton.attr('style', 'display: none !important');
     submitRequestButton.attr('style', 'display: flex !important');
@@ -1019,6 +1021,7 @@ async function formSubmissionCall() {
             body: JSON.stringify(API_POST_REQUEST_BODY),
             headers: requestHeader
         })
+        dataLayer.push({'event': 'renter_bulk_reg_submission'})
         const result = await response.json();
         console.log("Success:", result);
     } catch (error) {
