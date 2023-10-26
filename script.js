@@ -1072,8 +1072,7 @@ async function formSubmissionCall() {
     try {
         const response = await fetch(requestURL, {
             method: "POST",
-            body: JSON.stringify(API_POST_REQUEST_BODY),
-            headers: requestHeader
+            body: JSON.stringify(API_POST_REQUEST_BODY)
         })
         dataLayer.push({ 'event': 'renter_bulk_reg_submission' })
         const result = await response.json();
