@@ -1047,7 +1047,7 @@ async function formSubmissionCall() {
             "vehicleUnits": FINAL_FORM_DATA.vehicle_units,
             "bulkRentalLocation": FINAL_FORM_DATA.bulk_rental_location,
             "bulkRentalRadiusMiles": FINAL_FORM_DATA.bulk_rental_radius_miles,
-            "bulkRentaComment": FINAL_FORM_DATA.bulk_rental_comment,
+            "bulkRentalComment": FINAL_FORM_DATA.bulk_rental_comment,
             "fullName": FINAL_FORM_DATA.full_name,
             "firstName": FINAL_FORM_DATA.firstname,
             "lastName": FINAL_FORM_DATA.lastname,
