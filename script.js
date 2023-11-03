@@ -25,13 +25,11 @@ let FINAL_FORM_DATA = {
     bulk_rental_storage: 'no',
     daily_or_monthly_rate: '',
     vehicle_rate: '',
-    daily_rate: '',
     vehicle_units: '',
     bulk_rental_location: '',
     bulk_rental_radius_miles: '',
     bulk_rental_comment: '',
     hutk: '',
-    full_name: '',
     firstname: '',
     lastname: '',
     company: '',
@@ -50,31 +48,31 @@ let FINAL_FORM_DATA = {
  * used to populate the dropdown once the user selects a Vehicle Type
  */
 const VEHICLE_CATEGORIES = {
-    'truck': [
-        'Select',
-        'Flatbed Truck',
-        'Refrigerated Box Truck',
-        'Box Truck',
-    ],
-    'tractor': [
-        'Select',
-        'Single Axle Daycab Tractor',
-        'Single Axle Sleeper Tractor',
-        'Tandem Axle Daycab Tractor',
-        'Tandem Axle Sleeper Tractor'
-    ],
-    'trailer': [
-        'Select',
-        'Dry Van Trailer',
-        'Flatbed Trailer',
-        'Refrigerated Trailer',
-        'Chassis'
-    ],
-    'van': [
-        'Select',
-        'Refrigerated Cargo Van',
-        'Cargo Van'
-    ]
+    'truck': {
+        'Select': '',
+        'Flatbed Truck': 'flatbed-truck',
+        'Refrigerated Box Truck': 'refrigerated-box-truck',
+        'Box Truck': 'box-truck'
+    },
+    'tractor': {
+        'Select': '',
+        'Single Axle Daycab Tractor': 'single-axle-daycab',
+        'Single Axle Sleeper Tractor': 'single-axle-sleeper',
+        'Tandem Axle Daycab Tractor': 'tandem-axle-daycab',
+        'Tandem Axle Sleeper Tractor': 'tandem-axle-sleeper'
+    },
+    'trailer': {
+        'Select': '',
+        'Dry Van Trailer': 'dry-van',
+        'Flatbed Trailer': 'flatbed-trailer',
+        'Refrigerated Trailer': 'refrigeratedTrailer',
+        'Chassis': 'chassis'
+    },
+    'van': {
+        'Select': '',
+        'Refrigerated Cargo Van': 'refrigerated-cargo-van',
+        'Cargo Van': 'cargo-van'
+    }
 }
 
 /**
@@ -769,11 +767,15 @@ vehicleTypeButtons.on('click', function () {
     $(this).find('.v-type-icon.white').css('display', 'block');
 
     const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
+    console.log(vehicleType)
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
     var option = '';
-    for (var i = 0; i < vehicleTypeArray.length; i++) {
-        option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
+    for(var key in VEHICLE_CATEGORIES) {
+        option += '<option value="' + VEHICLE_CATEGORIES[key] + '">' + key + '</option>';
     }
+    // for (var i = 0; i < vehicleTypeArray.length; i++) {
+    //     option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
+    // }
     vehicleTypeDropdown.empty().append(option)
 
     FINAL_FORM_DATA.bulk_rental_vehicle_type = vehicleType
@@ -1041,14 +1043,12 @@ async function formSubmissionCall() {
             "bulkRentalVehicleType": FINAL_FORM_DATA.bulk_rental_vehicle_type,
             "bulkRentalVehicleSubtype": FINAL_FORM_DATA.bulk_rental_vehicle_subtype,
             "bulkRentalStorage": FINAL_FORM_DATA.bulk_rental_storage,
-            "dailyRate": FINAL_FORM_DATA.daily_rate,
             "dailyOrMonthlyRate": FINAL_FORM_DATA.daily_or_monthly_rate,
-            "vehicleRate": FINAL_FORM_DATA.vehicle_rate,
-            "vehicleUnits": FINAL_FORM_DATA.vehicle_units,
+            "vehicleRate": parseInt(FINAL_FORM_DATA.vehicle_rate),
+            "vehicleUnits": parseInt(FINAL_FORM_DATA.vehicle_units),
             "bulkRentalLocation": FINAL_FORM_DATA.bulk_rental_location,
             "bulkRentalRadiusMiles": FINAL_FORM_DATA.bulk_rental_radius_miles,
             "bulkRentalComment": FINAL_FORM_DATA.bulk_rental_comment,
-            "fullName": FINAL_FORM_DATA.full_name,
             "firstName": FINAL_FORM_DATA.firstname,
             "lastName": FINAL_FORM_DATA.lastname,
             "company": FINAL_FORM_DATA.company,
