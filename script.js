@@ -1082,8 +1082,10 @@ async function formSubmissionCall() {
         dataLayer.push({ 'event': 'renter_bulk_reg_submission' })
         const result = await response.json();
         console.log("Success:", result);
+        console.log(API_POST_REQUEST_BODY)
     } catch (error) {
         console.error("Error:", error);
+        console.log(API_POST_REQUEST_BODY)
     }
 }
 
