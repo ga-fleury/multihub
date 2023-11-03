@@ -770,14 +770,11 @@ vehicleTypeButtons.on('click', function () {
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
     var option = '';
     console.log(vehicleType)
-    for(var vehicleTypeKey in VEHICLE_CATEGORIES) {
-        if(vehicleType == VEHICLE_CATEGORIES[vehicleTypeKey]){            
-            for(var vehicleSubtypeKey in VEHICLE_CATEGORIES[vehicleTypeKey]) {
-                console.log(`vehicle category key vehicleSubtypeKey: ${VEHICLE_CATEGORIES[vehicleTypeKey][vehicleSubtypeKey]}`)
-                option += '<option value="' + VEHICLE_CATEGORIES[vehicleTypeKey][vehicleSubtypeKey] + '">' + vehicleSubtypeKey + '</option>';
-            }
-        }
+    for (var vehicleSubtypeKey in VEHICLE_CATEGORIES[vehicleType]) {
+        console.log(`vehicle category key vehicleSubtypeKey: ${VEHICLE_CATEGORIES[vehicleType][vehicleSubtypeKey]}`)
+        option += '<option value="' + VEHICLE_CATEGORIES[vehicleType][vehicleSubtypeKey] + '">' + vehicleSubtypeKey + '</option>';
     }
+
     // for (var i = 0; i < vehicleTypeArray.length; i++) {
     //     option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
     // }
@@ -787,14 +784,14 @@ vehicleTypeButtons.on('click', function () {
 
     // #region ------------- responsive changes start ---------
     if (windowWidth <= 992 && windowWidth >= 768) {
-        maskContainer.attr('style', 'height: 290px !important');
-        sliderContainer.attr('style', 'height: 290px !important');
-    }
+    maskContainer.attr('style', 'height: 290px !important');
+    sliderContainer.attr('style', 'height: 290px !important');
+}
 
-    if (windowWidth <= 767) {
-        maskContainer.attr('style', 'height: 350px !important');
-        sliderContainer.attr('style', 'height: 350px !important');
-    }
+if (windowWidth <= 767) {
+    maskContainer.attr('style', 'height: 350px !important');
+    sliderContainer.attr('style', 'height: 350px !important');
+}
     // #endregion responsive changes 
 })
 
