@@ -769,6 +769,7 @@ vehicleTypeButtons.on('click', function () {
     const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
     var option = '';
+    console.log(vehicleType)
     for(var vehicleTypeKey in VEHICLE_CATEGORIES) {
         if(vehicleType == VEHICLE_CATEGORIES[vehicleTypeKey]){            
             for(var vehicleSubtypeKey in VEHICLE_CATEGORIES[vehicleTypeKey]) {
