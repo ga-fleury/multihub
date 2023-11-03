@@ -767,11 +767,12 @@ vehicleTypeButtons.on('click', function () {
     $(this).find('.v-type-icon.white').css('display', 'block');
 
     const vehicleType = $(this).attr('id').slice($(this).attr('id').indexOf('_') + 1);
-    console.log(vehicleType)
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
     var option = '';
     for(var key in VEHICLE_CATEGORIES) {
-        option += '<option value="' + VEHICLE_CATEGORIES[key] + '">' + key + '</option>';
+        console.log(`vehicle category key: ${VEHICLE_CATEGORIES[key]}`)
+        console.log(`vehicle category key 0: ${VEHICLE_CATEGORIES[key][0]}`)
+        option += '<option value="' + VEHICLE_CATEGORIES[key] + '">' + VEHICLE_CATEGORIES[key] + '</option>';
     }
     // for (var i = 0; i < vehicleTypeArray.length; i++) {
     //     option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
