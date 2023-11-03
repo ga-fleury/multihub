@@ -770,9 +770,11 @@ vehicleTypeButtons.on('click', function () {
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
     var option = '';
     for(var vehicleTypeKey in VEHICLE_CATEGORIES) {
-        for(var vehicleSubtypeKey in VEHICLE_CATEGORIES[vehicleTypeKey]) {
-            console.log(`vehicle category key vehicleSubtypeKey: ${VEHICLE_CATEGORIES[vehicleTypeKey][vehicleSubtypeKey]}`)
-            option += '<option value="' + VEHICLE_CATEGORIES[vehicleTypeKey][vehicleSubtypeKey] + '">' + vehicleSubtypeKey + '</option>';
+        if(vehicleType == VEHICLE_CATEGORIES[vehicleTypeKey]){            
+            for(var vehicleSubtypeKey in VEHICLE_CATEGORIES[vehicleTypeKey]) {
+                console.log(`vehicle category key vehicleSubtypeKey: ${VEHICLE_CATEGORIES[vehicleTypeKey][vehicleSubtypeKey]}`)
+                option += '<option value="' + VEHICLE_CATEGORIES[vehicleTypeKey][vehicleSubtypeKey] + '">' + vehicleSubtypeKey + '</option>';
+            }
         }
     }
     // for (var i = 0; i < vehicleTypeArray.length; i++) {
