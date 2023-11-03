@@ -770,9 +770,10 @@ vehicleTypeButtons.on('click', function () {
     var vehicleTypeArray = VEHICLE_CATEGORIES[vehicleType];
     var option = '';
     for(var key in VEHICLE_CATEGORIES) {
-        console.log(`vehicle category key: ${VEHICLE_CATEGORIES[key]}`)
-        console.log(`vehicle category key 0: ${VEHICLE_CATEGORIES[key][0]}`)
-        option += '<option value="' + VEHICLE_CATEGORIES[key] + '">' + VEHICLE_CATEGORIES[key] + '</option>';
+        for(var key2 in VEHICLE_CATEGORIES[key]) {
+            console.log(`vehicle category key key2: ${VEHICLE_CATEGORIES[key][key2]}`)
+            option += '<option value="' + VEHICLE_CATEGORIES[key] + '">' + VEHICLE_CATEGORIES[key] + '</option>';
+        }
     }
     // for (var i = 0; i < vehicleTypeArray.length; i++) {
     //     option += '<option value="' + vehicleTypeArray[i] + '">' + vehicleTypeArray[i] + '</option>';
