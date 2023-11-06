@@ -719,9 +719,11 @@ modalSubmitButton.on('click', function () {
 
 submitRequestButton.on('click', function () {
     var emailCookie = document.cookie.match(new RegExp('(^| )' + 'user-email' + '=([^;]+)'));
+    if (emailCookie) {
+        emailField.val(decodeURIComponent(emailCookie[2]))
+    }
     var hubspotCookie = document.cookie.match(new RegExp('(^| )' + 'hubspotutk' + '=([^;]+)'));
     if (hubspotCookie) {
-        emailField.val(decodeURIComponent(emailCookie[2]))
         updateSubmissionData();
         formSubmissionCall();
         $('#success-overlay').css('display', 'flex');
