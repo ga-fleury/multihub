@@ -614,13 +614,20 @@ vehicleRate.on('change', function () {
     }
 })
 
-phoneNumberField.keypress(function (evt) {
-    allowOnlyNumbersToBeTyped(evt);
-
+phoneNumberField.on('keyup', function (e) {
+    e.target.value = e.target.value.replace(/[^\d]/g, '');
+    if (vehicleRate.val()) {
+        enableNextStepButton();
+    }
+    return false;
 })
 
-dotField.keypress(function (evt) {
-    allowOnlyNumbersToBeTyped(evt);
+dotField.on('keyup', function (e) {
+    e.target.value = e.target.value.replace(/[^\d]/g, '');
+    if (vehicleRate.val()) {
+        enableNextStepButton();
+    }
+    return false;
 })
 
 /**
