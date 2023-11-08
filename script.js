@@ -616,17 +616,11 @@ vehicleRate.on('change', function () {
 
 phoneNumberField.on('keyup', function (e) {
     e.target.value = e.target.value.replace(/[^\d]/g, '');
-    if (vehicleRate.val()) {
-        enableNextStepButton();
-    }
     return false;
 })
 
 dotField.on('keyup', function (e) {
     e.target.value = e.target.value.replace(/[^\d]/g, '');
-    if (vehicleRate.val()) {
-        enableNextStepButton();
-    }
     return false;
 })
 
