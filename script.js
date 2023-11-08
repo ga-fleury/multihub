@@ -784,14 +784,14 @@ vehicleTypeButtons.on('click', function () {
 
     // #region ------------- responsive changes start ---------
     if (windowWidth <= 992 && windowWidth >= 768) {
-    maskContainer.attr('style', 'height: 290px !important');
-    sliderContainer.attr('style', 'height: 290px !important');
-}
+        maskContainer.attr('style', 'height: 290px !important');
+        sliderContainer.attr('style', 'height: 290px !important');
+    }
 
-if (windowWidth <= 767) {
-    maskContainer.attr('style', 'height: 350px !important');
-    sliderContainer.attr('style', 'height: 350px !important');
-}
+    if (windowWidth <= 767) {
+        maskContainer.attr('style', 'height: 350px !important');
+        sliderContainer.attr('style', 'height: 350px !important');
+    }
     // #endregion responsive changes 
 })
 
@@ -1265,3 +1265,8 @@ const checkModalFields = () => {
         return false
     }
 }
+
+$('#close-email').on('click', function () {
+    console.log('clack')
+    $('#email-overlay-wrap').attr('style', 'display: none')
+})
