@@ -734,6 +734,7 @@ submitRequestButton.on('click', function () {
     else {
         $('#email-overlay-wrap').css('display', 'flex');
         $('body').attr('style', 'overflow: hidden !important');
+        triggerGTMEvent('renterBulkStep5')
         disableModalSubmitButton();
     }
 })
