@@ -1270,3 +1270,7 @@ $('#close-email').on('click', function () {
     console.log('clack')
     $('#email-overlay-wrap').attr('style', 'display: none')
 })
+
+$('#new-request-btn').on('click', function () {
+    window.location.reload()
+})
