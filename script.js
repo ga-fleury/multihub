@@ -864,12 +864,18 @@ radiusDropdownField.on('change', function () {
     if (locationField.val()) {
         enableNextStepButton();
     }
+    else {
+        disableNextStepButton();
+    }
 })
 
 locationField.on('change', function () {
     updateSummary(pickUpSummary, locationField.val())
     if (radiusDropdownField.val() && locationField.val()) {
         enableNextStepButton();
+    }
+    else {
+        disableNextStepButton();
     }
 })
 
