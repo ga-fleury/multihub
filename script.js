@@ -828,6 +828,7 @@ fromDateField.on('change', function () {
     let month = fromDateField.val().slice(5, 7)
     let day = fromDateField.val().slice(8, 10)
     let todayDate = new Date().toISOString().split('T')[0]
+    FINAL_FORM_DATA.multi_rental_date_start = fromDateField.val()
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
         enableNextStepButton();
@@ -836,6 +837,7 @@ fromDateField.on('change', function () {
         disableNextStepButton();
         dateWarning.attr('style', "display: block");
     }
+    fromDateField.val(`${month}/${day}/${year}`)
 })
 
 toDateField.on('change', function () {
@@ -843,6 +845,7 @@ toDateField.on('change', function () {
     let month = toDateField.val().slice(5, 7)
     let day = toDateField.val().slice(8, 10)
     let todayDate = new Date().toISOString().split('T')[0]
+    FINAL_FORM_DATA.multi_rental_date_start = toDateField.val()
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
         enableNextStepButton();
@@ -851,6 +854,7 @@ toDateField.on('change', function () {
         disableNextStepButton();
         dateWarning.attr('style', "display: block");
     }
+    toDateField.val(`${month}/${day}/${year}`)
 })
 
 radiusDropdownField.on('change', function () {
@@ -862,7 +866,7 @@ radiusDropdownField.on('change', function () {
 
 locationField.on('change', function () {
     updateSummary(pickUpSummary, locationField.val())
-    if (radiusDropdownField.val()) {
+    if (radiusDropdownField.val() && locationField.val()) {
         enableNextStepButton();
     }
 })
@@ -875,8 +879,6 @@ const updateSubmissionData = () => {
     FINAL_FORM_DATA.daily_or_monthly_rate = dailyOrMonthlyRate.val();
     FINAL_FORM_DATA.vehicle_rate = vehicleRate.val();
     FINAL_FORM_DATA.vehicle_units = vehicleNumberField.val();
-    FINAL_FORM_DATA.multi_rental_date_start = fromDateField.val();
-    FINAL_FORM_DATA.multi_rental_date_to = toDateField.val();
     FINAL_FORM_DATA.bulk_rental_location = locationField.val();
     FINAL_FORM_DATA.bulk_rental_radius_miles = radiusDropdownField.val();
     FINAL_FORM_DATA.bulk_rental_comment = commentField.val();
