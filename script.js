@@ -732,8 +732,6 @@ submitRequestButton.on('click', function () {
         $('body').attr('style', 'overflow: hidden !important');
         disableModalSubmitButton();
     }
-    console.log(emailCookie[2])
-    console.log(decodeURIComponent(emailCookie[2]))
 })
 
 
@@ -1269,7 +1267,6 @@ const checkModalFields = () => {
 }
 
 $('#close-email').on('click', function () {
-    console.log('clack')
     $('#email-overlay-wrap').attr('style', 'display: none')
 })
 
