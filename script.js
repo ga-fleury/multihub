@@ -847,7 +847,7 @@ toDateField.on('change', function () {
     let month = toDateField.val().slice(5, 7)
     let day = toDateField.val().slice(8, 10)
     let todayDate = new Date().toISOString().split('T')[0]
-    FINAL_FORM_DATA.multi_rental_date_start = toDateField.val()
+    FINAL_FORM_DATA.multi_rental_date_to = toDateField.val()
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
     if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
         enableNextStepButton();
