@@ -44,6 +44,20 @@ let FINAL_FORM_DATA = {
 }
 
 /**
+ * Resets all information on the form fields upon page refresh
+ */
+const resetFormFields = () => {
+    allFormAndModalFields.each(function() {
+        $(this).val('')
+    })
+}
+
+$( document ).ready(function() {
+    resetFormFields();
+    getCookies();
+});
+
+/**
  * An object with arrays for the different vehicle types,
  * used to populate the dropdown once the user selects a Vehicle Type
  */
@@ -85,6 +99,8 @@ let currentStepNumber = 0;
  * Global variable for window width, adjusted on resize
  */
 var windowWidth = $(window).width();
+
+const allFormAndModalFields = $('#first-name-field, #last-name-field, #your-company-field, #phone-number-field, #email-field-modal, #dot-field, #city-field, #vehicle-rate-field, #from-date-field, #to-date-field, #location-field, #comment-field')
 
 // -------------------------------- EVENTS ----------------------------------------
 
@@ -451,8 +467,6 @@ function getCookies() {
     }
 }
 
-getCookies();
-
 /**
  * Returns a reference to the Webflow Slider navigation control at the given index
  * @param {*} index 
@@ -803,8 +817,8 @@ vehicleTypeButtons.on('click', function () {
 
 vehicleTypeDropdown.on('change', function () {
     storageCheckboxWrap.attr('style', 'display: none')
-    console.log(vehicleTypeDropdown.val())
-    updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").val());
+    // updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").val());
+    updateSummary(vehicleTypeSummary, vehicleTypeDropdown.text());
     // #region ------------- responsive changes start ---------
 
     maskContainer.attr('style', 'height: 500px !important');
