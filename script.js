@@ -1216,7 +1216,7 @@ $(multistepForm).on('keyup keypress', function (e) {
  */
 
 const validateEmail = (field) => {
-    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const emailRegex = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (field.val().match(emailRegex)) {
         console.log('valid email')
         return true
