@@ -523,7 +523,7 @@ const checkCurrentStep = (stepNumber) => {
         triggerGTMEvent('renterBulkStep2')
         console.log('step 2 reached')
     } else if (stepNumber == 3) {
-        if (locationField.val() && radiusDropdownField.val() != 'select') {
+        if (validateLocation(locationField) && radiusDropdownField.val() != 'select') {
             enableNextStepButton();
         }
         showNextStepButton();
@@ -870,7 +870,7 @@ toDateField.on('change', function () {
 
 radiusDropdownField.on('change', function () {
     updateSummary(radiusSummary, radiusDropdownField.find(":selected").val())
-    if (locationField.val() && radiusDropdownField.val() != 'select') {
+    if (validateLocation(locationField) && radiusDropdownField.val() != 'select') {
         enableNextStepButton();
     }
     else {
@@ -880,7 +880,7 @@ radiusDropdownField.on('change', function () {
 
 locationField.on('change', function () {
     updateSummary(pickUpSummary, locationField.val())
-    if (radiusDropdownField.val() != 'select' && locationField.val()) {
+    if (radiusDropdownField.val() != 'select' && validateLocation(locationField)) {
         enableNextStepButton();
     }
     else {
@@ -1204,6 +1204,15 @@ const validateEmail = (field) => {
         return true
     } else {
         console.log('invalid email')
+        return false
+    }
+}
+
+const validateLocation = (field) => {
+    let fieldInput = field.val().replace(/\s/g,'')
+    if(fieldInput.length > 0) {
+        return true
+    } else {
         return false
     }
 }
