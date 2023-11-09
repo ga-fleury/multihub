@@ -1227,7 +1227,7 @@ const validatePhone = (field) => {
 }
 
 const validateVehicleRate = (field) => {
-    if (field.val().length > 0) {
+    if (field.val().length >= 2) {
         return true
     }
 }
