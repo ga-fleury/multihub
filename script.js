@@ -602,35 +602,17 @@ toDateField.keypress(function (e) {
     return false
 });
 
-vehicleRate.on('keypress', function (evt) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
-    }
-    if (vehicleRate.val()) {
-        enableNextStepButton();
-    }
-    return true;
-})
-
 /**
  * 
  */
 vehicleRate.on('keyup', function (e) {
     e.target.value = e.target.value.replace(/[^\d]/g, '');
-    if (vehicleRate.val()) {
-        enableNextStepButton();
-    }
-    return false;
-})
-
-vehicleRate.on('change', function () {
     if (validateVehicleRate(vehicleRate)) {
         enableNextStepButton();
     } else {
         disableNextStepButton();
     }
+    return false;
 })
 
 phoneNumberField.on('keyup', function (e) {
