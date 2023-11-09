@@ -833,12 +833,16 @@ fromDateField.on('change', function () {
     let todayDate = new Date().toISOString().split('T')[0]
     FINAL_FORM_DATA.multi_rental_date_start = fromDateField.val()
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
-    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
-        enableNextStepButton();
-        dateWarning.attr('style', "display: none");
-    } else {
-        disableNextStepButton();
-        dateWarning.attr('style', "display: block");
+
+    //check if both date fields have been filled
+    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
+        if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
+            enableNextStepButton();
+            dateWarning.attr('style', "display: none");
+        } else {
+            disableNextStepButton();
+            dateWarning.attr('style', "display: block");
+        }
     }
     fromDateField.val(`${month}/${day}/${year}`)
 })
@@ -850,12 +854,16 @@ toDateField.on('change', function () {
     let todayDate = new Date().toISOString().split('T')[0]
     FINAL_FORM_DATA.multi_rental_date_to = toDateField.val()
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
-    if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
-        enableNextStepButton();
-        dateWarning.attr('style', "display: none");
-    } else {
-        disableNextStepButton();
-        dateWarning.attr('style', "display: block");
+
+    //check if both date fields have been filled
+    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
+        if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
+            enableNextStepButton();
+            dateWarning.attr('style', "display: none");
+        } else {
+            disableNextStepButton();
+            dateWarning.attr('style', "display: block");
+        }
     }
     toDateField.val(`${month}/${day}/${year}`)
 })
