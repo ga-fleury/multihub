@@ -878,7 +878,7 @@ radiusDropdownField.on('change', function () {
     }
 })
 
-locationField.on('change', function () {
+locationField.on('keyup', function () {
     updateSummary(pickUpSummary, locationField.val())
     if (radiusDropdownField.val() != 'select' && validateLocation(locationField)) {
         enableNextStepButton();
