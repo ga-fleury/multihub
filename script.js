@@ -489,6 +489,9 @@ const checkCurrentStep = (stepNumber) => {
     if (stepNumber == 0) {
         makeSlideBigger();
         console.log('step 0 reached')
+        if (vehicleRate.val().length >= 2) {
+            enableNextStepButton();
+        }
     } else if (stepNumber == 1) {
         makeSlideSmaller();
         triggerGTMEvent('renterBulkStep1')
