@@ -817,8 +817,7 @@ vehicleTypeButtons.on('click', function () {
 
 vehicleTypeDropdown.on('change', function () {
     storageCheckboxWrap.attr('style', 'display: none')
-    // updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").val());
-    updateSummary(vehicleTypeSummary, vehicleTypeDropdown.text());
+    updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").text());
     // #region ------------- responsive changes start ---------
 
     maskContainer.attr('style', 'height: 500px !important');
