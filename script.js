@@ -509,8 +509,10 @@ const checkCurrentStep = (stepNumber) => {
     } else if (stepNumber == 1) {
         makeSlideSmaller();
         triggerGTMEvent('renterBulkStep1')
-        vehicleNumberField.val('2')
-        updateSummary(vehicleUnitsSummary, vehicleNumberField.val())
+        if(vehicleUnitsSummary.text() == 'Pending') {
+            vehicleNumberField.val('2')
+            updateSummary(vehicleUnitsSummary, vehicleNumberField.val())
+        }
         console.log('step 1 reached')
         enableNextStepButton();
     } else if (stepNumber == 2) {
