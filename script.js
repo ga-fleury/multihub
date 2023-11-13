@@ -731,7 +731,7 @@ modalSubmitButton.on('click', function () {
     if (modalSubmitButtonEnabled === true) {
         updateSubmissionData();
         FINAL_FORM_DATA.email = emailField.val();
-        document.cookie = `user-email=${emailFIeld.val()}`;
+        document.cookie = `user-email=${emailField.val()}`;
         formSubmissionCall();
         $('#email-overlay-wrap').css('display', 'none');
         $('#success-overlay').css('display', 'flex');
