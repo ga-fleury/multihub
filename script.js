@@ -502,37 +502,37 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
 const checkCurrentStep = (stepNumber) => {
     if (stepNumber == 0) {
         makeSlideBigger();
-        console.log('step 0 reached')
+        triggerGTMEvent('renterBulkStep1')
+        console.log('step 1 reached')
         if (vehicleRate.val().length >= 2) {
             enableNextStepButton();
         }
     } else if (stepNumber == 1) {
         makeSlideSmaller();
-        triggerGTMEvent('renterBulkStep1')
         if(vehicleUnitsSummary.text() == 'Pending') {
             vehicleNumberField.val('2')
             updateSummary(vehicleUnitsSummary, vehicleNumberField.val())
-        }
-        console.log('step 1 reached')
+            triggerGTMEvent('renterBulkStep2')}
+        console.log('step 2 reached')
         enableNextStepButton();
     } else if (stepNumber == 2) {
         if (fromDateField.val() && toDateField.val()) {
             enableNextStepButton();
         }
         updateSummary(vehicleUnitsSummary, vehicleNumberField.val())
-        triggerGTMEvent('renterBulkStep2')
-        console.log('step 2 reached')
+        triggerGTMEvent('renterBulkStep3')
+        console.log('step 3 reached')
     } else if (stepNumber == 3) {
+        showNextStepButton();
         if (validateLocation(locationField) && radiusDropdownField.val() != 'select') {
             enableNextStepButton();
         }
-        showNextStepButton();
-        triggerGTMEvent('renterBulkStep3')
-        console.log('step 3 reached')
+        triggerGTMEvent('renterBulkStep4')
+        console.log('step 4 reached')
     } else if (stepNumber == 4) {
         showSubmitButton();
-        console.log('step 4 reached')
-        triggerGTMEvent('renterBulkStep4')
+        console.log('step 5 reached')
+        triggerGTMEvent('renterBulkStep5')
     }
 }
 
@@ -708,19 +708,6 @@ editIconButton.on('click', function () {
     currentStepNumber = 0;
 })
 
-modalSubmitButton.on('click', function () {
-    if (modalSubmitButtonEnabled === true) {
-        updateSubmissionData();
-        FINAL_FORM_DATA.email = emailField.val();
-        formSubmissionCall();
-        $('#email-overlay-wrap').css('display', 'none');
-        $('#success-overlay').css('display', 'flex');
-        $('body').attr('style', 'overflow: hidden !important');
-        triggerGTMEvent('renterBulkRegSubmission')
-    } else if (modalSubmitButton === false) {
-        return false
-    }
-})
 
 submitRequestButton.on('click', function () {
     var emailCookie = document.cookie.match(new RegExp('(^| )' + 'user-email' + '=([^;]+)'));
@@ -735,11 +722,25 @@ submitRequestButton.on('click', function () {
     else {
         $('#email-overlay-wrap').css('display', 'flex');
         $('body').attr('style', 'overflow: hidden !important');
-        triggerGTMEvent('renterBulkStep5')
+        triggerGTMEvent('renterBulkStep6')
         disableModalSubmitButton();
     }
 })
 
+modalSubmitButton.on('click', function () {
+    if (modalSubmitButtonEnabled === true) {
+        updateSubmissionData();
+        FINAL_FORM_DATA.email = emailField.val();
+        document.cookie = `user-email=${emailFIeld.val()}`;
+        formSubmissionCall();
+        $('#email-overlay-wrap').css('display', 'none');
+        $('#success-overlay').css('display', 'flex');
+        $('body').attr('style', 'overflow: hidden !important');
+        triggerGTMEvent('renterBulkRegSubmission')
+    } else if (modalSubmitButton === false) {
+        return false
+    }
+})
 
 // TODO: remove this, no longer needed since we are using popup after submission
 
@@ -878,7 +879,7 @@ radiusDropdownField.on('change', function () {
     }
 })
 
-locationField.on('keyup', function () {
+locationField.on('change', function () {
     updateSummary(pickUpSummary, locationField.val())
     if (radiusDropdownField.val() != 'select' && validateLocation(locationField)) {
         enableNextStepButton();
@@ -916,146 +917,7 @@ const updateSubmissionData = () => {
  * Hubspot Form Submission API call
  */
 async function formSubmissionCall() {
-    // let requestURL = "https://api.hsforms.com/submissions/v3/integration/submit/3840745/8f60d2a1-bc0c-4ac6-a7cf-4bffeb9b3554"
     let requestURL = "https://api.coop.com/public/vehicles/bulk-rental"
-    // let authToken = "Bearer pat-na1-d613ec32-87bc-4150-b471-4ee867e69c30"
-    // let requestHeader = {
-    //     "Authorization": authToken,
-    //     "content-type": "application/json"
-    // }
-    // let API_POST_REQUEST_BODY = {
-    //     "fields": [
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "multi_rental_date_start",
-    //             "value": FINAL_FORM_DATA.multi_rental_date_start
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "email",
-    //             "value": FINAL_FORM_DATA.email
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "multi_rental_date_to",
-    //             "value": FINAL_FORM_DATA.multi_rental_date_to
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "bulk_rental_vehicle_type",
-    //             "value": FINAL_FORM_DATA.bulk_rental_vehicle_type
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "bulk_rental_vehicle_subtype",
-    //             "value": FINAL_FORM_DATA.bulk_rental_vehicle_subtype
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "bulk_rental_storage",
-    //             "value": FINAL_FORM_DATA.bulk_rental_storage
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "daily_rate",
-    //             "value": FINAL_FORM_DATA.daily_rate
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "daily_or_monthly_rate",
-    //             "value": FINAL_FORM_DATA.daily_or_monthly_rate
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "vehicle_rate",
-    //             "value": FINAL_FORM_DATA.vehicle_rate
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "vehicle_units",
-    //             "value": FINAL_FORM_DATA.vehicle_units
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "bulk_rental_location",
-    //             "value": FINAL_FORM_DATA.bulk_rental_location
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "bulk_rental_radius_miles",
-    //             "value": FINAL_FORM_DATA.bulk_rental_radius_miles
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "bulk_rental_comment",
-    //             "value": FINAL_FORM_DATA.bulk_rental_comment
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "full_name",
-    //             "value": FINAL_FORM_DATA.full_name
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "firstname",
-    //             "value": FINAL_FORM_DATA.firstname
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "lastname",
-    //             "value": FINAL_FORM_DATA.lastname
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "company",
-    //             "value": FINAL_FORM_DATA.company
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "phone",
-    //             "value": FINAL_FORM_DATA.phone
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "dot_number",
-    //             "value": FINAL_FORM_DATA.dot_number
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "city",
-    //             "value": FINAL_FORM_DATA.city
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "utm_campaign",
-    //             "value": utmCampaign
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "utm_source",
-    //             "value": utmSource
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "utm_medium",
-    //             "value": utmMedium
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "utm_content",
-    //             "value": utmContent
-    //         },
-    //         {
-    //             "objectTypeId": "0-1",
-    //             "name": "utm_term",
-    //             "value": utmTerm
-    //         }
-    //     ],
-    //     "context": {
-    //         "pageUri": "www.coop.com/multi-vehicle-request",
-    //         "pageName": "Bulk Rental Form"
-    //     }
-    // }
     let API_POST_REQUEST_BODY = {
         "fields": {
             "multiRentalDateStart": FINAL_FORM_DATA.multi_rental_date_start,
@@ -1189,13 +1051,7 @@ $(multistepForm).on('keyup keypress', function (e) {
     }
 });
 
-/**
- *   const getUTMsFromURL = () => {
-  let params = new URL(document.location).searchParams;
-  let name = params.get("name"); // is the string "Jonathan Smith".
-  let age = parseInt(params.get("age")); // is the number 18
-}
- */
+// --------------------------------- VALIDATION -----------------------------
 
 const validateEmail = (field) => {
     const emailRegex = /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
