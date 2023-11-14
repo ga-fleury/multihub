@@ -849,6 +849,9 @@ fromDateField.on('change', function () {
     fromDateField.val(`${month}/${day}/${year}`)
 })
 
+fromDateField.attr("readonly", "");
+toDateField.attr("readonly", "");
+
 toDateField.on('change', function () {
     let year = toDateField.val().slice(0, 4)
     let month = toDateField.val().slice(5, 7)
