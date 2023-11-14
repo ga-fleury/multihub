@@ -837,7 +837,7 @@ fromDateField.on('change', function () {
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
 
     //check if both date fields have been filled
-    if (fromDateField.val() != '//' > 0 && toDateField.val() != '//') {
+    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
         if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
             enableNextStepButton();
             dateWarning.attr('style', "display: none");
@@ -858,7 +858,7 @@ toDateField.on('change', function () {
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
 
     //check if both date fields have been filled
-    if (fromDateField.val() != '//' > 0 && toDateField.val() != '//') {
+    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
         if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
             enableNextStepButton();
             dateWarning.attr('style', "display: none");
