@@ -850,7 +850,10 @@ fromDateField.on('change', function () {
 })
 
 fromDateField.attr("readonly", "");
+fromDateField.attr("style", "background-color: white; cursor: default; color: black !important");
+
 toDateField.attr("readonly", "");
+toDateField.attr("style", "background-color: white; cursor: default; color: black !important");
 
 toDateField.on('change', function () {
     let year = toDateField.val().slice(0, 4)
