@@ -818,7 +818,7 @@ vehicleTypeDropdown.on('change', function () {
         sliderContainer.attr('style', 'height: 460px !important');
     }
 
-    if (vehicleTypeDropdown.val() == 'Dry Van Trailer' || vehicleTypeDropdown.val() == 'Refrigerated Trailer') {
+    if (vehicleTypeDropdown.find(":selected").text() == 'Dry Van Trailer' || vehicleTypeDropdown.find(":selected").text() == 'Refrigerated Trailer') {
         storageCheckboxWrap.attr('style', 'display: block')
         console.log('need storage')
     }
