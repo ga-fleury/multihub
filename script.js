@@ -837,7 +837,7 @@ fromDateField.on('change', function () {
     updateSummary(fromDateSummary, `${month}/${day}/${year}`)
 
     //check if both date fields have been filled
-    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
+    if (fromDateField.val() != '//' > 0 && toDateField.val() != '//') {
         if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
             enableNextStepButton();
             dateWarning.attr('style', "display: none");
@@ -849,30 +849,6 @@ fromDateField.on('change', function () {
     fromDateField.val(`${month}/${day}/${year}`)
 })
 
-fromDateField.on('keyup', function() {
-    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
-        if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
-            enableNextStepButton();
-            dateWarning.attr('style', "display: none");
-        } else {
-            disableNextStepButton();
-            dateWarning.attr('style', "display: block");
-        }
-    }
-})
-
-toDateField.on('keyup', function() {
-    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
-        if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
-            enableNextStepButton();
-            dateWarning.attr('style', "display: none");
-        } else {
-            disableNextStepButton();
-            dateWarning.attr('style', "display: block");
-        }
-    }
-})
-
 toDateField.on('change', function () {
     let year = toDateField.val().slice(0, 4)
     let month = toDateField.val().slice(5, 7)
@@ -882,7 +858,7 @@ toDateField.on('change', function () {
     updateSummary(toDateSummary, `${month}/${day}/${year}`)
 
     //check if both date fields have been filled
-    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
+    if (fromDateField.val() != '//' > 0 && toDateField.val() != '//') {
         if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
             enableNextStepButton();
             dateWarning.attr('style', "display: none");
