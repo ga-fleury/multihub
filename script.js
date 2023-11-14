@@ -802,7 +802,8 @@ vehicleTypeButtons.on('click', function () {
 })
 
 vehicleTypeDropdown.on('change', function () {
-    storageCheckboxWrap.attr('style', 'display: none')
+    storageCheckboxWrap.attr('style', 'display: none !important')
+    storageCheckbox.prop('checked', false)
     updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").text());
     // #region ------------- responsive changes start ---------
 
@@ -821,7 +822,6 @@ vehicleTypeDropdown.on('change', function () {
 
     if (vehicleTypeDropdown.find(":selected").text() == 'Dry Van Trailer' || vehicleTypeDropdown.find(":selected").text() == 'Refrigerated Trailer') {
         storageCheckboxWrap.attr('style', 'display: block')
-        console.log('need storage')
     }
 
 
