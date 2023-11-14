@@ -410,7 +410,8 @@ const toDateField = $('#to-date-field', dateStep);
  * Date Picker
  */
 $('[data-toggle="datepicker"]').datepicker({
-    format: 'yyyy-mm-dd'
+    format: 'yyyy-mm-dd',
+    highlightedClass: 'none'
 });
 // Available date placeholders:
 // Year: yyyy
@@ -846,6 +847,30 @@ fromDateField.on('change', function () {
         }
     }
     fromDateField.val(`${month}/${day}/${year}`)
+})
+
+fromDateField.on('keyup', function() {
+    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
+        if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
+            enableNextStepButton();
+            dateWarning.attr('style', "display: none");
+        } else {
+            disableNextStepButton();
+            dateWarning.attr('style', "display: block");
+        }
+    }
+})
+
+toDateField.on('keyup', function() {
+    if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
+        if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
+            enableNextStepButton();
+            dateWarning.attr('style', "display: none");
+        } else {
+            disableNextStepButton();
+            dateWarning.attr('style', "display: block");
+        }
+    }
 })
 
 toDateField.on('change', function () {
