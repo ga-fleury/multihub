@@ -756,6 +756,9 @@ const hideAfterSubmission = () => {
 vehicleTypeButtons.on('click', function () {
     updateSummary(vehicleTypeSummary, 'Pending');
 
+    storageCheckboxWrap.attr('style', 'display: none')
+    storageCheckbox.prop('checked', false)
+
     maskContainer.attr('style', 'height: 390px !important')
     sliderContainer.attr('style', 'height: 390px !important');
 
@@ -802,7 +805,7 @@ vehicleTypeButtons.on('click', function () {
 })
 
 vehicleTypeDropdown.on('change', function () {
-    storageCheckboxWrap.attr('style', 'display: none !important')
+    storageCheckboxWrap.attr('style', 'display: none')
     storageCheckbox.prop('checked', false)
     updateSummary(vehicleTypeSummary, vehicleTypeDropdown.find(":selected").text());
     // #region ------------- responsive changes start ---------
