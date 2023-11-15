@@ -55,6 +55,8 @@ const resetFormFields = () => {
 $( document ).ready(function() {
     resetFormFields();
     getCookies();
+    initializeDataLayer();
+    triggerGTMEvent('renterBulkStep1')
 });
 
 /**
@@ -107,8 +109,6 @@ const allFormAndModalFields = $('#first-name-field, #last-name-field, #your-comp
 const initializeDataLayer = () => {
     window.dataLayer = window.dataLayer || [];
 }
-
-initializeDataLayer();
 
 const triggerGTMEvent = (triggerName) => {
     window.dataLayer.push({
