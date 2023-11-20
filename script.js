@@ -720,15 +720,6 @@ decreaseVehicleNumberButton.on('click', function () {
     vehicleUnitsCheck();
 })
 
-editIconButton.on('click', function () {
-    triggerWebflowSliderNavigationControl(
-        getRegistrationFormNavigationControl(
-            REQUEST_FORM_STEPS.VEHICLE_TYPE_STEP
-        ));
-
-    currentStepNumber = 0;
-})
-
 
 submitRequestButton.on('click', function () {
     var emailCookie = document.cookie.match(new RegExp('(^| )' + 'user-email' + '=([^;]+)'));
