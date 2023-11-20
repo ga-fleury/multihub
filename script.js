@@ -52,6 +52,10 @@ const resetFormFields = () => {
     })
 }
 
+/**
+ * Reset, cookie values and GTM Events
+ */
+
 $( document ).ready(function() {
     resetFormFields();
     getCookies();
@@ -102,14 +106,24 @@ let currentStepNumber = 0;
  */
 var windowWidth = $(window).width();
 
+/**
+ * Selector for all Fields in the form (doesn't include Summary)
+ */
 const allFormAndModalFields = $('#first-name-field, #last-name-field, #your-company-field, #phone-number-field, #email-field-modal, #dot-field, #city-field, #vehicle-rate-field, #from-date-field, #to-date-field, #location-field, #comment-field')
 
 // -------------------------------- EVENTS ----------------------------------------
 
+/**
+ * Readies Datalayer to send GTM events
+ */
 const initializeDataLayer = () => {
     window.dataLayer = window.dataLayer || [];
 }
 
+/**
+ * Trigger a GTM event with the corresponding name
+ * @param {*} triggerName 
+ */
 const triggerGTMEvent = (triggerName) => {
     window.dataLayer.push({
         'event': triggerName,
@@ -200,7 +214,6 @@ let nextStepButtonEnabled = false;
 /**
  * Reference to the 'Back' button
  */
-
 const previousStepButton = $('#btn-previous-step');
 
 /**
@@ -222,13 +235,9 @@ const sliderContainer = $(sliderContainerSelector);
 /**
  * Reference to the hidden 'Hubspot UTK' cookie form field
  */
-
 const hubspotCookieField = $('#hubspot-utk-field');
 
 // ----------------------- SUMMARY FIELDS -------------------------
-
-
-const editIconButton = $('#edit-icon', summaryContainer);
 
 /**
  * Reference to the 'Vehicle Type' field in the summary section
@@ -273,10 +282,13 @@ const radiusSummary = $('#radius-summary', summaryContainer);
 // ------------------------------------ MODAL FIELDS ----------------------------
 
 /**
- * Reference to the Name modal field
+ * Reference to the First Name modal field
  */
 const firstNameField = $('#first-name-field');
 
+/**
+ * Reference to the Last Name modal field
+ */
 const lastNameField = $('#last-name-field');
 
 /**
@@ -304,8 +316,14 @@ const cityField = $('#city-field');
  */
 const emailField = $('#email-field-modal');
 
+/**
+ * Reference to the modal submit button
+ */
 const modalSubmitButton = $('#modal-submit-btn');
 
+/**
+ * Reference to the modal fields
+ */
 const requiredModalFields = $('#first-name-field, #last-name-field, #your-company-field, #phone-number-field, #email-field-modal')
 
 requiredModalFields.on('change', function () {
@@ -405,6 +423,8 @@ const fromDateField = $('#from-date-field', dateStep);
  * A reference to the 'To' date field
  */
 const toDateField = $('#to-date-field', dateStep);
+
+let dateFieldsValid = false;
 
 /**
  * Date Picker
@@ -517,7 +537,7 @@ const checkCurrentStep = (stepNumber) => {
         console.log('step 2 reached')
         enableNextStepButton();
     } else if (stepNumber == 2) {
-        if (fromDateField.val().length > 0 && toDateField.val().length > 0 && Date.parse(FINAL_FORM_DATA.multi_rental_date_start) < Date.parse(FINAL_FORM_DATA.multi_rental_date_to) && Date.parse(FINAL_FORM_DATA.multi_rental_date_start) >= Date.parse(todayDate)) {
+        if (dateFieldsValid) {
             enableNextStepButton();
         }
         updateSummary(vehicleUnitsSummary, vehicleNumberField.val())
@@ -843,9 +863,11 @@ fromDateField.on('change', function () {
     if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
         if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
             enableNextStepButton();
+            dateFieldsValid = true;
             dateWarning.attr('style', "display: none");
         } else {
             disableNextStepButton();
+            dateFieldsValid = false
             dateWarning.attr('style', "display: block");
         }
     }
@@ -870,9 +892,11 @@ toDateField.on('change', function () {
     if (fromDateField.val().length > 0 && toDateField.val().length > 0) {
         if (Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
             enableNextStepButton();
+            dateFieldsValid = true;
             dateWarning.attr('style', "display: none");
         } else {
             disableNextStepButton();
+            dateFieldsValid = false;
             dateWarning.attr('style', "display: block");
         }
     }
