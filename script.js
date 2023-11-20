@@ -517,7 +517,7 @@ const checkCurrentStep = (stepNumber) => {
         console.log('step 2 reached')
         enableNextStepButton();
     } else if (stepNumber == 2) {
-        if (fromDateField.val() && toDateField.val()) {
+        if (fromDateField.val().length > 0 && toDateField.val().length > 0 && Date.parse(fromDateField.val()) < Date.parse(toDateField.val()) && Date.parse(fromDateField.val()) >= Date.parse(todayDate)) {
             enableNextStepButton();
         }
         updateSummary(vehicleUnitsSummary, vehicleNumberField.val())
