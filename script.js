@@ -61,6 +61,7 @@ $( document ).ready(function() {
     getCookies();
     initializeDataLayer();
     triggerGTMEvent('renterBulkStep1')
+    initializeForm();
 });
 
 /**
@@ -519,6 +520,7 @@ const triggerWebflowSliderNavigationControl = (navControl) => {
 
 /**
  * Adjust several features based on what step the user is currently in
+ * and fires GTM events accordingly
  */
 const checkCurrentStep = (stepNumber) => {
     if (stepNumber == 0) {
@@ -558,12 +560,17 @@ const checkCurrentStep = (stepNumber) => {
 }
 
 
-
+/**
+ * Replaces next step button with submit button
+ */
 const showSubmitButton = () => {
     nextStepButton.attr('style', 'display: none !important');
     submitRequestButton.attr('style', 'display: flex !important');
 }
 
+/**
+ * shows the next step button
+ */
 const showNextStepButton = () => {
     nextStepButton.attr('style', 'display: flex !important');
     submitRequestButton.attr('style', 'display: none !important');
@@ -596,6 +603,7 @@ const goToPreviousStep = (stepNumber) => {
 const getStepNameByNumber = (obj, value) =>
     Object.keys(obj).find(key => obj[key] === value);
 
+
 const initializeForm = () => {
     maskContainer.css('height', '290px');
     sliderContainer.attr('style', 'height: 290px !important');
@@ -606,8 +614,11 @@ const initializeForm = () => {
     }
 }
 
-initializeForm();
-
+/**
+ * Updates the summary field with value
+ * @param {*} field 
+ * @param {*} value 
+ */
 const updateSummary = (field, value) => {
     field.text(value);
 }
