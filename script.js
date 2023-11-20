@@ -1162,6 +1162,7 @@ const checkModalFields = () => {
 
 $('#close-email').on('click', function () {
     $('#email-overlay-wrap').attr('style', 'display: none')
+    $('body').attr('style', '');
 })
 
 $('#new-request-btn').on('click', function () {
